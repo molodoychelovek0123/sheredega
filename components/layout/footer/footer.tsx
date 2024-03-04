@@ -2,13 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { FaFacebookF, FaGithub, FaTwitter } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
-import { Container } from "../../util/container";
+import { Container } from "../../../shared_components/components/Container/container";
 import { RawRenderer } from "./rawRenderer";
-import { useTheme } from "..";
-import { Icon } from "../../util/icon";
+import { Icon } from "../../../shared_components/components/Icon/icon";
 
 export const Footer = ({ data, icon, rawData }) => {
-  const theme = useTheme();
   const socialIconClasses = "h-7 w-auto";
   const socialIconColorClasses = {
     blue: "text-blue-500 dark:text-blue-400 hover:text-blue-300",
@@ -37,10 +35,7 @@ export const Footer = ({ data, icon, rawData }) => {
     },
   };
 
-  const footerColorCss =
-    data.color === "primary"
-      ? footerColor.primary[theme.color]
-      : footerColor.default;
+  const footerColorCss = footerColor.default;
 
   return (
     <footer className={`bg-gradient-to-br ${footerColorCss}`}>
@@ -68,11 +63,7 @@ export const Footer = ({ data, icon, rawData }) => {
                 target="_blank"
               >
                 <FaFacebookF
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      data.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
+                  className={`${socialIconClasses} text-white opacity-80 hover:opacity-100`}
                 />
               </a>
             )}
@@ -83,11 +74,7 @@ export const Footer = ({ data, icon, rawData }) => {
                 target="_blank"
               >
                 <FaTwitter
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      data.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
+                  className={`${socialIconClasses} text-white opacity-80 hover:opacity-100`}
                 />
               </a>
             )}
@@ -98,11 +85,7 @@ export const Footer = ({ data, icon, rawData }) => {
                 target="_blank"
               >
                 <AiFillInstagram
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      data.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
+                  className={`${socialIconClasses} text-white opacity-80 hover:opacity-100`}
                 />
               </a>
             )}
@@ -113,11 +96,7 @@ export const Footer = ({ data, icon, rawData }) => {
                 target="_blank"
               >
                 <FaGithub
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      data.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
+                  className={`${socialIconClasses} text-white opacity-80 hover:opacity-100`}
                 />
               </a>
             )}

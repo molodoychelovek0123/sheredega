@@ -26,15 +26,28 @@
   },
   "dependencies": {
     "@headlessui/react": "1.7.5",
+    "@lottiefiles/react-lottie-player": "^3.5.3",
+    "@react-hook/resize-observer": "^1.2.6",
     "@tailwindcss/typography": "^0.5.8",
+    "@uidotdev/usehooks": "^2.4.1",
+    "classnames": "^2.5.1",
     "date-fns": "^2.23.0",
+    "framer-motion": "^11.0.8",
+    "mapbox-gl": "^3.1.2",
+    "md5": "^2.3.0",
     "next": "^13.3.1",
+    "nullthrows": "^1.1.1",
     "react": "^18.2.0",
+    "react-animate-height": "^3.2.3",
     "react-dom": "^18.2.0",
     "react-icons": "^4.2.0",
-    "styled-jsx": "^3.2.5",
+    "react-simple-typewriter": "^5.0.1",
+    "resize-observer-polyfill": "^1.5.1",
+    "sass": "^1.71.1",
+    "tailwind-merge": "^2.2.1",
     "tailwindcss": "^3.2.4",
     "tinacms": "^1.5.24",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "uuidv4": "^6.2.13"
   }
 }

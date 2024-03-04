@@ -1,14 +1,14 @@
 import type { Collection } from "tinacms";
-import { iconSchema } from "../../components/util/icon";
+import { iconSchema } from "../../shared_components/components/Icon/icon";
 import { ColorPickerInput } from "../fields/color";
 
 const Global: Collection = {
-  label: "Global",
+  label: "Глобальные настройки",
   name: "global",
   path: "content/global",
   format: "json",
   ui: {
-    global: true,
+    global: true
   },
   fields: [
     {
@@ -20,7 +20,7 @@ const Global: Collection = {
         {
           type: "string",
           label: "Name",
-          name: "name",
+          name: "name"
         },
         {
           type: "string",
@@ -28,8 +28,8 @@ const Global: Collection = {
           name: "color",
           options: [
             { label: "Default", value: "default" },
-            { label: "Primary", value: "primary" },
-          ],
+            { label: "Primary", value: "primary" }
+          ]
         },
         {
           type: "object",
@@ -42,23 +42,23 @@ const Global: Collection = {
             },
             defaultItem: {
               href: "home",
-              label: "Home",
-            },
+              label: "Home"
+            }
           },
           fields: [
             {
               type: "string",
               label: "Link",
-              name: "href",
+              name: "href"
             },
             {
               type: "string",
               label: "Label",
-              name: "label",
-            },
-          ],
-        },
-      ],
+              name: "label"
+            }
+          ]
+        }
+      ]
     },
     {
       type: "object",
@@ -71,8 +71,8 @@ const Global: Collection = {
           name: "color",
           options: [
             { label: "Default", value: "default" },
-            { label: "Primary", value: "primary" },
-          ],
+            { label: "Primary", value: "primary" }
+          ]
         },
         {
           type: "object",
@@ -82,26 +82,26 @@ const Global: Collection = {
             {
               type: "string",
               label: "Facebook",
-              name: "facebook",
+              name: "facebook"
             },
             {
               type: "string",
               label: "Twitter",
-              name: "twitter",
+              name: "twitter"
             },
             {
               type: "string",
               label: "Instagram",
-              name: "instagram",
+              name: "instagram"
             },
             {
               type: "string",
               label: "Github",
-              name: "github",
-            },
-          ],
-        },
-      ],
+              name: "github"
+            }
+          ]
+        }
+      ]
     },
     {
       type: "object",
@@ -115,8 +115,8 @@ const Global: Collection = {
           label: "Primary Color",
           name: "color",
           ui: {
-            component: ColorPickerInput,
-          },
+            component: ColorPickerInput
+          }
         },
         {
           type: "string",
@@ -125,17 +125,17 @@ const Global: Collection = {
           options: [
             {
               label: "System Sans",
-              value: "sans",
+              value: "sans"
             },
             {
               label: "Nunito",
-              value: "nunito",
+              value: "nunito"
             },
             {
               label: "Lato",
-              value: "lato",
-            },
-          ],
+              value: "lato"
+            }
+          ]
         },
         {
           type: "string",
@@ -144,21 +144,21 @@ const Global: Collection = {
           options: [
             {
               label: "System",
-              value: "system",
+              value: "system"
             },
             {
               label: "Light",
-              value: "light",
+              value: "light"
             },
             {
               label: "Dark",
-              value: "dark",
-            },
-          ],
-        },
-      ],
-    },
-  ],
+              value: "dark"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 };
 
 export default Global;

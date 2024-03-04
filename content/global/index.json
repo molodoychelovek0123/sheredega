@@ -1,11 +1,11 @@
 {
   "header": {
     "icon": {
-      "name": "Tina",
+      "name": "BiCalendarExclamation",
       "color": "orange",
       "style": "float"
     },
-    "name": "Tina Starter",
+    "name": "Сайт",
     "color": "default",
     "nav": [
       {

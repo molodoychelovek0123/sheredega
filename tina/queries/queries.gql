@@ -18,6 +18,20 @@ query pageQuery {
       }
     }
   }
+  projectsConnection {
+      edges {
+        node {
+          title
+          date
+          hashtags
+          heroImg
+          type
+          _sys {
+            filename
+          }
+        }
+      }
+  }
 }
 
 query contentQuery($relativePath: String!) {
@@ -37,5 +51,12 @@ query blogPostQuery($relativePath: String!) {
         avatar
       }
     }
+  }
+}
+
+query projectsQuery($relativePath: String!) {
+  ...LayoutQueryFragment
+  projects(relativePath: $relativePath) {
+    ...ProjectsParts
   }
 }

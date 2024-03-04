@@ -1,0 +1,101 @@
+import Grid from "../../../components/Grid/Grid";
+import { GridTextProps } from "./Props";
+import React, { useRef } from "react";
+import { tinaField } from "tinacms/dist/react";
+import cn from "@/global/utils/classnames";
+import { Container } from "@/shared_components/components/Container/container";
+import { useAnimations } from "@/global/useAnimations";
+import { RichTextComponent } from "@/global/schemas/richTextFieldSchema";
+
+
+export const GridText = ({ block, grid, textBlock, indent, uniquePath, customCss }: GridTextProps) => {
+
+  const {
+    textStart = "3",
+    fontSize: fontSizeFromProps,
+    body,
+    title,
+    hideTitleOnMobile = false,
+    animation
+  } = textBlock ?? {};
+
+  const fontSize = typeof fontSizeFromProps === "string" ? fontSizeFromProps : "40";
+
+  const classes = cn(
+    Number(textStart) === 1 && "col-start-1",
+    Number(textStart) === 2 && "col-start-1 md:col-start-2",
+    Number(textStart) === 3 && "col-start-1 md:col-start-2 lg:col-start-3",
+    Number(grid.mobileColumns) === 1 && "col-end-2",
+    Number(grid.mobileColumns) === 2 && "col-end-3",
+    Number(grid.tabletColumns) === 1 && "md:col-end-2",
+    Number(grid.tabletColumns) === 2 && "md:col-end-3",
+    Number(grid.tabletColumns) === 3 && "md:col-end-4",
+    Number(grid.tabletColumns) === 4 && "md:col-end-5",
+    Number(grid.tabletColumns) === 5 && "md:col-end-6",
+    Number(grid.tabletColumns) === 6 && "md:col-end-7",
+    Number(grid.desktopColumns) === 1 && "lg:col-end-2",
+    Number(grid.desktopColumns) === 2 && "lg:col-end-3",
+    Number(grid.desktopColumns) === 3 && "lg:col-end-4",
+    Number(grid.desktopColumns) === 4 && "lg:col-end-5",
+    Number(grid.desktopColumns) === 5 && "lg:col-end-6",
+    Number(grid.desktopColumns) === 6 && "lg:col-end-7",
+    Number(grid.desktopColumns) === 7 && "lg:col-end-8",
+    Number(grid.desktopColumns) === 8 && "lg:col-end-9",
+    Number(grid.desktopColumns) === 9 && "lg:col-end-10",
+    Number(grid.desktopColumns) === 10 && "lg:col-end-11",
+    Number(grid.desktopColumns) === 11 && "lg:col-end-12",
+    Number(grid.desktopColumns) === 12 && "lg:col-end-13",
+    Number(fontSize) === 30 && "text-[18px] md:text-2xl lg:text-3xl ",
+    Number(fontSize) === 40 && "text-[22px] md:text-3xl lg:text-4.5xl "
+  );
+  const titleClasses = cn(
+    Number(textStart) === 1 && "col-end-1",
+    Number(textStart) === 2 && "col-end-1 md:col-end-2",
+    Number(textStart) === 3 && "col-end-1 md:col-end-2 lg:col-end-3",
+    hideTitleOnMobile && "hidden",
+    Number(fontSize) === 30 && "text-[26px] md:text-2xl lg:text-3xl ",
+    Number(fontSize) === 40 && " text-2xl md:text-3xl lg:text-4.5xl"
+  );
+
+  const textBlockRef = useRef<HTMLDivElement>(null);
+  const { animationClass: textBlockAnimationClass } = useAnimations(
+    textBlockRef,
+    animation?.type,
+    animation?.speed,
+    animation?.isScroll,
+    animation?.showOnce
+  );
+
+  /*
+
+   */
+  return (
+    <Container indent={indent} uniquePath={uniquePath} customCss={customCss}>
+      <Grid {...grid} ref={textBlockRef} className="gap-x-5 gap-y-10">
+        {title &&
+          (<h2
+            className={`${titleClasses} ${textBlockAnimationClass} text-3xl  leading-[1.1em]  font-medium col-start-1 md:block`}
+
+          >
+            <span className="text-inner" data-tina-field={tinaField(block, "textBlock.title")}>
+              {title}
+            </span>
+          </h2>)
+        }
+        {textBlock &&
+          <div className={`${classes} ${textBlockAnimationClass}  rte-text leading-[1.3em]`}
+               data-tina-field={tinaField(block, "textBlock")}>
+            <RichTextComponent body={body} />
+          </div>
+        }
+        {/*{animatedText &&*/}
+        {/*  <p className={`${startIndexClassName[animatedText.textStart]}`}*/}
+        {/*     data-tina-field={tinaField(block, "animatedBlock")}>*/}
+        {/*    {animatedText.body}*/}
+        {/*  </p>*/}
+        {/*}*/}
+      </Grid>
+    </Container>
+  );
+};
+

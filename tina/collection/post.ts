@@ -1,7 +1,12 @@
 import type { Collection } from "tinacms";
+import { heroBlockSchema } from "../../components/blocks/Page/hero";
+import { featureBlockSchema } from "../../components/blocks/Page/features";
+import { contentBlockSchema } from "../../components/blocks/Page/content";
+import { testimonialBlockSchema } from "../../components/blocks/Page/testimonial";
+import { gridTextBlockSchema } from "../../shared_components/blocks/Sheredega/GridText/schema";
 
 const Post: Collection = {
-  label: "Blog Posts",
+  label: "Посты",
   name: "post",
   path: "content/posts",
   format: "mdx",
@@ -111,6 +116,24 @@ const Post: Collection = {
         },
       ],
       isBody: true,
+    },
+    {
+      type: "object",
+      list: true,
+      name: "blocks",
+      label: "Sections",
+      ui: {
+        visualSelector: true,
+      },
+      templates: [
+        heroBlockSchema,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        featureBlockSchema,
+        contentBlockSchema,
+        testimonialBlockSchema,
+        // gridTextBlockSchema,
+      ],
     },
   ],
 };

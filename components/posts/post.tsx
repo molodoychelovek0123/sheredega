@@ -1,26 +1,46 @@
 /**
-Copyright 2021 Forestry.io Holdings, Inc.
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-    http://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+ Copyright 2021 Forestry.io Holdings, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 
 import React from "react";
-import { Container } from "../util/container";
-import { Section } from "../util/section";
-import { useTheme } from "../layout";
+import { Container } from "../../shared_components/components/Container/container";
+import { Section } from "../../shared_components/components/Section/section";
 import format from "date-fns/format";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { Prism } from "tinacms/dist/rich-text/prism";
 import type { TinaMarkdownContent, Components } from "tinacms/dist/rich-text";
 import { PostType } from "../../pages/posts/[filename]";
 import { tinaField } from "tinacms/dist/react";
+// import { PostBlocks } from "../../tina/__generated__/types";
+// import { Content } from "../blocks/Page/content";
+// import { Hero } from "../blocks/Page/hero";
+// import { Features } from "../blocks/Page/features";
+// import { Testimonial } from "../blocks/Page/testimonial";
+
+//
+// const Block = (block: PostBlocks) => {
+//   switch (block.__typename) {
+//     case "PostBlocksContent":
+//       return <Content data={block} />;
+//     case "PostBlocksHero":
+//       return <Hero data={block} />;
+//     case "PostBlocksFeatures":
+//       return <Features data={block} />;
+//     case "PostBlocksTestimonial":
+//       return <Testimonial data={block} />;
+//     default:
+//       return null;
+//   }
+// };
 
 const components: Components<{
   BlockQuote: {
@@ -109,11 +129,10 @@ const components: Components<{
     <span className="flex items-center justify-center">
       <img src={props.url} alt={props.alt} />
     </span>
-  ),
+  )
 };
 
 export const Post = (props: PostType) => {
-  const theme = useTheme();
   const titleColorClasses = {
     blue: "from-blue-400 to-blue-600 dark:from-blue-300 dark:to-blue-500",
     teal: "from-teal-400 to-teal-600 dark:from-teal-300 dark:to-teal-500",
@@ -125,7 +144,7 @@ export const Post = (props: PostType) => {
     orange:
       "from-orange-300 to-orange-600 dark:from-orange-200 dark:to-orange-500",
     yellow:
-      "from-yellow-400 to-yellow-500 dark:from-yellow-300 dark:to-yellow-500",
+      "from-yellow-400 to-yellow-500 dark:from-yellow-300 dark:to-yellow-500"
   };
 
   const date = new Date(props.date);
@@ -142,9 +161,7 @@ export const Post = (props: PostType) => {
           className={`w-full relative	mb-8 text-6xl font-extrabold tracking-normal text-center title-font`}
         >
           <span
-            className={`bg-clip-text text-transparent bg-gradient-to-r ${
-              titleColorClasses[theme.color]
-            }`}
+            className={`bg-clip-text text-transparent bg-gradient-to-r`}
           >
             {props.title}
           </span>
@@ -208,6 +225,18 @@ export const Post = (props: PostType) => {
         >
           <TinaMarkdown components={components} content={props._body} />
         </div>
+      </Container>
+
+      <Container className={`flex-1 pt-4`} width="small" size="large">
+        {props.blocks
+          ? props.blocks.map(function (block, i) {
+            return (
+              <div key={i} data-tina-field={tinaField(block)}>
+                {/*<Block {...block} />*/}
+              </div>
+            );
+          })
+          : null}
       </Container>
     </Section>
   );
