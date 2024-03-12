@@ -81,7 +81,7 @@ const Preloader = () => {
           }}
         >
         </Player>
-        <div className="text-black text-4.5xl sm:text-6xl font-medium  leading-[100%] absolute left-[21px] bottom-[31px] md:left-[60px] md:bottom-[60px]">Sheredega
+        <div className="text-black text-4.5xl sm:text-6xl font-medium  leading-[100%] absolute left-[21px] bottom-[31px] md:left-[60px] md:bottom-[60px] z-40">Sheredega
           Consulting...
 
           <CountUp start={startNumber} end={number} duration={duration} />%

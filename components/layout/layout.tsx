@@ -36,6 +36,7 @@ export const Layout = ({
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
+        <link rel={'stylesheet'} href={"/assets/scroll-driven-animation.css"} />
       </Head>
       <div
         className={`min-h-screen flex flex-col`}

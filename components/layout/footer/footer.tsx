@@ -7,7 +7,7 @@ export const Footer = () => {
   return (
     <footer className="bg-[#111111] text-white text-wrap-balance">
       <Container uniquePath={"desktop-footer"} className="relative pt-[68px] pb-[29px] hidden md:block">
-        <div className="grid grid-cols-12 relative pb-[60px] border-b-[#2c2c2c] border-b border-solid">
+        <div className="grid grid-cols-10  relative pb-[60px] border-b-[#2c2c2c] border-b border-solid">
           <div className="col-start-1 col-end-5 flex-col justify-start items-start gap-[42px] inline-flex">
             <div>
               <a className="block text-white text-3xl lg:text-[40px] font-medium lowercase leading-[44px]"
