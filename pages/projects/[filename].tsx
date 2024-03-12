@@ -11,7 +11,7 @@ import { Player } from "@lottiefiles/react-lottie-player";
 
 export const LinkToAllProjects = () => (
   <a className="flex justify-center items-center gap-3 mb-24 mt-14" href="/projects">
-             <span className="text-black text-xl  lg:text-3xl font-medium leading-7 relative -top-[4px]">
+             <span className="text-black text-xl  lg:text-[28px] font-medium leading-7 relative -top-[4px]">
             ко всем проектам
           </span>
     <img src="/assets/arrow-bottom-right.svg"

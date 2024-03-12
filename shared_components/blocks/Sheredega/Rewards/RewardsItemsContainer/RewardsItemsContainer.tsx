@@ -25,7 +25,7 @@ export const RewardsItemsContainer = ({ items }: { items?: (RewardsItemProps | n
 
       {page * 4 < len &&
         <div
-          className=" w-full justify-end text-black text-xl cursor-pointer  md:text-2xl lg:text-3xl font-medium leading-[90%] inline-flex items-center gap-2.5 mt-8 lg:mt-10"
+          className=" w-full justify-end text-black text-xl cursor-pointer  md:text-2xl lg:text-[28px] font-medium leading-[90%] inline-flex items-center gap-2.5 mt-8 lg:mt-10"
           onClick={() => setPage(prev => prev + 1)}
         >
           <span>показать еще</span>

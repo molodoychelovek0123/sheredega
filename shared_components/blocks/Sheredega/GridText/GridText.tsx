@@ -46,17 +46,17 @@ export const GridText = ({ block, grid, textBlock, indent, uniquePath, customCss
     Number(grid?.desktopColumns ?? 0) === 11 && "lg:col-end-12",
     Number(grid?.desktopColumns ?? 0) === 12 && "lg:col-end-13",
     Number(fontSize) === 22 && "text-[18px] md:text-xl lg:text-[22px] ",
-    Number(fontSize) === 30 && "text-[18px] md:text-2xl lg:text-3xl ",
-    Number(fontSize) === 40 && "text-[22px] md:text-3xl lg:text-4.5xl "
+    Number(fontSize) === 30 && "text-[18px] md:text-2xl lg:text-[28px] ",
+    Number(fontSize) === 40 && "text-[22px] md:text-[28px] lg:text-4.5xl "
   );
   const titleClasses = cn(
     Number(textStart) === 1 && "col-end-1",
     Number(textStart) === 2 && "col-end-1 md:col-end-2",
     Number(textStart) === 3 && "col-end-1 md:col-end-2 lg:col-end-3",
     hideTitleOnMobile && "hidden md:block",
-    Number(fontSize) === 22 && "text-[26px]  sm:text-3xl md:text-[32px] ",
-    Number(fontSize) === 30 && "text-[26px]  sm:text-3xl md:text-[32px]  ",
-    Number(fontSize) === 40 && " text-2xl md:text-3xl lg:text-4.5xl"
+    Number(fontSize) === 22 && "text-[26px]  sm:text-[28px] md:text-[32px] ",
+    Number(fontSize) === 30 && "text-[26px]  sm:text-[28px] md:text-[32px]  ",
+    Number(fontSize) === 40 && " text-2xl md:text-[28px] lg:text-4.5xl"
   );
 
   const textBlockRef = useRef<HTMLDivElement>(null);

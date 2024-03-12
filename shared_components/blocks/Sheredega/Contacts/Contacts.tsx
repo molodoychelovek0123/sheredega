@@ -31,7 +31,7 @@ export const Contacts = ({
     animation?.showOnce
   );
 
-  const className = cn("text-black text-[18px] sm:text-2xl md:text-3xl font-normal leading-[120%]", animationClass);
+  const className = cn("text-black text-[18px] sm:text-2xl md:text-[28px] font-normal leading-[120%]", animationClass);
 
   return (
     <Container indent={indent} uniquePath={uniquePath} customCss={customCss} className={className}>

@@ -490,7 +490,7 @@ export const Map = ({
             <img src="/assets/eye.svg"
                  alt="кнопка - международные"
                  className="" />
-            <span className="text-black text-3xl font-medium leading-7 relative -top-[4px]">
+            <span className="text-black text-[28px] font-medium leading-7 relative -top-[4px]">
             {isWorldWide ? "россия" : "международные"}
           </span>
           </div>
@@ -498,7 +498,7 @@ export const Map = ({
         <div className="absolute hidden items-center md:flex right-15 bottom-10 gap-4 z-10 cursor-pointer"
              onClick={onClickAllProjects}>
 
-          <span className="text-black text-3xl font-medium leading-7 relative -top-[4px]">
+          <span className="text-black text-[28px] font-medium leading-7 relative -top-[4px]">
             все проекты
           </span>
           <img src="/assets/arrow-bottom-right.svg"

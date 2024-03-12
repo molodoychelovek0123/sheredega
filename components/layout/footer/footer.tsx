@@ -10,10 +10,10 @@ export const Footer = () => {
         <div className="grid grid-cols-10  gap-x-5 gap-y-10  relative pb-[60px] border-b-[#2c2c2c] border-b border-solid">
           <div className="col-start-1 col-end-5 flex-col justify-start items-start gap-[42px] inline-flex">
             <div>
-              <a className="block text-white text-3xl lg:text-[40px] font-medium lowercase leading-[44px]"
+              <a className="block text-white text-[28px] lg:text-[40px] font-medium lowercase leading-[44px]"
                  href={"mailto:hello@sheredega.ru"}>hello@sheredega.ru
               </a>
-              <a className="block text-white text-3xl lg:text-[40px] font-medium lowercase leading-[44px]"
+              <a className="block text-white text-[28px] lg:text-[40px] font-medium lowercase leading-[44px]"
                  href={"tel:+79258880220"}> +7
                 925
                 888 02 20</a>

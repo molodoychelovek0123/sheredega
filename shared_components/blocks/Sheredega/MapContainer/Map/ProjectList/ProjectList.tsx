@@ -47,7 +47,7 @@ const ProjectList = ({ projects, isOpen, setOpen, toggleOpen, mapGoTo }: {
       className={`w-full max-h-full flex-col justify-start items-start  inline-flex bg-white border border-black border-opacity-10 p-6 lg:p-[26px] pb-0 lg:pb-0 pointer-events-auto`}>
       <div className="w-full justify-between items-center inline-flex cursor-pointer pb-6 lg:pb-[26px]"
            onClick={toggleOpen}>
-        <div className="text-black text-xl md:text-2xl lg:text-3xl font-medium leading-9">География проектов</div>
+        <div className="text-black text-xl md:text-2xl lg:text-[28px] font-medium leading-9">География проектов</div>
         <div className="w-8 h-8 relative">
           <div className="w-5 h-px  a-centered  border border-[#b2b2b2]"></div>
           <div

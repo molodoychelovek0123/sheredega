@@ -61,7 +61,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
                       className={`col-start-1 md:col-end-5 border-t-black border-t border-solid pb-4 opacity-15 ${index > 0}  mt-[30px] md:mt-10`}></div>
                     <div className="col-start-1 md:col-end-2 pb-[30px] md:pb-10">
                       {item?.href && item?.title ? <a href={item?.href}
-                                                      className="text-black text-2xl md:text-3xl lg:text-[32px] font-medium leading-[110%]"
+                                                      className="text-black text-2xl md:text-[28px] lg:text-[32px] font-medium leading-[110%]"
 
                                                       data-tina-field={tinaField(item)}>{item?.title}</a> : null}
                     </div>

@@ -29,7 +29,7 @@ export const Collapse = ({ title, body, isOpen, toggleOpen }: CollapseProps) => 
       >
         <div className="w-full pt-2.5 pb-3">
           <div
-            className="font-normal  text-black text-lg md:text-2xl lg:text-3xl leading-normal lg:leading-9 lg:max-w-[1096px] xl:max-w-[1440px]  rte-text">
+            className="font-normal  text-black text-lg md:text-2xl lg:text-[28px] leading-normal lg:leading-9 lg:max-w-[1096px] xl:max-w-[1440px]  rte-text">
             <RichTextComponent body={body} />
           </div>
         </div>
