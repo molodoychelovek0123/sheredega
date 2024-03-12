@@ -1,8 +1,6 @@
 import { defineConfig } from "tinacms";
 
-import Post from "./collection/post";
 import Global from "./collection/global";
-import Author from "./collection/author";
 import Page from "./collection/page";
 import Project from "./collection/project";
 
