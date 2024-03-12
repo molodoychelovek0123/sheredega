@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { CountUpProps } from "react-countup";
+import { useCookies } from "react-cookie";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -40,6 +41,8 @@ export const Blocks = (props: Omit<Page, "id" | "_sys" | "_values">) => {
 };
 
 const Preloader = () => {
+
+
   const [startNumber, setStartNumber] = React.useState(0);
   const [number, setNumber] = React.useState(95);
   const [duration, setDuration] = React.useState(12);
@@ -81,7 +84,8 @@ const Preloader = () => {
           }}
         >
         </Player>
-        <div className="text-black text-4.5xl sm:text-6xl font-medium  leading-[100%] absolute left-[21px] bottom-[31px] md:left-[60px] md:bottom-[60px] z-40">Sheredega
+        <div
+          className="text-black text-4.5xl sm:text-6xl font-medium  leading-[100%] absolute left-[21px] bottom-[31px] md:left-[60px] md:bottom-[60px] z-40">Sheredega
           Consulting...
 
           <CountUp start={startNumber} end={number} duration={duration} />%
@@ -98,10 +102,24 @@ export default function HomePage(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const { data } = useTina(props);
+  const [cookie, setCookie] = useCookies(["isLoaded"]);
+
+  const isAlreadyLoaded = cookie.isLoaded;
+  useEffect(() => {
+    if (!isAlreadyLoaded) {
+      const tomorrow = new Date();
+      // expires tomorrow
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      setCookie("isLoaded", true, { path: "/", expires: tomorrow });
+    }
+  }, [cookie, setCookie]);
+
 
   return (
     <Layout rawData={data} data={data.global}>
-      <Preloader />
+      {!isAlreadyLoaded &&
+        <Preloader />
+      }
       <Blocks {...data.page} />
     </Layout>
   );

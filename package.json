@@ -42,6 +42,7 @@
     "nullthrows": "^1.1.1",
     "react": "^18.2.0",
     "react-animate-height": "^3.2.3",
+    "react-cookie": "^7.1.0",
     "react-countup": "^6.5.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.2.0",

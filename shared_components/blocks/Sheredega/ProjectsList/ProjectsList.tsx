@@ -60,7 +60,7 @@ export const ProjectsList = ({ projects, showFilters = true }: Props) => {
 
 
   return (
-    <div>
+    <div className="mb-[100px]">
       {showFilters &&
         (
           <div className="pt-10 pb-15">

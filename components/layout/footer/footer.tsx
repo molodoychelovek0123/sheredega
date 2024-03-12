@@ -7,7 +7,7 @@ export const Footer = () => {
   return (
     <footer className="bg-[#111111] text-white text-wrap-balance">
       <Container uniquePath={"desktop-footer"} className="relative pt-[68px] pb-[29px] hidden md:block">
-        <div className="grid grid-cols-10  relative pb-[60px] border-b-[#2c2c2c] border-b border-solid">
+        <div className="grid grid-cols-10  gap-x-5 gap-y-10  relative pb-[60px] border-b-[#2c2c2c] border-b border-solid">
           <div className="col-start-1 col-end-5 flex-col justify-start items-start gap-[42px] inline-flex">
             <div>
               <a className="block text-white text-3xl lg:text-[40px] font-medium lowercase leading-[44px]"
@@ -38,12 +38,12 @@ export const Footer = () => {
             <img src={"/assets/logo-white.png"} alt={"Шередега ко"} className="absolute right-0 top-0" />
           </div>
         </div>
-        <div className="w-full h-4 justify-between items-start inline-flex pt-[26px]">
-          <div className="opacity-30 text-white text-lg font-normal leading-none">Политика конфиденциальности</div>
-          <div className="opacity-30 text-right text-white text-lg font-normal leading-none">Создано в ИСКРЕ,
+        <div className="w-full h-4 justify-between items-start grid grid-cols-10 pt-[26px]  gap-x-5 gap-y-10">
+          <div className="opacity-30 text-white text-lg font-normal leading-none col-start-1 col-end-5">Политика конфиденциальности</div>
+          <div className="opacity-30 text-left text-white text-lg font-normal leading-none col-start-5 col-end-9" >Создано в ИСКРЕ,
             иллюстрации: Анна Леонова
           </div>
-          <div className="opacity-30 text-white text-lg font-normal leading-none">© 2019 – 2024</div>
+          <div className="opacity-30 text-white text-lg font-normal leading-none col-start-9 col-end-11 text-right">© 2019 – 2024</div>
         </div>
       </Container>
       <Container uniquePath={"mobile-footer"} className={"block md:hidden"}>

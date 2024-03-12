@@ -104,25 +104,27 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
         className={`overflow-hidden sticky z-40 bg-white ${scrollDirection === "down" ? "-top-24" : "top-0"} transition-all duration-300`}
       >
         <Container uniquePath={"header"}>
-          <div className=" py-6 justify-between items-center w-full inline-flex relative">
-            <div className="justify-start items-center gap-2.5 xs:gap-[14px] flex">
+          <div className=" py-[6px] md:py-[19px] justify-between items-center w-full inline-flex relative">
+            <a href={"/"} className="justify-start items-center gap-2.5 xs:gap-[14px] flex">
               {data.logo && <img src={data.logo} alt="logo" className="h-[53px]" />}
               <div
                 className="text-black text-base sm:text-xl max-w-[150px] xs:max-w-full font-medium sm:font-normal  leading-[90%]">{data.name}</div>
-            </div>
-            <div className="h-5 justify-center items-center gap-11 a-y-centered w-full h-full hidden lg:inline-flex">
-              {data.nav &&
-                data.nav.map((item, i) => {
-                  if (!item) return null;
-                  const activeItem =
-                    (item.href === ""
-                      ? router.asPath === "/"
-                      : router.asPath.includes(item.href ?? "")) && isClient;
-                  return (
-                    <a data-tina-field={tinaField(item)} href={item?.href ?? "/"}
-                       className="text-black text-[22px] font-normal font-['Grato Grotesk DEMO'] leading-tight">{item.label}</a>
-                  );
-                })}
+            </a>
+            <div className="a-y-centered  hidden lg:grid  w-full h-full grid-cols-6 gap-x-5 gap-y-10">
+              <div className="justify-start items-center gap-11  hidden lg:inline-flex col-start-3 col-end-6">
+                {data.nav &&
+                  data.nav.map((item, i) => {
+                    if (!item) return null;
+                    const activeItem =
+                      (item.href === ""
+                        ? router.asPath === "/"
+                        : router.asPath.includes(item.href ?? "")) && isClient;
+                    return (
+                      <a data-tina-field={tinaField(item)} href={item?.href ?? "/"}
+                         className="text-black text-[22px] font-normal font-['Grato Grotesk DEMO'] leading-tight">{item.label}</a>
+                    );
+                  })}
+              </div>
             </div>
             <div
               className="text-black text-xl sm:text-[22px] font-medium sm:font-normal  leading-[90%] cursor-pointer"
