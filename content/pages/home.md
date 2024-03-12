@@ -2,8 +2,6 @@
 title: Главная
 blocks:
   - images:
-      - src: /uploads/Ебать рассказ про практику.docx
-        alt: Изображение
       - src: /uploads/slider-image-0.jpg
         alt: 'Sheredega - Hero image '
       - src: /uploads/slider-image-1.jpg
