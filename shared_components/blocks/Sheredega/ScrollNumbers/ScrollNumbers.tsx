@@ -3,20 +3,21 @@ import useResizeObserver from "@react-hook/resize-observer";
 import { GridText } from "@/shared_components/blocks/Sheredega/GridText/GridText";
 import { TinaMarkdownContent } from "tinacms/dist/rich-text";
 import { animationFieldType } from "@/global/constants/animations";
+import { tinaField } from "tinacms/dist/react";
 
 type Props = {
-  data?: {
-    text?: string;
-    subtext?: string;
-  }[]
+  data?: ({
+    text?: string | null;
+    subtext?: string | null;
+  } | null)[] | null
   textBlock?: {
-    hideTitleOnMobile?: boolean;
-    title?: string;
-    body?: TinaMarkdownContent | TinaMarkdownContent[]; // tina-rte
-    fontSize?: string;
-    textStart?: string;
-    animation?: animationFieldType,
-  }
+    hideTitleOnMobile?: boolean | null;
+    title?: string | null;
+    body?: TinaMarkdownContent | TinaMarkdownContent[] | null; // tina-rte
+    fontSize?: string | null;
+    textStart?: string | null;
+    animation?: animationFieldType | null,
+  } | null
 }
 
 const defailtData = [
@@ -42,13 +43,13 @@ const defailtData = [
   }
 ];
 
-export const SmoothScroll = ({ data = defailtData, textBlock }: Props) => {
-  if (data.length === 0) data = defailtData;
+export const ScrollNumbers = ({ data = defailtData, textBlock }: Props) => {
+  if ((data?.length ?? 0) === 0) data = defailtData;
   const ref = useRef<HTMLDivElement>(null);
   const [componentSize, setComponentSize] = useState<number>(1920);
   const [leftIndent, setLeftIndent] = useState<string>("35%");
   const [active, setActive] = useState<number>(0);
-  const [sectionHeight, setSectionHeight] = useState<string>("500vh");
+  const sectionHeight = "500vh";
   const [lastItemWidth, setLastItemWidth] = useState<string>("0px");
 
   useResizeObserver(ref, (entry) => {
@@ -58,31 +59,35 @@ export const SmoothScroll = ({ data = defailtData, textBlock }: Props) => {
 
   const scrollTrigger = useCallback(
     () => {
-      const flexContainerEl = ref.current.querySelector("div.pin-wrap");
-      const boundingClientRect = flexContainerEl.getBoundingClientRect();
-      const leftPosition = boundingClientRect.x;
+      if (ref.current && data) {
+        const flexContainerEl = ref.current.querySelector("div.pin-wrap");
+        if (flexContainerEl) {
+          const boundingClientRect = flexContainerEl.getBoundingClientRect();
+          const leftPosition = boundingClientRect.x;
 
-      const positions = [...flexContainerEl.querySelectorAll("div")].map(item => item.getBoundingClientRect().x);
-      const leftIndentValue = Number(leftIndent.replaceAll("px", "").replaceAll("#", ""));
+          const positions = [...flexContainerEl.querySelectorAll("div")].map(item => item.getBoundingClientRect().x);
+          const leftIndentValue = Number(leftIndent.replaceAll("px", "").replaceAll("#", ""));
 
-      setLastItemWidth(`${([...flexContainerEl.querySelectorAll("div")]?.[data.length - 1]?.getBoundingClientRect()?.width ?? "0")}px`);
+          setLastItemWidth(`${([...flexContainerEl.querySelectorAll("div")]?.[data.length - 1]?.getBoundingClientRect()?.width ?? "0")}px`);
 
-      const index = positions.findIndex(item => item + 20 > leftIndentValue);
+          const index = positions.findIndex(item => item + 20 > leftIndentValue);
 
-      if (index > data.length - 1) {
-        setActive(data.length - 1);
-        return;
-      }
+          if (index > data.length - 1) {
+            setActive(data.length - 1);
+            return;
+          }
 
-      if (index <= 0) {
-        if (leftPosition < -1000) {
-          setActive(data.length - 1);
-        } else {
-          setActive(0);
+          if (index <= 0) {
+            if (leftPosition < -1000) {
+              setActive(data.length - 1);
+            } else {
+              setActive(0);
+            }
+            return;
+          }
+          setActive(index);
         }
-        return;
       }
-      setActive(index);
     },
     [leftIndent]
   );
@@ -135,12 +140,14 @@ export const SmoothScroll = ({ data = defailtData, textBlock }: Props) => {
         {textBlock && <GridText textBlock={textBlock} />}
         <div className="pin-wrap gap-12 lg:gap-[115px] pt-20 pb-10 lg:py-20"
              style={{ paddingLeft: leftIndent, animationName: "move-extended" }}>
-          {data.map((item, i) =>
-            <div className={`${i === active ? "opacity-100" : "opacity-20"} transition-opacity duration-700`}>
+          {(data ?? []).map((item, i) =>
+            <div key={JSON.stringify(item)}
+                 className={`${i === active ? "opacity-100" : "opacity-20"} transition-opacity duration-700 scroll-numbers-item`}
+                 data-tina-field={item ? tinaField(item) : undefined}>
               <p
-                className="text-[70px] md:text-[90px] lg:text-[120px] leading-[100%] mb-5 font-medium "> {item.text} </p>
+                className="text-[70px] md:text-[90px] lg:text-[120px] leading-[100%] mb-5 font-medium "> {item?.text} </p>
               <p
-                className="text-black text-lg  lg:text-2xl font-normal leading-tight lg:leading-snug">{item.subtext} </p>
+                className="text-black text-lg  lg:text-2xl font-normal leading-tight lg:leading-snug whitespace-nowrap">{item?.subtext} </p>
 
             </div>
           )}

@@ -1,9 +1,14 @@
 import { useState, useEffect, RefObject } from "react";
 import cn from "@/global/utils/classnames";
 
-export const useAnimations = (ref: RefObject<any>, type: string, speed: string, isScroll: boolean, showOnce = true) => {
+export const useAnimations = (ref: RefObject<any>, type: string | null = "none", speed: string | null = "fast", isScroll: boolean | null = false, showOnce: boolean | null = true) => {
   const [isVisible, setIsVisible] = useState(false);
-//
+
+  type = type ?? "none";
+  speed = speed ?? "fast";
+  isScroll = isScroll ?? false;
+  showOnce = showOnce ?? true;
+
   const animationClass = isVisible || isScroll ? cn(
       type && type !== "none" ? "animate__animated animate__" + type : "",
       speed && "animate__" + speed,

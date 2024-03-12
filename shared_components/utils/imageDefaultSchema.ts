@@ -1,5 +1,13 @@
 import { ObjectField } from "@tinacms/schema-tools";
 
+export type MyImageProps =
+{
+  src?: string | null;
+  alt?: string | null;
+  link?: string | null;
+} | null
+
+
 export const imageSchema: ObjectField = {
   type: "object",
   label: "Изображение",

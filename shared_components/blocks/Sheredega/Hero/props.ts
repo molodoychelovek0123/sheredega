@@ -1,4 +1,5 @@
 import { TitleProps } from "../../../components/Title/Props";
+import { MyImageProps } from "@/shared_components/utils/imageDefaultSchema";
 
 type Block =  {
     __typename?: Block;
@@ -6,13 +7,10 @@ type Block =  {
   }
 
 export type HeroProps = {
-  block?: any;
-  images?: {
-   src?: string;
-   alt?: string
-  }[]
+  block?: any| null;
+  images?: (MyImageProps)[] | null;
   title?: Omit<TitleProps, 'children'> & {
-    heading?: string
-  }
+    heading?: string| null
+  } | null;
 
 }

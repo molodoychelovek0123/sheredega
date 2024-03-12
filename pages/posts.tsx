@@ -1,3 +1,8 @@
+// Посты не используются!
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
+
 import { Container } from "../shared_components/components/Container/container";
 import { Section } from "../shared_components/components/Section/section";
 import { Posts } from "../components/posts";

@@ -7,10 +7,7 @@ import { ProjectHeading } from "@/shared_components/blocks/Sheredega/ProjectHead
 import { Projects } from "@/tina/__generated__/types";
 import { BlockRenderer } from "@/components/blocks-renderer";
 import React, { CSSProperties } from "react";
-import Image from "next/image";
-import { LottiePlayer } from "@lottiefiles/react-lottie-player/dist/stories/index.stories";
-import { Controls, Player } from "@lottiefiles/react-lottie-player";
-import { FourImageShowcase } from "@/shared_components/blocks/Sheredega/FourImageShowcase/FourImageShowcase";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 export const LinkToAllProjects = () => (
   <a className="flex justify-center items-center gap-3 mb-24 mt-14" href="/projects">
@@ -28,11 +25,14 @@ export const Blocks = (props: Omit<Projects, "id" | "_sys" | "_values">) => {
     <>
       {props.blocks
         ? props.blocks.map(function(block, i) {
-          return (
-            <div key={i} data-tina-field={tinaField(block)} className="w-full">
-              <BlockRenderer block={block} customKey={i} entity={props} />
-            </div>
-          );
+          if (block) {
+            return (
+              <div key={i} data-tina-field={tinaField(block)} className="w-full">
+                <BlockRenderer block={block} customKey={i} entity={props} />
+              </div>
+            );
+          }
+          return null;
         })
         : null}
     </>
@@ -82,7 +82,7 @@ export default function ProjectPage(
   );
 }
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }: { params: { filename: string; [key: string]: string } }) => {
   const tinaProps = await client.queries.projectsQuery({
     relativePath: `${params.filename}.mdx`
   });
@@ -103,8 +103,8 @@ export const getStaticProps = async ({ params }) => {
 export const getStaticPaths = async () => {
   const projectsListData = await client.queries.projectsConnection();
   return {
-    paths: projectsListData.data.projectsConnection.edges.map((project) => ({
-      params: { filename: project.node._sys.filename }
+    paths: (projectsListData.data.projectsConnection?.edges??[]).map((project) => ({
+      params: { filename: project?.node?._sys.filename }
     })),
     fallback: "blocking"
   };

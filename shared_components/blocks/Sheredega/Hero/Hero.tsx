@@ -7,7 +7,7 @@ import { Title } from "../../../components/Title/Title";
 import { useEffect, useState } from "react";
 
 export const Hero = ({ block, images, title }: HeroProps) => {
-  const { heading } = title;
+  const { heading } = title ?? {};
   const [active, setActive] = useState(0);
   const imageTotal = (images?.length ?? 0);
   useEffect(() => {
@@ -20,20 +20,21 @@ export const Hero = ({ block, images, title }: HeroProps) => {
       });
     }, 5000);
     return () => {
-      clearInterval(timer)
+      clearInterval(timer);
     };
   }, []);
 
 
   return (
-    <Section className="relative pb-15 h-hero-fullscreen">
+    <Section className="relative pb-15 h-hero-fullscreen overflow-x-hidden">
       <div className="image-container absolute top-0 left-0 w-full h-full">
         {(images ?? []).map((item, index) =>
           (
             <img key={index}
                  className={`image-container absolute top-0 left-0 w-full h-full transition-opacity duration-500 object-cover ${index !== active ? "opacity-0" : "opacity-100"}`}
-                 src={item.src}
-                 alt={item.alt} />
+                 src={item?.src ?? "https://via.placeholder.com/1920x1080"}
+                 alt={item?.alt ??"Альтернативный текст" } />
+
           )
         )}
       </div>
@@ -41,7 +42,7 @@ export const Hero = ({ block, images, title }: HeroProps) => {
         size="large"
         className="relative h-full w-full"
       >
-        <Title  {...title} data-tina-field={tinaField(block, "title")}
+        <Title  size={title?.size ?? "100"} seoSize={title?.seoSize ?? "1"} color={title?.color ?? "black"} data-tina-field={tinaField(block, "title")}
                 className={"mt-auto absolute bottom-0"}
         > {heading} </Title>
 

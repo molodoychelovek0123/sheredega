@@ -4,11 +4,11 @@ import { IndentFieldType } from "@/global/schemas/indent";
 import { CustomCssTypeField } from "@/global/schemas/customCss";
 
 type Props = {
-  indent?: IndentFieldType;
+  indent?: IndentFieldType | null;
   children: React.ReactNode;
   className?: string;
   uniquePath?: string
-  customCss?: CustomCssTypeField,
+  customCss?: CustomCssTypeField | null,
   hide?: boolean,
   [key: string]: any
 }
@@ -54,8 +54,9 @@ export const Container = ({
 
   return (
     <>
-      {styles && <style dangerouslySetInnerHTML={{ __html: styles }} />}
+      {styles && <style dangerouslySetInnerHTML={{ __html: styles.replaceAll("undefined", "-") }} />}
       <div
+        id={customCss?.anchor?.replaceAll("#", "") ?? id}
         className={` w-full mx-auto ${!hide && "px-4 md:px-6 lg:px-10 xl:px-16 max-w-[1920px]"} ${className} ${id}`}
         {...props}
       >

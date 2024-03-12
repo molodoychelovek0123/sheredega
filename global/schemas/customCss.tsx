@@ -11,6 +11,21 @@ export const customCssSchema: ObjectField = {
       name: "_1",
       ui: {
         component: () => {
+          return <><h4 className="font-bold mt-4" style={{ whiteSpace: "pre-line" }}> Якорь </h4></>;
+        }
+      }
+    },
+    {
+      type: "string",
+      label: "Якорь",
+      name: "anchor",
+      description: "Якорь может использоваться для элементов меню внутри страницы и для прокручивания до якоря"
+    },
+    {
+      type: "boolean",
+      name: "_2",
+      ui: {
+        component: () => {
           return <><h4 className="font-bold mt-4" style={{ whiteSpace: "pre-line" }}> Настройка CSS </h4></>;
         }
       }
@@ -27,5 +42,6 @@ export const customCssSchema: ObjectField = {
   ]
 };
 export type CustomCssTypeField = {
-  data?: string;
+  anchor?: string | null;
+  data?: string  | null;
 }

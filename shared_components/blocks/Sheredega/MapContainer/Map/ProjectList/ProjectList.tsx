@@ -4,6 +4,8 @@ import { RegionsNames } from "@/global/constants/regions";
 // @ts-ignore
 import AnimateHeight from "react-animate-height";
 import { useDebounce } from "@react-hook/debounce";
+import { MyImageProps } from "@/shared_components/utils/imageDefaultSchema";
+import md5 from "md5";
 
 export type ProjectItem = {
   lng?: number;
@@ -13,12 +15,8 @@ export type ProjectItem = {
   city?: string;
   year?: string;
   link?: string;
-  image?: {
-    src?: string;
-    alt?: string
-  };
+  image?: MyImageProps;
   region?: RegionsNames[];
-
 }
 const ProjectList = ({ projects, isOpen, setOpen, toggleOpen, mapGoTo }: {
   projects: ProjectItem[];
@@ -30,8 +28,10 @@ const ProjectList = ({ projects, isOpen, setOpen, toggleOpen, mapGoTo }: {
   const [currentHover, setCurrentHover] = useDebounce<number | null>(null);
 
   useEffect(() => {
-    const center = [projects[currentHover]?.lng || 0, projects[currentHover]?.lat || 0];
-    mapGoTo && mapGoTo(center);
+    if (currentHover) {
+      const center = [projects[currentHover]?.lng || 0, projects[currentHover]?.lat || 0];
+      mapGoTo && mapGoTo(center);
+    }
   }, [currentHover]);
 
   useEffect(() => {
@@ -67,12 +67,12 @@ const ProjectList = ({ projects, isOpen, setOpen, toggleOpen, mapGoTo }: {
             {(showProjects ?? []).map((item, index) => (
 
               <a className="p-3.5 w-full w-full+3.5 -mx-3.5 block relative project-list-item"
-                 key={`${item?.title}-${item?.tooltip}-${item.lng}-${item.lat}`} href={item?.link}
+                 key={`${index}-${item?.title}-${item?.tooltip}-${item.lng}-${item.lat}`} href={item?.link}
                  onMouseOver={() => setCurrentHover(index)}
               >
                 <div className="w-full flex-col justify-start items-start gap-2.5 inline-flex">
                   <div className="justify-start items-center gap-5 inline-flex">
-                    <img className="w-20 h-20 object-cover shrink-0" src={item?.image?.src} alt={item?.image?.alt} />
+                    <img className="w-20 h-20 object-cover shrink-0" src={item?.image?.src ??  "https://via.placeholder.com/450x450"} alt={item?.image?.alt ?? "Проект"} />
                     <div className="flex-col justify-start items-start gap-2.5 inline-flex">
                       <div className="text-black text-xl font-medium  leading-normal">{item?.title}</div>
                       <div className="justify-start items-start gap-1.5 inline-flex">

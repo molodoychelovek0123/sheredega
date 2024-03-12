@@ -1,6 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-export const Section = ({ children, className = "" }) => {
+export const Section = ({ children, className = "" } : {
+  children?: ReactNode,
+  className?: string
+}) => {
 
   return (
     <section

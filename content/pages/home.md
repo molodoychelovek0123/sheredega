@@ -2,14 +2,16 @@
 title: Главная
 blocks:
   - images:
+      - src: /uploads/Ебать рассказ про практику.docx
+        alt: Изображение
       - src: /uploads/slider-image-0.jpg
         alt: 'Sheredega - Hero image '
       - src: /uploads/slider-image-1.jpg
         alt: 'Sheredega Hero Image - 2 '
     title:
-      heading: Заголовок
+      heading: Мы — городские психологи от архитектуры
       color: white
-      size: '120'
+      size: '100'
       seoSize: '1'
     _template: sheredegaHero
   - indent:
@@ -33,9 +35,10 @@ blocks:
 
         **Наша миссия — развитие**\
 
-        и преображение городских территорий\
+        и преображение городских территорий
 
-        \\
+
+        <indent indent="50" />
 
 
         <animated animatedWords={["Девелоперская концепция", "Работа",
@@ -74,60 +77,50 @@ blocks:
       isScroll: false
       speed: faster
     _template: numbers
-  - headline: Welcome to the Tina Starter
-    text: >
-      This project is set up to show you the basics of working with Tina. You're
-      looking at the landing page, which pulls content from
-      `content/pages/home.md`, components from components/blocks, and puts them
-      all together in `pages/[filename].tsx`, all based on a config
-      `tina/config.tsx`.
-    actions:
-      - label: Get Started
-        type: button
-        icon: true
-        link: /posts
-      - label: Read Blog
-        type: link
-        icon: false
-        link: /posts
-    image:
-      src: /uploads/unsplash-75EFpyXu3Wg.jpg
-      alt: >-
-        Photo of palm trees at sunset by Adam Birkett -
-        unsplash.com/photos/75EFpyXu3Wg
-    color: default
-    _template: hero
-  - items:
-      - icon:
-          name: BiCodeBlock
-          color: red
-          style: float
-        title: Amazing Feature
-        text: >-
-          Aliquam blandit felis rhoncus, eleifend ipsum in, condimentum nibh.
-          Praesent ac faucibus risus, eu lacinia enim.
-      - icon:
-          name: BiLike
-          color: primary
-          style: float
-        title: This Is a Feature
-        text: Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
-      - icon:
-          name: BiPalette
-          color: green
-          style: float
-        title: Configurable Theme
-        text: >-
-          Edit global theme configuration with Tina. Change your theme's primary
-          color, font, or icon set.
-    color: tint
-    _template: features
-  - quote: >-
-      There are only two hard things in Computer Science: cache invalidation and
-      naming things.
-    author: Phil Karlton
-    color: primary
-    _template: testimonial
+  - _template: map
+  - indent:
+      desktopTop: 60
+      desktopBottom: 60
+      tabletTop: 40
+      tabletBottom: 40
+      mobileTop: 20
+      mobileBottom: 20
+    collapses:
+      - title: Городам
+        body: >
+          Вовлечение жителей  /  Cинергия усилий всех участников развития
+          города  /  Привлечение федерального финансирования на проекты развития
+          территорий  /  Социокультурное программирование  /  Стратегическое
+          планирование  /  Межведомственное взаимодействие участников управления
+          территорией и города  /  Синхронизация государственных программ и
+          частных инициатив
+      - title: Девелоперам
+        body: >
+          Вовлечение жителей  /  Cинергия усилий всех участников развития
+          города  /  Привлечение федерального финансирования на проекты развития
+          территорий  /  Социокультурное программирование  /  Стратегическое
+          планирование  /  Межведомственное взаимодействие участников управления
+          территорией и города  /  Синхронизация государственных программ и
+          частных инициатив
+      - title: Архитекторам
+        body: >
+          Вовлечение жителей  /  Cинергия усилий всех участников развития
+          города  /  Привлечение федерального финансирования на проекты развития
+          территорий  /  Социокультурное программирование  /  Стратегическое
+          планирование  /  Межведомственное взаимодействие участников управления
+          территорией и города  /  Синхронизация государственных программ и
+          частных инициатив
+      - title: Федеральным органам и корпорациям
+        body: >
+          Вовлечение жителей  /  Cинергия усилий всех участников развития
+          города  /  Привлечение федерального финансирования на проекты развития
+          территорий  /  Социокультурное программирование  /  Стратегическое
+          планирование  /  Межведомственное взаимодействие участников управления
+          территорией и города  /  Синхронизация государственных программ и
+          частных инициатив
+    customCss:
+      anchor: '#directions'
+    _template: accordion
   - indent:
       desktopTop: 60
       desktopBottom: 60
@@ -140,12 +133,36 @@ blocks:
       tabletColumns: '3'
       desktopColumns: '3'
     images:
-      - src: /uploads/llama-6.avif
-        alt: Изображение
-      - src: /uploads/llama-3.avif
-        alt: Изображение
-      - src: /uploads/llama-2.avif
-        alt: Изображение
+      - src: /uploads/project-image-5.jpg
+        alt: Альт текст должен быть осмысленным
+      - src: /uploads/project-image-4.jpg
+        alt: Альт текст должен быть осмысленным
+      - src: /uploads/project-image-sheredega (4).jpg
+        alt: Альт текст должен быть осмысленным
     _template: gridImage
+  - indent:
+      desktopTop: 60
+      desktopBottom: 60
+      tabletTop: 40
+      tabletBottom: 40
+      mobileTop: 20
+      mobileBottom: 20
+    collapses:
+      - title: Мастер-планирование
+        body: >
+          Сегодня консалтинговые агентства играют важную роль в различных сферах
+          бизнеса, предлагая широкий спектр услуг и экспертных знаний.
+
+
+          Они помогают компаниям разрабатывать стратегии роста, оптимизировать
+          операционные процессы, внедрять инновации, а также управлять
+          изменениями.
+      - title: Исследования и тестирования
+        body: |
+          Исследования и тестирования
+      - title: ESG и устойчивое развитие
+        body: |
+          ESG и устойчивое развитие
+    _template: accordion
 ---
 

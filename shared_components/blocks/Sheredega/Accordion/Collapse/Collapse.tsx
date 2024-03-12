@@ -3,8 +3,8 @@ import AnimateHeight from "react-animate-height";
 import { CollapseProps } from "@/shared_components/blocks/Sheredega/Accordion/Collapse/props";
 import { RichTextComponent } from "@/global/schemas/richTextFieldSchema";
 
-export const Collapse = ({ title, text, isOpen, toggleOpen }: CollapseProps) => {
-  if (!title || !text) {
+export const Collapse = ({ title, body, isOpen, toggleOpen }: CollapseProps) => {
+  if (!title || !body) {
     return null;
   }
   return (
@@ -30,7 +30,7 @@ export const Collapse = ({ title, text, isOpen, toggleOpen }: CollapseProps) => 
         <div className="w-full pt-2.5 pb-3">
           <div
             className="font-normal  text-black text-lg md:text-2xl lg:text-3xl leading-normal lg:leading-9 lg:max-w-[1096px] xl:max-w-[1440px]  rte-text">
-            <RichTextComponent body={text} />
+            <RichTextComponent body={body} />
           </div>
         </div>
       </AnimateHeight>

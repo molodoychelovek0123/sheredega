@@ -9,7 +9,7 @@ export const fourImageShowcaseSchema: Template = {
   name: "fourImageShowcase",
   label: "4 изображения",
   ui: {
-    previewSrc: "/blocks/accordion.png",
+    previewSrc: "/blocks/four-image-showcase.jpg",
     defaultItem: {
       container: true,
       indent: indentDefaults,
@@ -35,7 +35,7 @@ export const fourImageShowcaseSchema: Template = {
       list: true,
       ui: {
         component: "group-list",
-        itemProps: (item) => ({
+        itemProps: (item : any) => ({
           key: item.id,
           label: item.alt
         }),
@@ -44,7 +44,7 @@ export const fourImageShowcaseSchema: Template = {
           id: Math.random().toString(36).substr(2, 9)
         })
       },
-      fields: imageSchema.fields
+      fields: imageSchema.fields as any
     },
     ANIMATION_SCHEMA,
     customCssSchema

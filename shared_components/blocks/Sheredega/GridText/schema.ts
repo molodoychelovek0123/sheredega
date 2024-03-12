@@ -34,7 +34,7 @@ export const gridTextBlockSchema: Template = {
           label: "Заголовок",
           name: "title",
           ui: {
-            validate: (value) => {
+            validate: (value: any) => {
               const lengthOfTitle = value?.length || 0;
               if (lengthOfTitle > 20) {
                 return "Заголовок не должен превышать 20 символов";
@@ -53,7 +53,8 @@ export const gridTextBlockSchema: Template = {
           label: "Размер текста",
           name: "fontSize",
           options: [
-            { value: "30", label: "Маленький" },
+            { value: "22", label: "Маленький" },
+            { value: "30", label: "Средний" },
             { value: "40", label: "Большой" }
           ]
         },

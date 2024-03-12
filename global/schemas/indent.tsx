@@ -3,12 +3,12 @@ import React from "react";
 
 const ui = (defaultValue?: number) => ({
   ui: {
-    validate: (value) => {
+    validate: (value: any) => {
       if (isNaN(parseFloat(value))) {
         return "Отступ должен быть числом";
       }
     },
-    parse: (value) => {
+    parse: (value : any) => {
       return parseFloat(value) ?? defaultValue ?? 0;
     },
     defaultValue: defaultValue ?? 0,
@@ -97,10 +97,10 @@ export const indentDefaults: IndentFieldType = {
 };
 
 export type IndentFieldType = {
-  desktopTop?: number,
-  desktopBottom?: number,
-  tabletTop?: number,
-  tabletBottom?: number,
-  mobileTop?: number,
-  mobileBottom?: number
+  desktopTop?: number  | null,
+  desktopBottom?: number  | null,
+  tabletTop?: number  | null,
+  tabletBottom?: number  | null,
+  mobileTop?: number  | null,
+  mobileBottom?: number  | null
 }

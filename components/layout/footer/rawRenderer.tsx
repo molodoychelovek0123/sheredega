@@ -2,7 +2,7 @@ import React from "react";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-export const RawRenderer = ({ rawData, parentColor }) => {
+export const RawRenderer = ({ rawData, parentColor } : any) => {
 
   const [isOpen, setIsOpen] = useState(false);
 

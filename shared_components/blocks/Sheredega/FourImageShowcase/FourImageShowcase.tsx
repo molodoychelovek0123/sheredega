@@ -12,7 +12,7 @@ export const FourImageShowcase = ({
                                     indent,
                                     animation
                                   }: FourImageShowcaseProps) => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   const { animationClass } = useAnimations(
     ref,
     animation?.type,
@@ -25,14 +25,18 @@ export const FourImageShowcase = ({
     <Container indent={indent} uniquePath={uniquePath} customCss={customCss} hide={!container}>
       <div className="w-full justify-start items-start four-image-showcase inline-flex flex-wrap " ref={ref}>
         {(images ?? []).map((item, index) => (
+          <>
+            {item &&
           <div key={JSON.stringify(item)}
                className={`w-full md:image-1/2 animate__delay-1s  ${animationClass}`}
                style={{ "--animate-delay": `${index * 0.2}s` } as CSSProperties}
                data-tina-field={tinaField(item)}>
             <div className="w-full pt-[62.015%] relative">
-              <img className="absolute top-0 left-0 w-full h-full object-cover" src={item.src} alt={item.alt} />
+              <img className="absolute top-0 left-0 w-full h-full object-cover" src={item.src ?? "https://via.placeholder.com/450x450"} alt={item?.alt ?? "Альтернативный текст"} />
             </div>
           </div>
+            }
+          </>
         ))}
       </div>
     </Container>

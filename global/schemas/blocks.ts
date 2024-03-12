@@ -14,6 +14,14 @@ import { fourImageShowcaseSchema } from "../../shared_components/blocks/Sheredeg
 import { dividerSchema } from "../../shared_components/blocks/Sheredega/Divider/schema";
 import { cardsGridBlockSchema } from "../../shared_components/blocks/Sheredega/CardsGrid/schema";
 import { scrollNumbersBlockSchema } from "../../shared_components/blocks/Sheredega/ScrollNumbers/schema";
+import {
+  aboutPersonSchema,
+  aboutPersonStickySchema
+} from "../../shared_components/blocks/Sheredega/AboutPerson/schema";
+import { logosSchema } from "../../shared_components/blocks/Sheredega/LogoMarquee/schema";
+import { contactsSchema } from "../../shared_components/blocks/Sheredega/Contacts/schema";
+import { rewardsSchema } from "../../shared_components/blocks/Sheredega/Rewards/schema";
+import { mapSchema } from "../../shared_components/blocks/Sheredega/MapContainer/schema";
 
 export const getBlocksSchema = (additionalTemplates: ObjectField["templates"] = []): ObjectField => ({
   type: "object",
@@ -24,18 +32,26 @@ export const getBlocksSchema = (additionalTemplates: ObjectField["templates"] = 
     visualSelector: true
   },
   templates: additionalTemplates.concat([
-    scrollNumbersBlockSchema,
     sheredegaHeroBlockSchema,
     gridTextBlockSchema,
+    mapSchema,
     dividerSchema,
-    cardsGridBlockSchema,
+    scrollNumbersBlockSchema,
     numbersBlockSchema,
+    logosSchema,
+    aboutPersonSchema,
+    aboutPersonStickySchema,
     gridImageSchema,
+    cardsGridBlockSchema,
     accordionSchema,
-    scrollDrivenSliderSchema,
     fourImageShowcaseSchema,
+    rewardsSchema,
     zaglushkaSchema,
     fullWidthImageSchema,
+    scrollDrivenSliderSchema,
+    contactsSchema,
+    ///////////////////////////////////////
+    // Дальше идут компоненты tina-starter
     heroBlockSchema,
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

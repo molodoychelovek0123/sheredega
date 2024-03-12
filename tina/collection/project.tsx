@@ -4,6 +4,7 @@ import type { Collection } from "tinacms";
 import { regions } from "../../global/constants/regions";
 import { getBlocksSchema } from "../../global/schemas/blocks";
 import { projectHeadingBlockSchema } from "../../shared_components/blocks/Sheredega/ProjectHeading/ProjectHeading";
+import { UIField } from "@tinacms/schema-tools/dist/types";
 
 
 const slugify = (text: string) => {
@@ -56,7 +57,11 @@ const slugify = (text: string) => {
     .replace(/^-+/, "")      // Trim - from start of text
     .replace(/-+$/, "");      // Trim - from end of text
 };
-const showOnRussiaComponentNumber = props => {
+
+type UIComponentNumberProps = UIField<number, false>['component']
+type UIComponentStringProps = UIField<string, false>['component']
+const showOnRussiaComponentNumber : UIComponentNumberProps = props => {
+
   return (
     <div className="relative mb-5 last:mb-0 show-on-russia" style={{ zIndex: 997 }}>
       <label
@@ -65,20 +70,22 @@ const showOnRussiaComponentNumber = props => {
       >
         {props.field.label}
       </label>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/*// @ts-ignore*/}
       <input
         type="number"
         className="shadow-inner focus:shadow-outline focus:border-blue-500 focus:outline-none block text-base placeholder:text-gray-300 px-3 py-2 text-gray-600 w-full bg-white border border-gray-200 transition-all ease-out duration-150 focus:text-gray-900 rounded-md  undefined show-on-russia"
-        name={props.field.name}
         defaultValue=""
 
         {...props.input}
+        name={props.field.name}
       />
     </div>
 
   );
 };
 
-const showOnRussiaComponentString = props => {
+const showOnRussiaComponentString : UIComponentStringProps = props => {
   return (
     <div className="relative mb-5 last:mb-0 show-on-russia" style={{ zIndex: 997 }}>
       <label
@@ -87,20 +94,25 @@ const showOnRussiaComponentString = props => {
       >
         {props.field.label}
       </label>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/*// @ts-ignore*/}
       <input
         type="text"
         className="shadow-inner focus:shadow-outline focus:border-blue-500 focus:outline-none block text-base placeholder:text-gray-300 px-3 py-2 text-gray-600 w-full bg-white border border-gray-200 transition-all ease-out duration-150 focus:text-gray-900 rounded-md  undefined show-on-russia"
-        name={props.field.name}
+
 
         {...props.input}
+        //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         defaultValue={props?.form?.getFieldState("title")?.value ?? ""}
+        name={props.field.name}
       />
     </div>
 
   );
 };
 
-const mapTitle = props => {
+const mapTitle = (props : any) => {
   const title = props?.form?.getFieldState("title")?.value ?? "";
   useEffect(() => {
     if (!props?.input?.value) props?.input?.onChange(title);
@@ -223,8 +235,8 @@ const Project: Collection = {
           label: "Международный проект",
           name: "globalProject",
           ui: {
-            parse: val => Boolean(val),
-            component: props => {
+            parse: (val : any) => Boolean(val),
+            component: (props : any) => {
               const value = props.input.value;
               return (
                 <div className="relative mb-5 last:mb-0">
@@ -283,7 +295,7 @@ const Project: Collection = {
           name: "lat",
           label: "Широта",
           ui: {
-            parse: (val) => Number(val),
+            parse: (val : any) => Number(val),
             component: showOnRussiaComponentNumber
           }
         },
@@ -292,7 +304,7 @@ const Project: Collection = {
           name: "lng",
           label: "Долгота",
           ui: {
-            parse: (val) => Number(val),
+            parse: (val : any)  => Number(val),
             component: showOnRussiaComponentNumber
           }
         },
@@ -301,7 +313,7 @@ const Project: Collection = {
           name: "tooltip",
           label: "Тултип - надпись (при наведении мышью)",
           ui: {
-            parse: (val) => String(val),
+            parse: (val: any) => String(val),
             component: showOnRussiaComponentString
           }
         },
@@ -311,7 +323,7 @@ const Project: Collection = {
           label: "Заголовок",
           description: "Будет показан в 'География проектов'",
           ui: {
-            parse: (val) => String(val),
+            parse: (val: any) => String(val),
             component: mapTitle
           }
         },
@@ -320,7 +332,7 @@ const Project: Collection = {
           name: "region",
           label: "Регион",
           options: Object.keys(regions).map(key => ({
-            label: regions[key] ?? "Не найдено название",
+            label: regions?.[key as keyof typeof regions] ?? "Не найдено название",
             value: key ?? "Russia"
           })),
           description: "Если не нашли подходящий, выберите 'другой'"

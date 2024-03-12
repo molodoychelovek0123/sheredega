@@ -35,7 +35,7 @@ export const gridImageSchema: Template = {
           id: Math.random().toString(36).substr(2, 9)
         })
       },
-      fields: [...imageSchema.fields, {
+      fields: [...imageSchema.fields as any, {
         type: "string",
         name: "link",
         label: "Ссылка"

@@ -112,10 +112,10 @@ export const ANIMATIONS = [
 ];
 
 export type animationFieldType = {
-  type?: string,
-  isScroll?: boolean,
-  speed?: string
-  showOnce?: boolean;
+  type?: string | null,
+  isScroll?: boolean | null,
+  speed?: string | null
+  showOnce?: boolean  | null;
 }
 
 export const ANIMATION_SCHEMA: ObjectField = {

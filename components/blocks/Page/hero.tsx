@@ -50,7 +50,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           {data.actions && (
             <Actions
               className="justify-center md:justify-start py-2"
-              parentColor={data.color}
+              parentColor={data.color ?? undefined}
               actions={data.actions}
             />
           )}
@@ -62,13 +62,13 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           >
             <img
               className="absolute w-full rounded-lg max-w-xs md:max-w-none h-auto blur-2xl brightness-150 contrast-[0.9] dark:brightness-150 saturate-200 opacity-50 dark:opacity-30 mix-blend-multiply dark:mix-blend-hard-light"
-              src={data.image.src}
+              src={data.image.src ?? ""}
               aria-hidden="true"
             />
             <img
               className="relative z-10 w-full max-w-xs rounded-lg md:max-w-none h-auto"
-              alt={data.image.alt}
-              src={data.image.src}
+              alt={data.image.alt ?? "Sheredega Alt Text"}
+              src={data.image.src ?? ""}
             />
           </div>
         )}

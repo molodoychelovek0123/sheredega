@@ -17,8 +17,8 @@ const PlusSvg = ({ active }: { active?: boolean }) => (
 const OptionItem = ({ option, active, addOption, removeOption }: {
   option: string,
   active: boolean,
-  addOption?: (option: string) => void,
-  removeOption?: (option: string) => void
+  addOption: (option: string) => void,
+  removeOption: (option: string) => void
 }) => (
   <div
     key={option}
@@ -38,18 +38,26 @@ export const Filters = ({ options, value, onChange }: Props) => {
 
   const removeAll = () => {
     setLocalSave(value ?? []);
-    onChange([]);
+    if (onChange) {
+      onChange([]);
+    }
   };
   const addAll = () => {
-    onChange(localSave ?? []);
+    if (onChange) {
+      onChange(localSave ?? []);
+    }
   };
 
   const addOption = (option: string) => {
-    onChange([...(value ?? []), option]);
+    if (onChange) {
+      onChange([...(value ?? []), option]);
+    }
   };
 
   const removeOption = (option: string) => {
-    onChange((value ?? []).filter((item) => item !== option));
+    if (onChange) {
+      onChange((value ?? []).filter((item) => item !== option));
+    }
   };
   return (
     <div className="relative flex gap-4 lg:gap-y-5 flex-wrap">
@@ -57,7 +65,9 @@ export const Filters = ({ options, value, onChange }: Props) => {
                   addOption={removeAll}
                   removeOption={addAll} />
       {options?.map((option) => (
-        <OptionItem option={option} active={(value ?? []).includes(option)}
+        <OptionItem
+          key={JSON.stringify(option ?? null)}
+          option={option} active={(value ?? []).includes(option)}
                     addOption={addOption}
                     removeOption={removeOption}
         />

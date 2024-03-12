@@ -3,25 +3,26 @@ import {  useMemo, useState } from "react";
 import { Filters } from "@/shared_components/blocks/Sheredega/ProjectsList/Filters/Filters";
 import { AnimatePresence, motion } from "framer-motion";
 
+export type ProjectItem =  {
+  title: string | null;
+  heroImg?: string | null;
+  type?: string[] | null;
+  filename?: string | null
+}
 type Props = {
-  projects: {
-    title: string;
-    heroImg?: string;
-    type?: string[];
-    filename?: string
-  }[];
-  showFilters?: boolean;
+  projects:ProjectItem[] | null;
+  showFilters?: boolean | null;
 }
 
 export const ProjectsList = ({ projects, showFilters = true }: Props) => {
 
   // const [projectsToShow, setProjectsToShow] = useState(projects);
-  const uniqueTypes = projects
+  const uniqueTypes:  IterableIterator<string> = (projects ?? [])
     .map((project) => project.type)
     .flat()
     .filter(Boolean)
     .reduce((uniqueTypes, type) => {
-      const lowerCaseType = type.toLowerCase(); // Приводим к нижнему регистру для проверки уникальности
+      const lowerCaseType = type?.toLowerCase(); // Приводим к нижнему регистру для проверки уникальности
       if (!uniqueTypes.has(lowerCaseType)) {
         uniqueTypes.set(lowerCaseType, type); // Сохраняем в Map приведенное к нижнему регистру значение и оригинальное
       }
@@ -32,7 +33,7 @@ export const ProjectsList = ({ projects, showFilters = true }: Props) => {
   const types = Array.from(uniqueTypes); // Преобразуем Map обратно в массив
 
 
-  const [activeTypes, setActiveTypes] = useState<typeof types>(null);
+  const [activeTypes, setActiveTypes] = useState<typeof types | null>(null);
   // const [lastActiveTypesLength, setLastActiveTypesLength] = useState(0);
 
   // useEffect(() => {
@@ -52,7 +53,7 @@ export const ProjectsList = ({ projects, showFilters = true }: Props) => {
   // }, [activeTypes]);
 
   const filtered = useMemo(() => {
-    return projects.filter((project) =>
+    return (projects ?? []).filter((project) =>
       !project.type || (project.type ?? [])
         .some(type => !(activeTypes ?? []).length || (activeTypes ?? []).map(item => item.toLowerCase()).includes(type.toLowerCase())));
   }, [projects, activeTypes]);
@@ -63,7 +64,7 @@ export const ProjectsList = ({ projects, showFilters = true }: Props) => {
       {showFilters &&
         (
           <div className="pt-10 pb-15">
-            <Filters options={types} value={activeTypes} onChange={setActiveTypes} />
+            <Filters options={types} value={activeTypes ?? []} onChange={setActiveTypes} />
           </div>
         )
       }

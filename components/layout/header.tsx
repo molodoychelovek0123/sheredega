@@ -5,124 +5,137 @@ import { Container } from "../../shared_components/components/Container/containe
 import { Icon } from "../../shared_components/components/Icon/icon";
 import { tinaField } from "tinacms/dist/react";
 import { GlobalHeader } from "../../tina/__generated__/types";
+import { useScrollDirection } from "@/global/hooks/useScrollDirection";
+import FingerPrint from "@/public/assets/menu-bg.svg";
+import AnimateHeight from "react-animate-height";
 
 export const Header = ({ data }: { data: GlobalHeader }) => {
+  const [menuHeight, setMenuHeight] = React.useState(0);
   const router = useRouter();
+  const currentPath = router.asPath;
+  const pathWoAnchors = currentPath.split("#")[0];
 
-  const headerColor = {
-    default:
-      "text-black dark:text-white from-gray-50 to-white dark:from-gray-800 dark:to-gray-900",
-    primary: {
-      blue: "text-white from-blue-300 to-blue-500",
-      teal: "text-white from-teal-400 to-teal-500",
-      green: "text-white from-green-400 to-green-500",
-      red: "text-white from-red-400 to-red-500",
-      pink: "text-white from-pink-400 to-pink-500",
-      purple: "text-white from-purple-400 to-purple-500",
-      orange: "text-white from-orange-400 to-orange-500",
-      yellow: "text-white from-yellow-400 to-yellow-500"
-    }
-  };
+  const { scrollDirection } = useScrollDirection();
 
-  const headerColorCss = headerColor.default;
 
   const [isClient, setIsClient] = React.useState(false);
   React.useEffect(() => {
     setIsClient(true);
   }, []);
 
+  const onMenuLinkClick: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
+    const { href } = e.currentTarget;
+
+    e.preventDefault();
+    setMenuHeight(0);
+    router.push(href);
+    if (href.includes("#") && (href.indexOf("#") === 0 || href.indexOf("#") === 1) && typeof document !== "undefined") {
+      const id = href.split("#")[1];
+      const element = document.getElementById(id);
+      if (element) {
+        console.log(element);
+        element.scrollIntoView();
+      }
+    } else {
+      window.open(href, "_self");
+    }
+  };
+
   return (
-    <div
-      className={`relative overflow-hidden bg-gradient-to-b ${headerColorCss}`}
-    >
-      <Container size="custom" className="py-0 relative z-10 max-w-8xl">
-        <div className="flex items-center justify-between gap-6">
-          <h4 className="select-none text-lg font-bold tracking-tight my-4 transition duration-150 ease-out transform">
-            <Link
-              href="/"
-              className="flex gap-1 items-center whitespace-nowrap tracking-[.002em]"
+    <>
+      <AnimateHeight height={`${menuHeight}%`} className={"w-full h-full fixed top-0 left-0 bg-white z-50"}
+                     disableDisplayNone={true}>
+        <Container uniquePath={"header-menu"}
+                   className={" pb-6 pt-[30px] sm:pt-10 sm:pb-10 h-[100vh] relative max-w-full"}>
+          <div className={"relative"}>
+            <div
+              className="text-black text-xl sm:text-[22px] font-medium sm:font-normal  leading-[90%] cursor-pointer absolute top-0 right-0"
+              onClick={() => setMenuHeight(0)}
             >
-              <Icon
-                tinaField={tinaField(data, "icon")}
-                parentColor={data.color}
-                data={{
-                  name: data.icon.name,
-                  color: data.icon.color,
-                  style: data.icon.style
-                }}
-              />
-              <span data-tina-field={tinaField(data, "name")}>{data.name}</span>
-            </Link>
-          </h4>
-          <ul className="flex gap-6 sm:gap-8 lg:gap-10 tracking-[.002em] -mx-4">
-            {data.nav &&
-              data.nav.map((item, i) => {
-                const activeItem =
-                  (item.href === ""
-                    ? router.asPath === "/"
-                    : router.asPath.includes(item.href)) && isClient;
-                return (
-                  <li
-                    key={`${item.label}-${i}`}
-                    className={`${
-                      activeItem ? " border-b-3 border-blue-200 text-blue-700 dark:text-blue-300 font-medium dark:border-blue-700" : ""
-                    }`}
-                  >
-                    <Link
-                      data-tina-field={tinaField(item, "label")}
-                      href={`/${item.href}`}
-                      className={`relative select-none	text-base inline-block tracking-wide transition duration-150 ease-out hover:opacity-100 py-8 px-4 ${
-                        activeItem ? `` : `opacity-70`
-                      }`}
-                    >
-                      {item.label}
-                      {activeItem && (
-                        <svg
-                          className={`absolute bottom-0 left-1/2 w-[180%] h-full -translate-x-1/2 -z-1 opacity-10 dark:opacity-15 text-blue-500`}
-                          preserveAspectRatio="none"
-                          viewBox="0 0 230 230"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+              закрыть
+            </div>
+
+            <div className=" pt-[59px] sm:pt-[49px]">
+              <div className="grid grid-cols-1 md:grid-cols-6 ">
+                {data.menu && data.menu.map((item, index) => (
+                  <React.Fragment key={JSON.stringify(item ?? { data: index })}>
+                    <div
+                      className={`col-start-1 md:col-end-5 border-t-black border-t border-solid pb-4 opacity-15 ${index > 0}  mt-[30px] md:mt-10`}></div>
+                    <div className="col-start-1 md:col-end-2 pb-[30px] md:pb-10">
+                      {item?.href && item?.title ? <a href={item?.href}
+                                                      className="text-black text-2xl md:text-3xl lg:text-[32px] font-medium leading-[110%]"
+
+                                                      data-tina-field={tinaField(item)}>{item?.title}</a> : null}
+                    </div>
+                    <div className="md:col-start-4 md:col-end-6 flex flex-col gap-4">
+                      {item?.items && item?.items.map((link, linkIndex) => (
+                        <React.Fragment
+                          key={JSON.stringify(link ?? { data: linkIndex })}
                         >
-                          <rect
-                            x="230"
-                            y="230"
-                            width="230"
-                            height="230"
-                            transform="rotate(-180 230 230)"
-                            fill="url(#paint0_radial_1_33)"
-                          />
-                          <defs>
-                            <radialGradient
-                              id="paint0_radial_1_33"
-                              cx="0"
-                              cy="0"
-                              r="1"
-                              gradientUnits="userSpaceOnUse"
-                              gradientTransform="translate(345 230) rotate(90) scale(230 115)"
-                            >
-                              <stop stopColor="currentColor" />
-                              <stop
-                                offset="1"
-                                stopColor="currentColor"
-                                stopOpacity="0"
-                              />
-                            </radialGradient>
-                          </defs>
-                        </svg>
-                      )}
-                    </Link>
-                  </li>
-                );
-              })}
-          </ul>
-        </div>
-        <div
-          className={`absolute h-1 bg-gradient-to-r from-transparent ${
-            data.color === "primary" ? `via-white` : `via-black dark:via-white`
-          } to-transparent bottom-0 left-4 right-4 -z-1 opacity-5`}
-        />
-      </Container>
-    </div>
+                          {link?.href && link?.label ?
+                            <Link
+                              data-tina-field={tinaField(link)}
+                              href={link?.href.replaceAll(pathWoAnchors, "")}
+                              className="text-black text-lg font-normal leading-[105%] md:text-xl inline-flex gap-4 flex-nowrap items-center justify-start"
+                              onClick={onMenuLinkClick}>{link?.label}
+                              {link?.label.toLowerCase().includes("телеграм") &&
+                                <img className={"h-[18px] md:h-[24px] "} src="/uploads/something-logos/tg.svg"
+                                     alt="Телеграм" />}
+                            </Link>
+                            : null}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div
+            className={"absolute bottom-0 right-0 max-w-[50vw] sm:max-w-[42.153vw] w-full h-full pt-[89px] pointer-events-none"}>
+            <div className={"relative w-full h-full menu-fingerprint"}>
+              <img src={"/assets/menu-bg.svg"} alt="fingerprint"
+                   className={"h-full w-full object-contain object-right-bottom"} />
+            </div>
+          </div>
+        </Container>
+      </AnimateHeight>
+
+
+      <div
+        className={`overflow-hidden sticky z-40 bg-white ${scrollDirection === "down" ? "-top-24" : "top-0"} transition-all duration-300`}
+      >
+        <Container uniquePath={"header"}>
+          <div className=" py-6 justify-between items-center w-full inline-flex relative">
+            <div className="justify-start items-center gap-2.5 xs:gap-[14px] flex">
+              {data.logo && <img src={data.logo} alt="logo" className="h-[53px]" />}
+              <div
+                className="text-black text-base sm:text-xl max-w-[150px] xs:max-w-full font-medium sm:font-normal  leading-[90%]">{data.name}</div>
+            </div>
+            <div className="h-5 justify-center items-center gap-11 inline-flex a-y-centered w-full h-full">
+              {data.nav &&
+                data.nav.map((item, i) => {
+                  if (!item) return null;
+                  const activeItem =
+                    (item.href === ""
+                      ? router.asPath === "/"
+                      : router.asPath.includes(item.href ?? "")) && isClient;
+                  return (
+                    <a data-tina-field={tinaField(item)} href={item?.href ?? "/"}
+                       className="text-black text-[22px] font-normal font-['Grato Grotesk DEMO'] leading-tight">{item.label}</a>
+                  );
+                })}
+            </div>
+            <div
+              className="text-black text-xl sm:text-[22px] font-medium sm:font-normal  leading-[90%] cursor-pointer"
+              onClick={() => setMenuHeight(100)}
+            >меню
+            </div>
+
+
+          </div>
+        </Container>
+      </div>
+    </>
   );
 };

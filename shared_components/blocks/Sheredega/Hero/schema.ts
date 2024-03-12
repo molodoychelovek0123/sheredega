@@ -20,7 +20,7 @@ export const HeroBlockSchema: Template = {
       list: true,
       ui: {
         component: "group-list",
-        itemProps: (item) => ({
+        itemProps: (item : any) => ({
           key: item.id,
           label: item.alt,
         }),
@@ -29,7 +29,7 @@ export const HeroBlockSchema: Template = {
           id: Math.random().toString(36).substr(2, 9),
         }),
       },
-      fields: imageSchema.fields
+      fields: imageSchema.fields as any
     },
     titleSchema
   ]

@@ -21,11 +21,11 @@ export const Title = ({
                         className,
                         isBold = true
                       }: Props) => {
-  const fontColorClass: Record<Props["color"], string> = {
+  const fontColorClass: Record<Exclude<Props["color"], undefined>, string> = {
     black: "text-black",
     white: "text-white"
   };
-  const sizeClass: Record<Props["size"], string> = {
+  const sizeClass: Record<Exclude<Props["size"],undefined>, string> = {
     "120": "title-comp-120",
     "100": "title-comp-100",
     "80": "title-comp-80",

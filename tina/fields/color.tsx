@@ -34,7 +34,7 @@ export const ColorPickerInput = wrapFieldsWithMeta(({ input }) => {
           return (
             <button
               className={`w-9 h-9 rounded-full shadow border ${
-                inputClasses[color]
+                inputClasses[color as keyof  typeof inputClasses]
               } ${
                 input.value === color
                   ? "ring-[3px] ring-offset-2 ring-blue-400"

@@ -5,9 +5,9 @@ import cn from "@/global/utils/classnames";
 
 const Grid: ForwardRefRenderFunction<HTMLDivElement, GridProps> =
   ({
-     mobileColumns,
-     tabletColumns,
-     desktopColumns,
+     mobileColumns = 2,
+     tabletColumns = 6,
+     desktopColumns = 6,
      children,
      className
    }, ref) => {
@@ -42,7 +42,8 @@ const Grid: ForwardRefRenderFunction<HTMLDivElement, GridProps> =
 
 
     return (
-      <div className={`grid  ${mobileColumnsStyle} ${tabletColumnsStyle} ${desktopColumnsStyle} ${className}`} ref={ref}>
+      <div className={`grid  ${mobileColumnsStyle} ${tabletColumnsStyle} ${desktopColumnsStyle} ${className}`}
+           ref={ref}>
         {children}
       </div>
     );

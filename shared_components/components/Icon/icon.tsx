@@ -4,7 +4,7 @@ import { IconPickerInput } from "../../../tina/fields/icon";
 import * as BoxIcons from "react-icons/bi";
 
 export const IconOptions = {
-  Tina: (props) => (
+  Tina: (props: any) => (
     <svg
       {...props}
       viewBox="0 0 66 80"
@@ -80,20 +80,20 @@ export const Icon = ({
   parentColor = "",
   className = "",
   tinaField = "",
-}) => {
-  if (IconOptions[data.name] === null || IconOptions[data.name] === undefined) {
+}: any) => {
+  if (IconOptions[data.name as keyof typeof IconOptions] === null || IconOptions[data.name as keyof typeof IconOptions] === undefined) {
     return null;
   }
 
-  const { name, color, size = "medium", style = "regular" } = data;
+  const { name,  size = "medium", style = "regular" } = data;
 
 
-  const IconSVG = IconOptions[name];
+  const IconSVG = IconOptions[name as keyof typeof IconOptions];
 
   const iconSizeClasses =
     typeof size === "string"
-      ? iconSizeClass[size]
-      : iconSizeClass[Object.keys(iconSizeClass)[size]];
+      ? iconSizeClass[size as keyof typeof iconSizeClass]
+      : iconSizeClass[Object.keys(iconSizeClass)[size]  as keyof typeof iconSizeClass];
 
   const iconColor = 'blue'
 

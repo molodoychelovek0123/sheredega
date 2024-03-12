@@ -5,9 +5,10 @@ import { animationFieldType } from "@/global/constants/animations";
 
 // По какой-то причине не используется в GridText
 export type BaseSectionProps = {
-  grid?: GridProps;
-  indent?: IndentFieldType;
+  block?: any | null;
+  grid?: GridProps | null;
+  indent?: IndentFieldType | null;
   uniquePath?: string;
-  customCss?: CustomCssTypeField;
-  animation?: animationFieldType,
+  customCss?: CustomCssTypeField | null;
+  animation?: animationFieldType | null,
 }

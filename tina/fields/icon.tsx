@@ -25,7 +25,7 @@ export const IconPickerInput = wrapFieldsWithMeta(({ input }) => {
   const inputLabel = Object.keys(IconOptions).includes(input.value)
     ? parseIconName(input.value)
     : "Select Icon";
-  const InputIcon = IconOptions[input.value] ? IconOptions[input.value] : null;
+  const InputIcon = IconOptions?.[input.value as keyof typeof IconOptions] ? IconOptions[input.value as keyof typeof IconOptions] : null;
 
   return (
     <div className="relative z-[1000]">

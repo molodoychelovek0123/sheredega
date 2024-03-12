@@ -4,14 +4,14 @@ import { Icon } from "../../../shared_components/components/Icon/icon";
 import { iconSchema } from "../../../shared_components/components/Icon/icon";
 import {
   PageBlocksFeatures,
-  PageBlocksFeaturesItems,
+  PageBlocksFeaturesItems
 } from "../../../tina/__generated__/types";
 import { tinaField } from "tinacms/dist/react";
 
 export const Feature = ({
-  featuresColor,
-  data,
-}: {
+                          featuresColor,
+                          data
+                        }: {
   featuresColor: string;
   data: PageBlocksFeaturesItems;
 }) => {
@@ -56,8 +56,11 @@ export const Features = ({ data }: { data: PageBlocksFeatures }) => {
         size="large"
       >
         {data.items &&
-          data.items.map(function (block, i) {
-            return <Feature featuresColor={data.color} key={i} data={block} />;
+          data.items.map(function(block, i) {
+            if (block && data.color) {
+              return <Feature featuresColor={data.color} key={i} data={block} />;
+            }
+            return null;
           })}
       </Container>
     </Section>
@@ -70,8 +73,8 @@ const defaultFeature = {
   icon: {
     color: "",
     style: "float",
-    name: "",
-  },
+    name: ""
+  }
 };
 
 export const featureBlockSchema = {
@@ -80,8 +83,8 @@ export const featureBlockSchema = {
   ui: {
     previewSrc: "/blocks/features.png",
     defaultItem: {
-      items: [defaultFeature, defaultFeature, defaultFeature],
-    },
+      items: [defaultFeature, defaultFeature, defaultFeature]
+    }
   },
   fields: [
     {
@@ -90,31 +93,31 @@ export const featureBlockSchema = {
       name: "items",
       list: true,
       ui: {
-        itemProps: (item) => {
+        itemProps: (item : any) => {
           return {
-            label: item?.title,
+            label: item?.title
           };
         },
         defaultItem: {
-          ...defaultFeature,
-        },
+          ...defaultFeature
+        }
       },
       fields: [
         iconSchema,
         {
           type: "string",
           label: "Title",
-          name: "title",
+          name: "title"
         },
         {
           type: "string",
           label: "Text",
           name: "text",
           ui: {
-            component: "textarea",
-          },
-        },
-      ],
+            component: "textarea"
+          }
+        }
+      ]
     },
     {
       type: "string",
@@ -123,8 +126,8 @@ export const featureBlockSchema = {
       options: [
         { label: "Default", value: "default" },
         { label: "Tint", value: "tint" },
-        { label: "Primary", value: "primary" },
-      ],
-    },
-  ],
+        { label: "Primary", value: "primary" }
+      ]
+    }
+  ]
 };

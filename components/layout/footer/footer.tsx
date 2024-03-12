@@ -1,113 +1,92 @@
 import React from "react";
-import Link from "next/link";
-import { FaFacebookF, FaGithub, FaTwitter } from "react-icons/fa";
-import { AiFillInstagram } from "react-icons/ai";
 import { Container } from "../../../shared_components/components/Container/container";
-import { RawRenderer } from "./rawRenderer";
-import { Icon } from "../../../shared_components/components/Icon/icon";
 
-export const Footer = ({ data, icon, rawData }) => {
-  const socialIconClasses = "h-7 w-auto";
-  const socialIconColorClasses = {
-    blue: "text-blue-500 dark:text-blue-400 hover:text-blue-300",
-    teal: "text-teal-500 dark:text-teal-400 hover:text-teal-300",
-    green: "text-green-500 dark:text-green-400 hover:text-green-300",
-    red: "text-red-500 dark:text-red-400 hover:text-red-300",
-    pink: "text-pink-500 dark:text-pink-400 hover:text-pink-300",
-    purple: "text-purple-500 dark:text-purple-400 hover:text-purple-300",
-    orange: "text-orange-500 dark:text-orange-400 hover:text-orange-300",
-    yellow: "text-yellow-500 dark:text-yellow-400 hover:text-yellow-300",
-    primary: "text-white opacity-80 hover:opacity-100",
-  };
+export const Footer = () => {
 
-  const footerColor = {
-    default:
-      "text-gray-800 from-white to-gray-50 dark:from-gray-900 dark:to-gray-1000",
-    primary: {
-      blue: "text-white from-blue-500 to-blue-700",
-      teal: "text-white from-teal-500 to-teal-600",
-      green: "text-white from-green-500 to-green-600",
-      red: "text-white from-red-500 to-red-600",
-      pink: "text-white from-pink-500 to-pink-600",
-      purple: "text-white from-purple-500 to-purple-600",
-      orange: "text-white from-orange-500 to-orange-600",
-      yellow: "text-white from-yellow-500 to-yellow-600",
-    },
-  };
-
-  const footerColorCss = footerColor.default;
 
   return (
-    <footer className={`bg-gradient-to-br ${footerColorCss}`}>
-      <Container className="relative" size="small">
-        <div className="flex justify-between items-center gap-6 flex-wrap">
-          <Link
-            href="/"
-            className="group mx-2 flex items-center font-bold tracking-tight text-gray-400 dark:text-gray-300 opacity-50 hover:opacity-100 transition duration-150 ease-out whitespace-nowrap"
-          >
-            <Icon
-              parentColor={data.color}
-              data={{
-                name: icon.name,
-                color: data.color === "primary" ? "primary" : icon.color,
-                style: icon.style,
-              }}
-              className="inline-block h-10 w-auto group-hover:text-orange-500"
-            />
-          </Link>
-          <div className="flex gap-4">
-            {data.social && data.social.facebook && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={data.social.facebook}
-                target="_blank"
-              >
-                <FaFacebookF
-                  className={`${socialIconClasses} text-white opacity-80 hover:opacity-100`}
-                />
+    <footer className="bg-[#111111] text-white text-wrap-balance">
+      <Container uniquePath={"desktop-footer"} className="relative pt-[68px] pb-[29px] hidden md:block">
+        <div className="grid grid-cols-12 relative pb-[60px] border-b-[#2c2c2c] border-b border-solid">
+          <div className="col-start-1 col-end-5 flex-col justify-start items-start gap-[42px] inline-flex">
+            <div>
+              <a className="block text-white text-3xl lg:text-[40px] font-medium lowercase leading-[44px]"
+                 href={"mailto:hello@sheredega.ru"}>hello@sheredega.ru
               </a>
-            )}
-            {data.social && data.social.twitter && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={data.social.twitter}
-                target="_blank"
-              >
-                <FaTwitter
-                  className={`${socialIconClasses} text-white opacity-80 hover:opacity-100`}
-                />
-              </a>
-            )}
-            {data.social && data.social.instagram && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={data.social.instagram}
-                target="_blank"
-              >
-                <AiFillInstagram
-                  className={`${socialIconClasses} text-white opacity-80 hover:opacity-100`}
-                />
-              </a>
-            )}
-            {data.social && data.social.github && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={data.social.github}
-                target="_blank"
-              >
-                <FaGithub
-                  className={`${socialIconClasses} text-white opacity-80 hover:opacity-100`}
-                />
-              </a>
-            )}
+              <a className="block text-white text-3xl lg:text-[40px] font-medium lowercase leading-[44px]"
+                 href={"tel:+79258880220"}> +7
+                925
+                888 02 20</a>
+            </div>
+            <div className="text-white text-xl font-normal  leading-normal text-wrap-balance">ООО «Шередега Консалтинг»,
+              г. Москва
+            </div>
           </div>
-          <RawRenderer parentColor={data.color} rawData={rawData} />
+          <div className="col-start-5 col-end-7 flex-col justify-start items-start gap-5 inline-flex">
+            <a href={"/"} className="text-white text-xl font-normal leading-normal">Главная</a>
+            <a href={"/projects"} className="text-white text-xl font-normal leading-normal">Проекты</a>
+            <a href={"/about"} className="text-white text-xl font-normal leading-normal">О
+              бюро</a>
+            <a href={"/contacts"} className="text-white text-xl font-normal leading-normal">Контакты</a>
+          </div>
+          <div className="col-start-7 col-end-9 flex-col justify-start items-start gap-5 inline-flex">
+            <a href={"/about#partners"} className="text-white text-xl font-normal leading-normal">Партнеры</a>
+            <a href={"/about#rewards"} className="text-white text-xl font-normal leading-normal">Награды</a>
+            <a href={"/contacts#geography"} className="text-white text-xl font-normal leading-normal">География
+              проектов</a>
+            {/*<a href={"/about#partners"}  className="text-white text-xl font-normal leading-normal">Блог в телеграм</a>*/}
+            <img src={"/assets/logo-white.png"} alt={"Шередега ко"} className="absolute right-0 top-0" />
+          </div>
         </div>
+        <div className="w-full h-4 justify-between items-start inline-flex pt-[26px]">
+          <div className="opacity-30 text-white text-lg font-normal leading-none">Политика конфиденциальности</div>
+          <div className="opacity-30 text-right text-white text-lg font-normal leading-none">Создано в ИСКРЕ,
+            иллюстрации: Анна Леонова
+          </div>
+          <div className="opacity-30 text-white text-lg font-normal leading-none">© 2019 – 2024</div>
+        </div>
+      </Container>
+      <Container uniquePath={"mobile-footer"} className={"block md:hidden"}>
+
         <div
-          className={`absolute h-1 bg-gradient-to-r from-transparent ${
-            data.color === "primary" ? `via-white` : `via-black dark:via-white`
-          } to-transparent top-0 left-4 right-4 opacity-5`}
-        ></div>
+          className="w-full  px-[15px] py-[23px] bg-neutral-900 border-t border-black border-opacity-20 justify-start items-start gap-2.5 inline-flex">
+          <div className="flex-col w-full justify-start items-start gap-[30px] inline-flex">
+            <div className="flex-col w-full justify-start items-start gap-[55px] flex">
+              <div className="justify-start items-start gap-[69px] inline-flex relative w-full">
+                <div className="text-white text-[26px] font-medium lowercase leading-7">hello@sheredega.ru<br />+7 925
+                  888 02 20
+                </div>
+                <img src={"/assets/logo-white.png"} alt={"Шередега ко"}
+                     className="absolute right-0 top-0 w-[47px] h-[68px] " />
+              </div>
+              <div className="justify-start items-start gap-[68px] inline-flex">
+                <div className="flex-col justify-start items-start gap-5 inline-flex">
+                  <a href={"/"} className="text-white text-lg font-normal leading-snug">Главная</a>
+                  <a href={"/projects"} className="text-white text-lg font-normal leading-snug">Проекты</a>
+                  <a href={"/about"} className="text-white text-lg font-normal leading-snug">О бюро</a>
+                  <a href={"/contacts"} className="text-white text-lg font-normal leading-snug">Контакты</a>
+                </div>
+                <div className="flex-col justify-start items-start gap-5 inline-flex">
+                  <a href={"/about#partners"} className="text-white text-lg font-normal leading-snug">Партнеры</a>
+                  <a href={"/about#rewards"} className="text-white text-lg font-normal leading-snug">Награды</a>
+                  <a href={"/contacts#geography"} className="text-white text-lg font-normal leading-snug">География
+                    проектов</a>
+                </div>
+              </div>
+              <div className="text-white text-base font-normal leading-tight">ООО «Шередега Консалтинг», г. Москва</div>
+            </div>
+            <div className="flex-col justify-start items-start gap-[17px] flex w-full">
+              <div className="h-[0px] w-full opacity-20 border border-white"></div>
+              <div className="opacity-20 text-white text-base font-normal leading-tight">Политика конфиденциальности
+              </div>
+              <div className="opacity-20 text-white text-base font-normal leading-tight">Создано в ИСКРЕ<br />Иллюстрации:
+                Анна Леонова
+              </div>
+              <div className="opacity-20"><span className="text-white text-base font-light  leading-tight">©</span><span
+                className="text-white text-base font-normal leading-tight"> 2019 – 2024</span></div>
+            </div>
+          </div>
+        </div>
       </Container>
     </footer>
   );

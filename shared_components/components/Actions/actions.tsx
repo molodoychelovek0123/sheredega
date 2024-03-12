@@ -9,9 +9,9 @@ export const Actions = ({
   className = "",
   actions,
 }: {
-  parentColor: string;
+  parentColor?: string;
   className: string;
-  actions: PageBlocksHeroActions[];
+  actions: (PageBlocksHeroActions | null)[] | null;
 }) => {
   const buttonColorClasses = {
     blue: "text-white bg-blue-500 hover:bg-blue-600 bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-400 hover:to-blue-500",
@@ -61,8 +61,15 @@ export const Actions = ({
   return (
     <div className={`flex flex-wrap items-center gap-y-4 gap-x-6 ${className}`}>
       {actions &&
-        actions.map(function (action, index) {
+        actions.map(function (currentAction, index) {
           let element = null;
+          const action = currentAction ?? {
+            label: "no label",
+            type: "button",
+            icon: false,
+            link: "#",
+
+          }
           if (action.type === "button") {
             element = (
               <Link key={index} href={action.link ? action.link : "/"}>

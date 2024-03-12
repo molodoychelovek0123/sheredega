@@ -3,7 +3,6 @@ import "mapbox-gl/dist/mapbox-gl.css";
 // @ts-ignore
 import mapboxgl from "!mapbox-gl";
 
-import { useClickAway } from "@uidotdev/usehooks";
 import React, { useRef, useEffect, useMemo, useState } from "react";
 import
   ProjectList, {
@@ -11,6 +10,9 @@ import
 } from "@/shared_components/blocks/Sheredega/MapContainer/Map/ProjectList/ProjectList";
 import { v4 } from "uuid";
 import { MAP_INLINE_STYLES } from "@/shared_components/blocks/Sheredega/MapContainer/Map/constants";
+import { removeDuplicateCoordsData } from "@/shared_components/blocks/Sheredega/MapContainer/Map/utils";
+
+import { useDebouncedCallback } from "use-debounce";
 
 mapboxgl.accessToken = "pk.eyJ1IjoiYm94ZGV2ZWxvcGVyIiwiYSI6ImNsdDJhNDh5NzFtMjYycnBwbjlmeDhna3oifQ.SmuF-JFGwF0o1BKCSCdeHA";
 
@@ -19,29 +21,13 @@ type CameraBound = {
   _ne: { lng: number, lat: number }
 }
 
-const removeDuplicateCoordsData = (array: ProjectItem[]) => {
-  const uniqueCoord = {};
-  const uniqueArray: ProjectItem[] = []; // Результирующий массив без повторов
-
-  // Проход по каждому объекту в исходном массиве
-  array.forEach(obj => {
-    // Если id этого объекта еще не встречался, добавляем его в результирующий массив
-    if (!uniqueCoord[obj.lat + obj.lng]) {
-      uniqueCoord[obj.lat + obj.lng] = true; // Отмечаем id как уже встреченный
-      uniqueArray.push(obj); // Добавляем объект в результирующий массив
-    }
-  });
-
-  return uniqueArray; // Возвращаем результирующий массив без повторов id
-};
-
 
 const filterPointsByBounds = (points: ProjectItem[], bounds: CameraBound) => {
     return points.filter(point =>
-      point.lat >= bounds._sw.lat &&
-      point.lat <= bounds._ne.lat &&
-      point.lng >= bounds._sw.lng &&
-      point.lng <= bounds._ne.lng
+      (point?.lat ?? 9999) >= bounds._sw.lat &&
+      (point?.lat ?? 9999) <= bounds._ne.lat &&
+      (point?.lng ?? 9999) >= bounds._sw.lng &&
+      (point?.lng ?? 9999) <= bounds._ne.lng
     );
   }
 ;
@@ -51,75 +37,115 @@ type Props = {
   onClickAllProjects?: () => void;
   onClickWorldWide?: () => void;
   isWorldWide?: boolean
-  points?: ProjectItem[];
-  worldWidePoints?: ProjectItem[];
+  points?: ProjectItem[] | null;
+  worldWidePoints?: ProjectItem[] | null;
 }
 export const Map = ({
                       onClickAllProjects,
                       onClickWorldWide,
-                      isWorldWide,
-                      points: projectsFromProps,
-                      worldWidePoints: worldWideProjects
+                      isWorldWide = false,
+                      points: russianPoints,
+                      worldWidePoints
                     }: Props) => {
+
+  const memedRussianPoints = useMemo(() => (russianPoints ?? []), [russianPoints]);
+  const memedWorldWidePoints = useMemo(() => (worldWidePoints ?? []), [worldWidePoints]);
   const [tooltipFilter, setTooltipFilter] = useState<string | null>(null);
   const [regionFilter, setRegionFilter] = useState<string | null>(null);
   const [projectListOpen, setProjectListOpen] = useState(false);
   const [cameraBound, setCameraBound] = useState<CameraBound | null>(null);
   const toggleProjectListOpen = () => setProjectListOpen(prevState => !prevState);
 
+  const russianPointsWoDup = removeDuplicateCoordsData((memedRussianPoints ?? []).filter(item => item.lng && item.lat && item.tooltip && item.region));
 
-  const points = removeDuplicateCoordsData((projectsFromProps ?? []).filter(item => item.lng && item.lat && item.tooltip && item.region));
 
+  const updateCameraBound = useDebouncedCallback(
+    (bounds: CameraBound) => {
+      setCameraBound(bounds);
+    },
+    700
+  );
 
   const geoJsonData = useMemo(() => ({
     "type": "FeatureCollection",
     "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-    "features": points.map(item => ({
+    "features": russianPointsWoDup.map(item => ({
       "type": "Feature",
       "properties": { "id": v4(), "title": item.tooltip },
       "geometry": { "type": "Point", "coordinates": [item.lng, item.lat] }
     }))
-  }), [points]);
+  }), [russianPointsWoDup]);
 
   const projectListFiltered = useMemo(() => {
+    // console.log([tooltipFilter, regionFilter, cameraBound]);
+
+    setTimeout(() => {
+      if (tooltipFilter || regionFilter || cameraBound) setProjectListOpen(true);
+    }, 400);
     if (tooltipFilter) {
-      const tooltipResult = projectsFromProps.filter(item => item.tooltip?.toLowerCase().includes(tooltipFilter.toLowerCase()));
+      const tooltipResult = (memedRussianPoints ?? []).filter(item => item.tooltip?.toLowerCase().includes(tooltipFilter.toLowerCase()));
       if (tooltipResult.length > 0) {
         return tooltipResult;
       }
     }
     if (regionFilter && regionFilter.length > 0) {
-      const regionResult = projectsFromProps.filter(item => {
+      const regionResult = (memedRussianPoints ?? []).filter(item => {
         return item.region && (item.region ?? []).some(region =>
           region.toLowerCase().includes(regionFilter.toLowerCase())
         );
       });
-      if (regionResult.length > 0) {
-        return regionResult;
-      }
+      return regionResult;
     }
     if (cameraBound) {
-      return filterPointsByBounds(projectsFromProps, cameraBound);
+      return filterPointsByBounds(memedRussianPoints ?? [], cameraBound);
     }
-    return projectsFromProps;
-  }, [tooltipFilter, regionFilter, cameraBound]);
+    return memedRussianPoints;
+  }, [tooltipFilter, regionFilter]);
 
-  const projectListRef = useClickAway<HTMLDivElement>(() => {
-    setProjectListOpen(false);
-  });
+  // const projectListRef = useClickAway<HTMLDivElement>(() => {
+  //   console.log("projectListRef");
+  //   // setProjectListOpen(false);
+  // });
 
   const mapContainer = useRef(null);
-  const map = useRef(null);
+  const map = useRef<any>(null);
+
 
   useEffect(() => {
     if (isSsr()) {
       return;
     }
 
+    const layerExists = (str: string) => {
+      if (map.current) {
+
+        try {
+          return map.current?.getLayer(str);
+        } catch (e) {
+          console.warn(e);
+        }
+      }
+      return false;
+    };
+    const removeLayer = (str: string) => {
+      if (map.current) {
+        try {
+          if (layerExists(str)) {
+            map.current?.removeLayer(str);
+          }
+        } catch (e) {
+          // nothing
+          console.warn(e);
+        }
+
+      }
+    };
+
+
     const width = isSsr() ? 1920 : window.innerWidth;
     const lng = width < 900 ? 38 : 94;
     const lat = width < 900 ? 55 : 66;
-    const zoom = 3.8;
+    const zoom = 4.0;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/boxdeveloper/clt2cx6x9007m01ra433404f1",
@@ -130,13 +156,14 @@ export const Map = ({
     });
 
 
-    map.current.on("load", function() {
-      map.current.addSource("states", {
+    map.current?.on("load", function() {
+
+      map.current?.addSource("states", {
         "type": "vector",
         "url": "mapbox://boxdeveloper.cbgbnbqx"
       });
 
-      map.current.addSource("points", {
+      map.current?.addSource("points", {
         type: "geojson",
         data: geoJsonData,
         cluster: true,
@@ -145,134 +172,149 @@ export const Map = ({
       });
 
 
-      map.current.loadImage(
-        "/uploads/point.png",
-        (error, image) => {
+      map.current?.loadImage(
+        "http://localhost:3000/uploads/point.png",
+        (error: any, image: any) => {
+          console.log(error, image);
           if (error) throw error;
-          map.current.addImage("cat", image);
+          map.current?.addImage("cat", image);
         }
       );
 
       const updatePointsLayer = () => {
         try {
-          map.current.removeLayer("clusters");
-          map.current.removeLayer("cluster-count");
-          map.current.removeLayer("unclustered-point");
+          removeLayer("clusters");
+          removeLayer("cluster-count");
+          removeLayer("unclustered-point");
         } catch (e) {
           // nothing
         }
 
-        map.current.addLayer({
-          id: "clusters",
-          type: "circle",
-          source: "points",
-          filter: ["has", "point_count"],
-          paint: {
+        // console.log("updatePointsLayer");
+        if (!layerExists("clusters")) {
+          map.current?.addLayer({
+            id: "clusters",
+            type: "circle",
+            source: "points",
+            filter: ["has", "point_count"],
+            paint: {
 
-            "circle-color": [
-              "step",
-              ["get", "point_count"],
-              "#000000",
-              100,
-              "#000000",
-              750,
-              "#000000"
-            ],
-            "circle-radius": [
-              "step",
-              ["get", "point_count"],
-              20,
-              100,
-              30,
-              750,
-              40
-            ]
-          }
-        });
+              "circle-color": [
+                "step",
+                ["get", "point_count"],
+                "#000000",
+                100,
+                "#000000",
+                750,
+                "#000000"
+              ],
+              "circle-radius": [
+                "step",
+                ["get", "point_count"],
+                20,
+                100,
+                30,
+                750,
+                40
+              ]
+            }
+          });
+        }
+        if (!layerExists("cluster-count")) {
 
-        map.current.addLayer({
-          id: "cluster-count",
-          type: "symbol",
-          source: "points",
-          filter: ["has", "point_count"],
-          layout: {
-            "text-field": ["get", "point_count_abbreviated"],
-            "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-            "text-size": 14
-          },
-          paint: {
+          map.current?.addLayer({
+            id: "cluster-count",
+            type: "symbol",
+            source: "points",
+            filter: ["has", "point_count"],
+            layout: {
+              "text-field": ["get", "point_count_abbreviated"],
+              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+              "text-size": 14
+            },
+            paint: {
 
-            "text-color": "#ffffff"
-          }
-        });
+              "text-color": "#ffffff"
+            }
+          });
+        }
 
 
-        map.current.addLayer({
-          id: "unclustered-point",
-          type: "symbol",
-          source: "points",
-          filter: ["!", ["has", "point_count"]],
-          layout: {
-            "icon-image": "cat", // reference the image
-            "icon-size": 1
-            // "symbol-z-order": "viewport-y"
-          }
-        });
+        if (!layerExists("unclustered-point")) {
+
+          map.current?.addLayer({
+            id: "unclustered-point",
+            type: "symbol",
+            source: "points",
+            filter: ["!", ["has", "point_count"]],
+            layout: {
+              "icon-image": "point", // reference the image
+              "icon-size": 1
+              // "symbol-z-order": "viewport-y"
+            }
+          });
+        }
       };
 
-      let activeMainLayerId = null;
+      let activeMainLayerId: number | null = null;
       const updateMainLayer = (active: number | null) => {
         try {
-          map.current.removeLayer("fill-states");
-          map.current.removeLayer("state-borders");
+          removeLayer("fill-states");
+          removeLayer("state-borders");
         } catch (e) {
           // nothing
         }
+        // console.log(active);
         if (active === activeMainLayerId) {
           activeMainLayerId = null;
           active = null;
         }
         activeMainLayerId = active;
-        map.current.addLayer({
-          "id": "fill-states",
-          "type": "fill",
-          "source": "states",
-          "source-layer": "russia_geojson_wgs84_new_2-2bvzgs",
-          "layout": {},
-          "paint": {
-            // "fill-outline-color": "#ffffff",
-            "fill-color": [
-              "case",
-              ["==", ["get", "id"], active],
-              "#F6F7FA",
-              "#ffffff"
-            ],
-            "fill-opacity": 1
-          }
-        });
+        if (!layerExists("fill-states")) {
+          map.current?.addLayer({
+            "id": "fill-states",
+            "type": "fill",
+            "source": "states",
+            "source-layer": "russia_geojson_wgs84_new_2-2bvzgs",
+            "layout": {},
+            "paint": {
+              // "fill-outline-color": "#ffffff",
+              "fill-color": [
+                "case",
+                ["==", ["get", "id"], active],
+                "#F6F7FA",
+                "#ffffff"
+              ],
+              "fill-opacity": 1
+            }
+          });
+        }
 
-        map.current.addLayer({
-          "id": "state-borders",
-          "type": "line",
-          "source": "states",
-          "source-layer": "russia_geojson_wgs84_new_2-2bvzgs",
-          "layout": {},
-          "paint": {
-            "line-emissive-strength": 2,
-            "line-color": [
-              "case",
-              ["==", ["get", "id"], active],
-              "#000000",
-              "#cdcdcd"
-            ],
-            "line-width": [
-              "case",
-              ["==", ["get", "id"], active],
-              2,
-              1
-            ]
-          }
-        });
+        if (!layerExists("state-borders")) {
+          map.current?.addLayer({
+            "id": "state-borders",
+            "type": "line",
+            "source": "states",
+            "source-layer": "russia_geojson_wgs84_new_2-2bvzgs",
+            "layout": {},
+            "paint": {
+              "line-emissive-strength": 2,
+              "line-color": [
+                "case",
+                ["==", ["get", "id"], active],
+                "#000000",
+                "#cdcdcd"
+              ],
+              "line-width": [
+                "case",
+                ["==", ["get", "id"], active],
+                2,
+                1
+              ]
+            }
+          });
+        }
+
         updatePointsLayer();
       };
 
@@ -294,12 +336,26 @@ export const Map = ({
         return [avgLon, avgLat];
       };
 
-      map.current.on("click", "fill-states", function(e) {
+      map.current?.on("click", "fill-states", function(e: any) {
 
+
+        const lat = Math.round((e?.lngLat?.lat ?? 0) * 100) / 100;
+        const lng = Math.round((e?.lngLat?.lng ?? 0) * 100) / 100;
+        const region = (memedRussianPoints ?? []).find(item =>
+          item?.lat && item?.lng
+          && Math.abs(Math.round((item?.lat ?? 0) * 100) / 100 - lat) < 0.9
+          && Math.abs(Math.round((item?.lng ?? 0) * 100) / 100 - lng) < 0.9
+        )?.region?.[0];
+        if (region) {
+          // Значит кликнули на unclustered-point
+          setRegionFilter(null);
+          updateMainLayer(null);
+          return;
+        }
         const coords = e.features[0].geometry.coordinates[0].length > 1 ? e.features[0].geometry.coordinates[0] : e.features[0].geometry.coordinates[0][0];
 
         const newRegionFilterValue = e.features[0].properties?.en_name ?? null;
-        setTooltipFilter(null);
+        // setTooltipFilter(null);
         setRegionFilter(prevState => prevState === newRegionFilterValue ? null : newRegionFilterValue);
 
 
@@ -307,7 +363,7 @@ export const Map = ({
 
         setTimeout(() => {
           try {
-            map.current.easeTo({
+            map.current?.easeTo({
               center: getPolygonCenter(coords)
             });
             setProjectListOpen(true);
@@ -315,21 +371,21 @@ export const Map = ({
             // nothing
           }
 
-        }, 600);
+        }, 100);
       });
 
 
-      map.current.on("click", "clusters", (e) => {
-        const features = map.current.queryRenderedFeatures(e.point, {
+      map.current?.on("click", "clusters", (e: any) => {
+        const features = map.current?.queryRenderedFeatures(e.point, {
           layers: ["clusters"]
         });
         const clusterId = features[0].properties.cluster_id;
-        map.current.getSource("points").getClusterExpansionZoom(
+        map.current?.getSource("points").getClusterExpansionZoom(
           clusterId,
-          (err, zoom) => {
+          (err: any, zoom: any) => {
             if (err) return;
 
-            map.current.easeTo({
+            map.current?.easeTo({
               center: features[0].geometry.coordinates,
               zoom: zoom
             });
@@ -357,44 +413,56 @@ export const Map = ({
       // map.current.on("zoom", "unclustered-point", (e) => {
       //   showTooltip(e);
       // });
-      map.current.on("mouseover", "unclustered-point", (e) => {
+      map.current?.on("mouseover", "unclustered-point", (e: any) => {
         showTooltip(e);
       });
-      map.current.on("click", "unclustered-point", (e) => {
+      map.current?.on("click", "unclustered-point", (e: any) => {
+        // console.log("unclustered-point");
+        // const coords = e.features[0].geometry.coordinates.length > 1 ? e.features[0].geometry.coordinates : e.features[0].geometry.coordinates[0];
+        // // console.log(coords);
+        // const lat = Math.round(coords[1] * 100) / 100;
+        // const lng = Math.round(coords[0] * 100) / 100;
+        // const region = (projectListFiltered ?? []).find(item => Math.round(
+        //   (item?.lat ?? 0) * 100) / 100 - lat < 0.1 && Math.round((item?.lng ?? 0) * 100) / 100 - lng < 0.1
+        // )?.region?.[0];
+        // tooltipActiveRegion = region;
         const title = e.features[0].properties.title;
-        setTooltipFilter(title);
         setTimeout(() => {
           try {
             setTooltipFilter(title);
             setProjectListOpen(true);
+            e.stopPropagation();
           } catch (e) {
             // nothing
           }
-        }, 1500);
+        }, 100);
       });
 
-      map.current.on("zoom", () => {
+      map.current?.on("zoom", () => {
         setTooltipFilter(null);
-        setCameraBound(map.current.getBounds());
+        // setProjectListOpen(false);
+        updateCameraBound(map.current?.getBounds());
       });
-      map.current.on("move", () => {
+      map.current?.on("move", () => {
         setTooltipFilter(null);
-        setCameraBound(map.current.getBounds());
+        // setProjectListOpen(false);
+        updateCameraBound(map.current?.getBounds());
       });
 
-      map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
+      map.current?.addControl(new mapboxgl.NavigationControl(), "top-right");
+      map.current?.scrollZoom.disable();
 
 
     });
     return () => {
-      console.log("unmount");
+      // console.log("unmount");
       map?.current?.remove();
       map.current = undefined;
     };
-  }, []);
+  }, [memedRussianPoints, memedWorldWidePoints]);
 
   const mapGoTo = (center: number[]) => {
-    if(center[0] !== 0 && center[1] !== 0) {
+    if (center[0] !== 0 && center[1] !== 0) {
       map.current?.easeTo({
         center: center
       });
@@ -408,7 +476,7 @@ export const Map = ({
 
       <div className="relative bg-[#f6f7fa]">
 
-        {(worldWideProjects ?? []).length > 0 &&
+        {(memedWorldWidePoints ?? []).length > 0 &&
           <div className="absolute md:hidden items-center left-4 bottom-10 gap-4 z-10 cursor-pointer"
                onClick={onClickWorldWide}>
             <img src="/assets/worldwide-button.svg"
@@ -416,7 +484,7 @@ export const Map = ({
                  className="" />
           </div>}
 
-        {(worldWideProjects ?? []).length > 0 &&
+        {(memedWorldWidePoints ?? []).length > 0 &&
           <div className="absolute hidden items-center md:flex left-15 bottom-10 gap-4 z-10 cursor-pointer"
                onClick={onClickWorldWide}>
             <img src="/assets/eye.svg"
@@ -437,12 +505,15 @@ export const Map = ({
                alt="кнопка - все проекты"
                className="" />
         </div>
-        <div ref={projectListRef} className={`absolute top-10 left-4 right-4 md:left-15 md:right-15 z-10 w-full-4 transition-all duration-500 bottom-[90px] h-fit  lg:max-h-none 
-        ${isWorldWide ? "max-w-full lg:w-full-30 max-h-full" : "max-w-[610px] max-h-[50vh] max-h-[50dvh]"}
+        {/* ${isWorldWide ? "max-w-full lg:w-full-30 max-h-full" : "max-w-[610px] max-h-[50vh] max-h-[50dvh] " */}
+        <div
+          // ref={projectListRef}
+          className={`map-project-list absolute top-10 left-4 right-4 md:left-15 md:right-15 z-10 w-full-4 transition-all duration-500 bottom-[90px] h-fit  lg:max-h-none 
+        max-w-[610px] max-h-[50vh] max-h-[50dvh] 
         `}>
           <ProjectList isOpen={projectListOpen || isWorldWide} toggleOpen={toggleProjectListOpen}
                        setOpen={setProjectListOpen}
-                       projects={isWorldWide ? worldWideProjects : projectListFiltered}
+                       projects={isWorldWide ? (memedWorldWidePoints ?? []) : (projectListFiltered ?? [])}
                        mapGoTo={mapGoTo}
           />
         </div>

@@ -1,6 +1,7 @@
 import { BaseSectionProps } from "../../../../shared_components/blocks/Sheredega/constants";
+import { MyImageProps } from "@/shared_components/utils/imageDefaultSchema";
 
 export type FourImageShowcaseProps = {
-  images?: { src?: string; alt?: string }[];
-  container?: boolean;
+  images?: MyImageProps[] | null;
+  container?: boolean| null;
 } & Omit<BaseSectionProps, 'grid'>

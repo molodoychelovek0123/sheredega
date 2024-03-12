@@ -1,5 +1,4 @@
 import type { Collection } from "tinacms";
-import { iconSchema } from "../../shared_components/components/Icon/icon";
 import { ColorPickerInput } from "../fields/color";
 
 const Global: Collection = {
@@ -13,27 +12,22 @@ const Global: Collection = {
   fields: [
     {
       type: "object",
-      label: "Header",
+      label: "Хедер",
       name: "header",
       fields: [
-        iconSchema as any,
+        {
+          type: "image",
+          label: "Логотип",
+          name: "logo"
+        },
         {
           type: "string",
-          label: "Name",
+          label: "Название компании",
           name: "name"
         },
         {
-          type: "string",
-          label: "Color",
-          name: "color",
-          options: [
-            { label: "Default", value: "default" },
-            { label: "Primary", value: "primary" }
-          ]
-        },
-        {
           type: "object",
-          label: "Nav Links",
+          label: "Ссылки",
           name: "nav",
           list: true,
           ui: {
@@ -48,13 +42,66 @@ const Global: Collection = {
           fields: [
             {
               type: "string",
-              label: "Link",
+              label: "Ссылка",
               name: "href"
             },
             {
               type: "string",
-              label: "Label",
+              label: "Текст ссылки",
               name: "label"
+            }
+          ]
+        },
+        {
+          type: "object",
+          label: "Содержание меню",
+          name: "menu",
+          list: true,
+          ui: {
+            itemProps: (item) => {
+              return { label: item?.label };
+            },
+            defaultItem: {
+              title: "Главная",
+            }
+          },
+          fields: [
+            {
+              type: "string",
+              label: "Заголовок",
+              name: "title"
+            },
+            {
+              type: "string",
+              label: "Ссылка на заголовке",
+              name: "href"
+            },
+            {
+              type: "object",
+              label: "Ссылки",
+              name: "items",
+              list: true,
+              ui: {
+                itemProps: (item) => {
+                  return { label: item?.label };
+                },
+                defaultItem: {
+                  href: "home",
+                  label: "Home"
+                }
+              },
+              fields: [
+                {
+                  type: "string",
+                  label: "Ссылка",
+                  name: "href"
+                },
+                {
+                  type: "string",
+                  label: "Текст ссылки",
+                  name: "label"
+                }
+              ]
             }
           ]
         }

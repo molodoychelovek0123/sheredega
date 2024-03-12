@@ -1,24 +1,79 @@
 {
   "header": {
-    "icon": {
-      "name": "BiCalendarExclamation",
-      "color": "orange",
-      "style": "float"
-    },
-    "name": "Сайт",
-    "color": "default",
+    "logo": "/uploads/logo.svg",
+    "name": "Sheredega Consulting",
     "nav": [
       {
-        "href": "",
-        "label": "Home"
+        "href": "projects",
+        "label": "проекты"
       },
       {
         "href": "about",
-        "label": "About"
+        "label": "о бюро"
       },
       {
-        "href": "posts",
-        "label": "Blog"
+        "href": "conctacts",
+        "label": "контакты"
+      }
+    ],
+    "menu": [
+      {
+        "title": "Главная",
+        "href": "/",
+        "items": [
+          {
+            "href": "/#geography",
+            "label": "География проектов"
+          },
+          {
+            "href": "/#directions",
+            "label": "Наши заказчики"
+          },
+          {
+            "href": "/#",
+            "label": "Направления работы"
+          }
+        ]
+      },
+      {
+        "title": "О бюро",
+        "href": "/about",
+        "items": [
+          {
+            "href": "/about#partners",
+            "label": "Партнеры"
+          },
+          {
+            "href": "/about#team",
+            "label": "Команда"
+          },
+          {
+            "href": "/about#rewards",
+            "label": "Награды"
+          }
+        ]
+      },
+      {
+        "title": "Проекты",
+        "href": "/projects"
+      },
+      {
+        "title": "Контакты",
+        "href": "/contacts",
+        "items": [
+          {
+            "href": "mailto:hello@sheredega.ru",
+            "label": "hello@sheredega.ru"
+          },
+          {
+            "href": "tel:+79258880220",
+            "label": "+7 925 888 02 20"
+          },
+          {
+            "href": "https://telegram.org",
+            "label": "Блог в телеграм"
+          }
+        ]
       }
     ]
   },

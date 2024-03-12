@@ -1,3 +1,8 @@
+// Посты не используются!
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
+
 import { Post } from "../../components/posts/post";
 import { client } from "../../tina/__generated__/client";
 import { useTina } from "tinacms/dist/react";
