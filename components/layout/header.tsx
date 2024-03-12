@@ -2,11 +2,9 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Container } from "../../shared_components/components/Container/container";
-import { Icon } from "../../shared_components/components/Icon/icon";
 import { tinaField } from "tinacms/dist/react";
 import { GlobalHeader } from "../../tina/__generated__/types";
 import { useScrollDirection } from "@/global/hooks/useScrollDirection";
-import FingerPrint from "@/public/assets/menu-bg.svg";
 import AnimateHeight from "react-animate-height";
 
 export const Header = ({ data }: { data: GlobalHeader }) => {
@@ -112,7 +110,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
               <div
                 className="text-black text-base sm:text-xl max-w-[150px] xs:max-w-full font-medium sm:font-normal  leading-[90%]">{data.name}</div>
             </div>
-            <div className="h-5 justify-center items-center gap-11 inline-flex a-y-centered w-full h-full">
+            <div className="h-5 justify-center items-center gap-11 a-y-centered w-full h-full hidden lg:inline-flex">
               {data.nav &&
                 data.nav.map((item, i) => {
                   if (!item) return null;
