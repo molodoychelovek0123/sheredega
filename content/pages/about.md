@@ -57,9 +57,11 @@ blocks:
         type: half-fadeIn
     _template: gridText
   - firstBlock:
+      body: ''
       shiftRight: 40
       indentRight: 38
     secondBlock:
+      body: ''
       shiftLeft: 40
       indentLeft: 38
     _template: aboutPersonStatic
