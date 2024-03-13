@@ -62,7 +62,7 @@ export const Contacts = ({
         {secondaryEmail || tgLink || secondaryEmailTitle ?
           <div className=" flex-col justify-start items-start gap-[30px] md:gap-10 inline-flex">
             {secondaryEmail || secondaryEmailTitle ? <div className={className}>
-                {secondaryEmailTitle && <><p  data-tina-field={tinaField(block, "secondaryEmailTitle")}> {secondaryEmailTitle} </p> <br /></>}
+                {secondaryEmailTitle && <><p  data-tina-field={tinaField(block, "secondaryEmailTitle")}> {secondaryEmailTitle} </p> </>}
                 {secondaryEmail &&
                   <><a href={`mailto:${secondaryEmail}`}  data-tina-field={tinaField(block, "secondaryEmail")}>{secondaryEmail} </a><br /></>
                 }
