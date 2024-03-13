@@ -65,12 +65,16 @@ blocks:
       shiftLeft: 40
       indentLeft: 38
     _template: aboutPersonStatic
-  - indent:
-      desktopTop: 60
+  - body: |
+      #### **Команда**
+    _template: content
+  - container: true
+    indent:
+      desktopTop: 20
       desktopBottom: 60
-      tabletTop: 40
+      tabletTop: 20
       tabletBottom: 40
-      mobileTop: 20
+      mobileTop: 10
       mobileBottom: 20
     cards:
       - text: Александр Власов
