@@ -105,7 +105,7 @@ body, .font-sans {
 
 .h-hero-fullscreen {
   height: 83vh;
-  height: 83dvh;
+  //height: 83dvh;
 }
 
 
@@ -573,4 +573,10 @@ body {
 
 .no-scroll {
   overflow: hidden;
+}
+
+html a{
+  &:hover{
+    opacity: 0.35;
+  }
 }

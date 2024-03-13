@@ -57,31 +57,14 @@ blocks:
         type: half-fadeIn
     _template: gridText
   - firstBlock:
+      body: ''
       shiftRight: 40
       indentRight: 38
     secondBlock:
+      body: ''
       shiftLeft: 40
       indentLeft: 38
     _template: aboutPersonStatic
-  - firstBlock:
-      image:
-        src: /uploads/yuriy-sheredega-scale.png
-        alt: Юрий Шередега - изображение
-      body: "«Наша миссия — развитие\_\\\nи преображение городских территорий.\\\n\\\nПоиск центральной площадки для общегородских мероприятий»\n"
-      personName: Юрий Шередега
-      personPosition: Руководитель бюро
-      shiftRight: 40
-      indentRight: 38
-    secondBlock:
-      image:
-        src: /uploads/yuriy-sheredega-scale.png
-        alt: Юрий Шередега
-      body: "«Наша миссия — развитие\_и преображение городских территорий.\\\n\\\nПоиск центральной площадки для общегородских мероприятий»\n"
-      personName: Юрий Шередега
-      personPosition: Руководитель бюро
-      shiftLeft: 40
-      indentLeft: 38
-    _template: aboutPerson
   - indent:
       desktopTop: 60
       desktopBottom: 60

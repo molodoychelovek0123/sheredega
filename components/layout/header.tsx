@@ -58,7 +58,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
       <AnimateHeight height={`${menuHeight}%`} className={"w-full h-full fixed top-0 left-0 bg-white z-50"}
                      disableDisplayNone={true}>
         <Container uniquePath={"header-menu"}
-                   className={" pb-6 pt-[30px] sm:pt-10 sm:pb-10 h-[100vh] relative max-w-full"}>
+                   className={" pb-6 pt-[30px] sm:pt-10 sm:pb-10 h-[100vh] relative max-w-full overflow-y-scroll"}>
           <div className={"relative"}>
             <div
               className="text-black text-xl sm:text-[22px] font-medium sm:font-normal  leading-[90%] cursor-pointer absolute top-0 right-0"
@@ -79,7 +79,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
                       <div
                         className={`col-start-1 md:col-end-2 ${(item?.items?.length ?? 0) > 0 ? "pb-[30px]" : ""} md:pb-10`}>
                         {item?.href && item?.title ? <a href={item?.href}
-                                                        className="text-black text-2xl md:text-[28px] lg:text-[32px] font-medium leading-[110%]"
+                                                        className="text-black text-2xl md:text-[28px] lg:text-[32px] font-medium leading-[110%]  hover:opacity-40"
 
                                                         data-tina-field={tinaField(item)}>{item?.title}</a> : null}
                       </div>
@@ -92,7 +92,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
                               <Link
                                 data-tina-field={tinaField(link)}
                                 href={link?.href.replaceAll(pathWoAnchors, "")}
-                                className="text-black text-lg font-normal leading-[105%] md:text-xl inline-flex gap-4 flex-nowrap items-center justify-start"
+                                className="text-black text-lg font-normal leading-[105%] md:text-xl inline-flex gap-4 flex-nowrap items-center justify-start  hover:opacity-40"
                                 onClick={onMenuLinkClick}>{link?.label}
                                 {link?.label.toLowerCase().includes("телеграм") &&
                                   <img className={"h-[18px] md:h-[24px] "} src="/uploads/something-logos/tg.svg"
@@ -122,11 +122,11 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
 
 
       <div
-        className={`overflow-hidden sticky z-40 bg-white ${scrollDirection === "down" ? "-top-24" : "top-0"} transition-all duration-300`}
+        className={`overflow-hidden sticky z-40 bg-white ${scrollDirection === "down" ? "-top-24" : "top-0"} transition-all duration-300 mb-[60px] sm:mb-[50px]`}
       >
         <Container uniquePath={"header"}>
           <div className=" py-[6px] md:py-[19px] justify-between items-center w-full inline-flex relative">
-            <a href={"/"} className="justify-start items-center gap-2.5 xs:gap-[14px] flex relative z-10">
+            <a href={"/"} className="justify-start items-center gap-2.5 xs:gap-[14px] flex relative z-10  hover:opacity-40">
               {data.logo && <img src={data.logo} alt="logo" className="h-[53px]" />}
               <div
                 className="text-black text-base sm:text-xl max-w-[150px] xs:max-w-full font-medium sm:font-normal  leading-[90%]">{data.name}</div>
@@ -142,7 +142,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
                         : router.asPath.includes(item.href ?? "")) && isClient;
                     return (
                       <a data-tina-field={tinaField(item)} href={item?.href ?? "/"}
-                         className="text-black text-[22px] font-normal font-['Grato Grotesk DEMO'] leading-tight">{item.label}</a>
+                         className="text-black text-[22px] font-normal  leading-tight  hover:opacity-40">{item.label}</a>
                     );
                   })}
               </div>

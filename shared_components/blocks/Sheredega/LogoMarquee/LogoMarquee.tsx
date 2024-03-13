@@ -82,7 +82,7 @@ const LogoContainer = ({ src, alt, "data-tina-field": dataTinaField }: {
   return (
     <div
       key={dataTinaField}
-      className="w-[165px] h-[165px] md:w-[220px] md:h-[220px] lg:w-[330px] lg:h-[330px] px-6 border border-neutral-200 flex-col justify-center items-center inline-flex relative overflow-hidden"
+      className="w-[165px] h-[165px] md:w-[220px] md:h-[220px] lg:w-[330px] lg:h-[330px] px-6 border border-[#e0e0e0] flex-col justify-center items-center inline-flex relative overflow-hidden"
       data-tina-field={dataTinaField}>
       <div
         className="w-[330px] h-[330px] a-centered pointer-events-none flex-col justify-center items-center inline-flex px-6 ">

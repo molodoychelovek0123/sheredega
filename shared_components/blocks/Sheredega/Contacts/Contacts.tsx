@@ -35,7 +35,7 @@ export const Contacts = ({
 
   return (
     <Container indent={indent} uniquePath={uniquePath} customCss={customCss} className={className}>
-      <Grid mobileColumns={1} tabletColumns={2} desktopColumns={3} ref={ref}>
+      <Grid mobileColumns={1} tabletColumns={2} desktopColumns={3} ref={ref} className={"gap-x-5 gap-y-10"}>
         <div className={cn(className, "mb-4 md:mb-0")}>
           {textContent ?? defaultTextContent}
         </div>

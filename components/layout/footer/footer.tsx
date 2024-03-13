@@ -5,15 +5,15 @@ export const Footer = () => {
 
 
   return (
-    <footer className="bg-[#111111] text-white text-wrap-balance">
+    <footer className="bg-[#111111] text-white text-wrap-balance mt-[100px] sm:mt-[120px]">
       <Container uniquePath={"desktop-footer"} className="relative pt-[68px] pb-[29px] hidden md:block">
         <div className="grid grid-cols-10  gap-x-5 gap-y-10  relative pb-[60px] border-b-[#2c2c2c] border-b border-solid">
           <div className="col-start-1 col-end-5 flex-col justify-start items-start gap-[42px] inline-flex">
             <div>
-              <a className="block text-white text-[28px] lg:text-[40px] font-medium lowercase leading-[44px]"
+              <a className="block text-white text-[28px] lg:text-[40px] font-medium lowercase leading-[44px] hover:opacity-40"
                  href={"mailto:hello@sheredega.ru"}>hello@sheredega.ru
               </a>
-              <a className="block text-white text-[28px] lg:text-[40px] font-medium lowercase leading-[44px]"
+              <a className="block text-white text-[28px] lg:text-[40px] font-medium lowercase leading-[44px]  hover:opacity-40"
                  href={"tel:+79258880220"}> +7
                 925
                 888 02 20</a>
@@ -23,16 +23,16 @@ export const Footer = () => {
             </div>
           </div>
           <div className="col-start-5 col-end-7 flex-col justify-start items-start gap-5 inline-flex">
-            <a href={"/"} className="text-white text-xl font-normal leading-normal">Главная</a>
-            <a href={"/projects"} className="text-white text-xl font-normal leading-normal">Проекты</a>
-            <a href={"/about"} className="text-white text-xl font-normal leading-normal">О
+            <a href={"/"} className="text-white text-xl font-normal leading-normal  hover:opacity-40">Главная</a>
+            <a href={"/projects"} className="text-white text-xl font-normal leading-normal hover:opacity-40">Проекты</a>
+            <a href={"/about"} className="text-white text-xl font-normal leading-normal hover:opacity-40">О
               бюро</a>
-            <a href={"/contacts"} className="text-white text-xl font-normal leading-normal">Контакты</a>
+            <a href={"/contacts"} className="text-white text-xl font-normal leading-normal hover:opacity-40">Контакты</a>
           </div>
           <div className="col-start-7 col-end-9 flex-col justify-start items-start gap-5 inline-flex">
-            <a href={"/about#partners"} className="text-white text-xl font-normal leading-normal">Партнеры</a>
-            <a href={"/about#rewards"} className="text-white text-xl font-normal leading-normal">Награды</a>
-            <a href={"/contacts#geography"} className="text-white text-xl font-normal leading-normal">География
+            <a href={"/about#partners"} className="text-white text-xl font-normal leading-normal hover:opacity-40">Партнеры</a>
+            <a href={"/about#rewards"} className="text-white text-xl font-normal leading-normal hover:opacity-40">Награды</a>
+            <a href={"/contacts#geography"} className="text-white text-xl font-normal leading-normal hover:opacity-40">География
               проектов</a>
             {/*<a href={"/about#partners"}  className="text-white text-xl font-normal leading-normal">Блог в телеграм</a>*/}
             <img src={"/assets/logo-white.png"} alt={"Шередега ко"} className="absolute right-0 top-0" />
@@ -56,7 +56,7 @@ export const Footer = () => {
                 <div className="text-white text-[26px] font-medium lowercase leading-7">hello@sheredega.ru<br />+7 925
                   888 02 20
                 </div>
-                <img src={"/assets/logo-white.png"} alt={"Шередега ко"}
+                <img src={"/assets/logo-white.svg"} alt={"Шередега ко"}
                      className="absolute right-0 top-0 w-[47px] h-[68px] " />
               </div>
               <div className="justify-start items-start gap-[68px] inline-flex">
