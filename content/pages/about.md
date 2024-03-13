@@ -84,7 +84,8 @@ blocks:
       shiftLeft: 40
       indentLeft: 38
     _template: aboutPerson
-  - indent:
+  - container: true
+    indent:
       desktopTop: 60
       desktopBottom: 60
       tabletTop: 40
@@ -92,9 +93,18 @@ blocks:
       mobileTop: 20
       mobileBottom: 20
     cards:
-      - {}
-      - {}
-      - {}
+      - text: Александр Власов
+        subtext: Должность
+        image:
+          src: /uploads/project-image-5.jpg
+      - text: Ольга Романова
+        subtext: Должность
+        image:
+          src: /uploads/project-image-3.jpg
+      - text: Ольга Романова
+        subtext: Должность
+        image:
+          src: /uploads/project-image-4.jpg
       - {}
       - {}
       - {}
