@@ -51,7 +51,6 @@ export const ScrollNumbers = ({ data = defailtData, textBlock }: Props) => {
   const [active, setActive] = useState<number>(0);
   const sectionHeight = "500vh";
   const [lastItemWidth, setLastItemWidth] = useState<string>("0px");
-  const [maxTransformStyle, setMaxTransformStyle] = useState<string>("");
   const [endAnimation, setEndAnimation] = useState<boolean>(false);
 
   useResizeObserver(ref, (entry) => {
@@ -151,13 +150,7 @@ export const ScrollNumbers = ({ data = defailtData, textBlock }: Props) => {
     [leftIndent]
   );
 
-  useEffect(() => {
-    if (active === (data?.length ?? 0) - 1) {
-      // setMaxTransformStyle(`translateX(calc(-100% + calc(${leftIndent} + ${lastItemWidth})))`);
-    } else {
-      setMaxTransformStyle("");
-    }
-  }, [active, leftIndent, lastItemWidth]);
+
 
 
   useEffect(() => {
@@ -203,13 +196,13 @@ export const ScrollNumbers = ({ data = defailtData, textBlock }: Props) => {
   `;
 
   return (
-    <section id="sectionPin" className="" style={{ height: sectionHeight }}>
+    <section id="sectionPin" className="mt-[100px]" style={{ height: sectionHeight }}>
       {/*<style dangerouslySetInnerHTML={{ __html: style }} />*/}
       <div className="pin-wrap-sticky" ref={ref}>
         {textBlock && <GridText textBlock={textBlock} />}
         <div className="relative">
           <div className={`pin-wrap pin-wrap-actual gap-12 lg:gap-[115px] pt-20 pb-10 lg:py-20  ${endAnimation ? "opacity-0" : "opacity-100"}`}
-               style={{ paddingLeft: leftIndent, transform: maxTransformStyle }}>
+               style={{ paddingLeft: leftIndent}}>
             {(data ?? []).map((item, i) =>
               <div key={JSON.stringify(item)}
                    className={`${i === active ? "opacity-100" : "opacity-20"} transition-opacity duration-700 scroll-numbers-item`}

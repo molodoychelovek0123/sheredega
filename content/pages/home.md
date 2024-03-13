@@ -4,7 +4,7 @@ blocks:
   - images:
       - src: /uploads/slider-image-0.jpg
         alt: 'Sheredega - Hero image '
-      - src: /uploads/slider-image-1.jpg
+      - src: /uploads/unsplash-75EFpyXu3Wg.jpg
         alt: 'Sheredega Hero Image - 2 '
     title:
       heading: Мы — городские психологи от архитектуры

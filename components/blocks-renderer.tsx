@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 
 import type {
   PageBlocks,
-  PageBlocksAboutPerson,
+  PageBlocksAboutPerson, PageBlocksAboutPersonStatic,
   PageBlocksFourImageShowcase,
   PageBlocksGridImage, PageBlocksLogos,
   PageBlocksRewards,
@@ -35,6 +35,7 @@ import { Rewards } from "@/shared_components/blocks/Sheredega/Rewards/Rewards";
 import { MapContainer } from "@/shared_components/blocks/Sheredega/MapContainer/MapContainer";
 import { LogoMarquee } from "@/shared_components/blocks/Sheredega/LogoMarquee/LogoMarquee";
 import { Contacts } from "@/shared_components/blocks/Sheredega/Contacts/Contacts";
+import { AboutPersonStatic } from "@/shared_components/blocks/Sheredega/AboutPersonStatic/AboutPersonStatic";
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -121,6 +122,8 @@ export const BlockRenderer = <T = unknown>({ block, entity, customKey: key }: {
       // eslint-disable-next-line no-case-declarations
       const logosBlock = block as PageBlocksLogos
       return <LogoMarquee logosFirst={logosBlock.logosFirst ?? null} logosSecond={logosBlock.logosSecond ?? null} baseVelocity={logosBlock.baseVelocity ?? null} key={uniquePath} />
+    case "AboutPersonStatic":
+      return <AboutPersonStatic key={uniquePath} />
     case "":
     default:
       return null;

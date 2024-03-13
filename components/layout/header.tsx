@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Container } from "../../shared_components/components/Container/container";
 import { tinaField } from "tinacms/dist/react";
-import { GlobalHeader } from "../../tina/__generated__/types";
+import { GlobalHeader, GlobalHeaderMenu, Maybe } from "../../tina/__generated__/types";
 import { useScrollDirection } from "@/global/hooks/useScrollDirection";
 import AnimateHeight from "react-animate-height";
 
 export const Header = ({ data }: { data: GlobalHeader }) => {
-  const [menuHeight, setMenuHeight] = React.useState(0);
+  const [menuHeight, setMenuHeight] = React.useState<number>(0);
   const router = useRouter();
   const currentPath = router.asPath;
   const pathWoAnchors = currentPath.split("#")[0];
@@ -17,9 +17,22 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
 
 
   const [isClient, setIsClient] = React.useState(false);
-  React.useEffect(() => {
+  useEffect(() => {
     setIsClient(true);
   }, []);
+
+  useEffect(() => {
+    if (typeof document !== "undefined")
+    {
+      if (menuHeight === 100) {
+        document.querySelector('body')?.classList.add('no-scroll');
+      }
+     else {
+        document.querySelector('body')?.classList.remove('no-scroll');
+      }
+    }
+  }, [menuHeight]);
+
 
   const onMenuLinkClick: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
     const { href } = e.currentTarget;
@@ -39,6 +52,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
     }
   };
 
+  let prevItem: Maybe<GlobalHeaderMenu> | undefined = undefined;
   return (
     <>
       <AnimateHeight height={`${menuHeight}%`} className={"w-full h-full fixed top-0 left-0 bg-white z-50"}
@@ -55,42 +69,49 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
 
             <div className=" pt-[59px] sm:pt-[49px]">
               <div className="grid grid-cols-1 md:grid-cols-6 ">
-                {data.menu && data.menu.map((item, index) => (
-                  <React.Fragment key={JSON.stringify(item ?? { data: index })}>
-                    <div
-                      className={`col-start-1 md:col-end-5 border-t-black border-t border-solid pb-4 opacity-15 ${index > 0}  mt-[30px] md:mt-10`}></div>
-                    <div className="col-start-1 md:col-end-2 pb-[30px] md:pb-10">
-                      {item?.href && item?.title ? <a href={item?.href}
-                                                      className="text-black text-2xl md:text-[28px] lg:text-[32px] font-medium leading-[110%]"
+                {data.menu && data.menu.map((item, index) => {
 
-                                                      data-tina-field={tinaField(item)}>{item?.title}</a> : null}
-                    </div>
-                    <div className="md:col-start-4 md:col-end-6 flex flex-col gap-4">
-                      {item?.items && item?.items.map((link, linkIndex) => (
-                        <React.Fragment
-                          key={JSON.stringify(link ?? { data: linkIndex })}
-                        >
-                          {link?.href && link?.label ?
-                            <Link
-                              data-tina-field={tinaField(link)}
-                              href={link?.href.replaceAll(pathWoAnchors, "")}
-                              className="text-black text-lg font-normal leading-[105%] md:text-xl inline-flex gap-4 flex-nowrap items-center justify-start"
-                              onClick={onMenuLinkClick}>{link?.label}
-                              {link?.label.toLowerCase().includes("телеграм") &&
-                                <img className={"h-[18px] md:h-[24px] "} src="/uploads/something-logos/tg.svg"
-                                     alt="Телеграм" />}
-                            </Link>
-                            : null}
-                        </React.Fragment>
-                      ))}
-                    </div>
-                  </React.Fragment>
-                ))}
+                  const data = (
+                    <React.Fragment key={JSON.stringify(item ?? { data: index })}>
+                      <div
+                        className={`col-start-1 md:col-end-5 border-t-black border-t border-solid pb-4 opacity-10 ${index > 0}  ${(prevItem?.items?.length ?? 0) > 0 ? "mt-[30px]" : "mt-[20px]"}  md:mt-10`}></div>
+
+                      <div
+                        className={`col-start-1 md:col-end-2 ${(item?.items?.length ?? 0) > 0 ? "pb-[30px]" : ""} md:pb-10`}>
+                        {item?.href && item?.title ? <a href={item?.href}
+                                                        className="text-black text-2xl md:text-[28px] lg:text-[32px] font-medium leading-[110%]"
+
+                                                        data-tina-field={tinaField(item)}>{item?.title}</a> : null}
+                      </div>
+                      <div className="md:col-start-4 md:col-end-6 flex flex-col gap-4">
+                        {item?.items && item?.items.map((link, linkIndex) => (
+                          <React.Fragment
+                            key={JSON.stringify(link ?? { data: linkIndex })}
+                          >
+                            {link?.href && link?.label ?
+                              <Link
+                                data-tina-field={tinaField(link)}
+                                href={link?.href.replaceAll(pathWoAnchors, "")}
+                                className="text-black text-lg font-normal leading-[105%] md:text-xl inline-flex gap-4 flex-nowrap items-center justify-start"
+                                onClick={onMenuLinkClick}>{link?.label}
+                                {link?.label.toLowerCase().includes("телеграм") &&
+                                  <img className={"h-[18px] md:h-[24px] "} src="/uploads/something-logos/tg.svg"
+                                       alt="Телеграм" />}
+                              </Link>
+                              : null}
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </React.Fragment>
+                  );
+                  prevItem = item;
+                  return data;
+                })}
               </div>
             </div>
           </div>
           <div
-            className={"absolute bottom-0 right-0 max-w-[50vw] sm:max-w-[42.153vw] w-full h-full pt-[89px] pointer-events-none"}>
+            className={"absolute bottom-0 right-0 max-h-[43vh] sm:max-h-full max-w-[50vw] sm:max-w-[42.153vw] w-full h-full pt-[89px] pointer-events-none"}>
             <div className={"relative w-full h-full menu-fingerprint"}>
               <img src={"/assets/menu-bg.svg"} alt="fingerprint"
                    className={"h-full w-full object-contain object-right-bottom"} />
@@ -105,7 +126,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
       >
         <Container uniquePath={"header"}>
           <div className=" py-[6px] md:py-[19px] justify-between items-center w-full inline-flex relative">
-            <a href={"/"} className="justify-start items-center gap-2.5 xs:gap-[14px] flex">
+            <a href={"/"} className="justify-start items-center gap-2.5 xs:gap-[14px] flex relative z-10">
               {data.logo && <img src={data.logo} alt="logo" className="h-[53px]" />}
               <div
                 className="text-black text-base sm:text-xl max-w-[150px] xs:max-w-full font-medium sm:font-normal  leading-[90%]">{data.name}</div>
@@ -127,7 +148,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
               </div>
             </div>
             <div
-              className="text-black text-xl sm:text-[22px] font-medium sm:font-normal  leading-[90%] cursor-pointer"
+              className="text-black text-xl sm:text-[22px] font-medium sm:font-normal  leading-[90%] cursor-pointer  relative z-10"
               onClick={() => setMenuHeight(100)}
             >меню
             </div>

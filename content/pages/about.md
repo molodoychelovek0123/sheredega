@@ -57,6 +57,13 @@ blocks:
         type: half-fadeIn
     _template: gridText
   - firstBlock:
+      shiftRight: 40
+      indentRight: 38
+    secondBlock:
+      shiftLeft: 40
+      indentLeft: 38
+    _template: aboutPersonStatic
+  - firstBlock:
       image:
         src: /uploads/yuriy-sheredega-scale.png
         alt: Юрий Шередега - изображение

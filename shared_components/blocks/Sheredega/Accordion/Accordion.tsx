@@ -1,7 +1,7 @@
 import { Container } from "@/shared_components/components/Container/container";
 import { AccordionProps } from "@/shared_components/blocks/Sheredega/Accordion/props";
 import { Collapse } from "@/shared_components/blocks/Sheredega/Accordion/Collapse/Collapse";
-import { useEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import { tinaField } from "tinacms/dist/react";
 import { useAnimations } from "@/global/useAnimations";
 
@@ -14,12 +14,12 @@ export const Accordion = ({ indent, uniquePath, customCss, collapses }: Accordio
   const [opens, setOpens] = useState<boolean[]>(generateOpens((collapses ?? []).length));
 
   const ref = useRef<HTMLDivElement>(null);
-  const { isVisible } = useAnimations(
+  const { isVisible, animationClass } = useAnimations(
     ref,
-    "accordion-custom",
+    "fadeIn",
     "",
     false,
-    false
+    true
   );
   useEffect(() => {
     if (opens.length != (collapses?.length)) {
@@ -49,7 +49,9 @@ export const Accordion = ({ indent, uniquePath, customCss, collapses }: Accordio
             const { body, title } = item;
             if (body && title) {
               return (
-                <div className="text-wrap-balance" key={JSON.stringify(item)} data-tina-field={tinaField(item)}>
+                <div className={`text-wrap-balance ${animationClass} animate__delay-1s`}
+                     key={JSON.stringify(item) + index} data-tina-field={tinaField(item)}
+                     style={{ "--animate-delay": `${index * 0.2}s` } as CSSProperties}>
                   <Collapse isOpen={open} toggleOpen={toggle} body={body} title={title} />
                 </div>
               );

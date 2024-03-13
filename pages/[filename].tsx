@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { InferGetStaticPropsType } from "next";
 import { BlockRenderer } from "../components/blocks-renderer";
 import { tinaField, useTina } from "tinacms/dist/react";
@@ -15,6 +15,7 @@ import dynamic from "next/dynamic";
 // @ts-ignore
 import { CountUpProps } from "react-countup";
 import { useCookies } from "react-cookie";
+import { AboutPersonStatic } from "@/shared_components/blocks/Sheredega/AboutPersonStatic/AboutPersonStatic";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -103,22 +104,34 @@ export default function HomePage(
 ) {
   const { data } = useTina(props);
   const [cookie, setCookie] = useCookies(["isLoaded"]);
-
-  const isAlreadyLoaded = cookie.isLoaded;
+  const [isAlreadyLoaded, setIsAlreadyLoaded] = useState(false);
+  const [clientLoaded, setClientLoaded] = useState(false);
   useEffect(() => {
-    if (!isAlreadyLoaded) {
+    setIsAlreadyLoaded(!!cookie.isLoaded);
+    setClientLoaded(true);
+    if (!cookie.isLoaded) {
       const tomorrow = new Date();
       // expires tomorrow
       tomorrow.setDate(tomorrow.getDate() + 1);
       setCookie("isLoaded", true, { path: "/", expires: tomorrow });
+
+      setIsAlreadyLoaded(false);
     }
-  }, [cookie, setCookie]);
+  }, []);
 
 
   return (
     <Layout rawData={data} data={data.global}>
-      {!isAlreadyLoaded &&
-        <Preloader />
+      {clientLoaded ?
+        <>
+          {!isAlreadyLoaded &&
+            <Preloader />
+          }
+        </>
+        : <div
+          className={`fixed top-0 left-0 right-0 bottom-0 transition-all duration-700 `}
+          style={{ background: "#ffffff", zIndex: 944 }}>
+        </div>
       }
       <Blocks {...data.page} />
     </Layout>

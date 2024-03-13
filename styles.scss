@@ -117,9 +117,25 @@ body, .font-sans {
 .title-comp-100 {
   @include title-comp-100;
 }
+
 .title-comp-80 {
-   @include title-comp-80;
- }
+  @include title-comp-80;
+}
+
+.title-comp-70 {
+
+  @include title-comp-70;
+}
+
+.title-comp-60 {
+
+  @include title-comp-60;
+}
+
+.title-comp-50 {
+
+  @include title-comp-50;
+}
 
 .title-comp-40 {
   @include title-comp-40;
@@ -128,8 +144,6 @@ body, .font-sans {
 .title-comp-32 {
   @include title-comp-32;
 }
-
-
 
 
 /*.md\:col-start-2 {*/
@@ -239,8 +253,9 @@ h1, h2, h3, h4, h5, h6 {
   transition: all .5s ease-in-out;
 
   &--active {
-    transform: rotate(0deg);
-    @apply a-centered;
+    opacity: 0;
+    //transform: rotate(0deg);
+    //@apply a-centered;
   }
 }
 
@@ -470,7 +485,6 @@ div.scroll-numbers-item {
 }
 
 
-
 .progress {
   position: fixed;
   left: 0;
@@ -545,8 +559,8 @@ body {
 }
 
 
-.preloader{
-  @media (max-width: 600px){
+.preloader {
+  @media (max-width: 600px) {
     position: absolute !important;
     left: 0 !important;
     top: 0 !important;
@@ -555,4 +569,8 @@ body {
     height: 100dvh !important;
     transform: none !important;
   }
+}
+
+.no-scroll {
+  overflow: hidden;
 }

@@ -4,15 +4,15 @@
     "name": "Sheredega Consulting",
     "nav": [
       {
-        "href": "projects",
+        "href": "/projects",
         "label": "проекты"
       },
       {
-        "href": "about",
+        "href": "/about",
         "label": "о бюро"
       },
       {
-        "href": "conctacts",
+        "href": "/contacts",
         "label": "контакты"
       }
     ],
@@ -76,18 +76,5 @@
         ]
       }
     ]
-  },
-  "footer": {
-    "color": "default",
-    "social": {
-      "facebook": "/",
-      "twitter": "/",
-      "instagram": "/"
-    }
-  },
-  "theme": {
-    "color": "blue",
-    "font": "sans",
-    "darkMode": "system"
   }
 }

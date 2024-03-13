@@ -18,6 +18,9 @@ import {
   aboutPersonSchema,
   aboutPersonStickySchema
 } from "../../shared_components/blocks/Sheredega/AboutPerson/schema";
+import {
+  aboutPersonStaticSchema
+} from "../../shared_components/blocks/Sheredega/AboutPersonStatic/schema";
 import { logosSchema } from "../../shared_components/blocks/Sheredega/LogoMarquee/schema";
 import { contactsSchema } from "../../shared_components/blocks/Sheredega/Contacts/schema";
 import { rewardsSchema } from "../../shared_components/blocks/Sheredega/Rewards/schema";
@@ -39,6 +42,7 @@ export const getBlocksSchema = (additionalTemplates: ObjectField["templates"] = 
     scrollNumbersBlockSchema,
     numbersBlockSchema,
     logosSchema,
+    aboutPersonStaticSchema,
     aboutPersonSchema,
     aboutPersonStickySchema,
     gridImageSchema,

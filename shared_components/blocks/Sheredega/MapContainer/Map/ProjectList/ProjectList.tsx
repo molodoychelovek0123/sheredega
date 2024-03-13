@@ -47,7 +47,9 @@ const ProjectList = ({ projects, isOpen, setOpen, toggleOpen, mapGoTo }: {
       className={`w-full max-h-full flex-col justify-start items-start  inline-flex bg-white border border-black border-opacity-10 p-6 lg:p-[26px] pb-0 lg:pb-0 pointer-events-auto`}>
       <div className="w-full justify-between items-center inline-flex cursor-pointer pb-6 lg:pb-[26px]"
            onClick={toggleOpen}>
-        <div className="text-black text-xl md:text-2xl lg:text-[28px] font-medium leading-9">География проектов</div>
+        <div className="text-black text-xl md:text-2xl lg:text-[28px] h-[32px] font-medium leading-9">География
+          проектов
+        </div>
         <div className="w-8 h-8 relative">
           <div className="w-5 h-px  a-centered  border border-[#b2b2b2]"></div>
           <div
@@ -72,7 +74,9 @@ const ProjectList = ({ projects, isOpen, setOpen, toggleOpen, mapGoTo }: {
               >
                 <div className="w-full flex-col justify-start items-start gap-2.5 inline-flex">
                   <div className="justify-start items-center gap-5 inline-flex">
-                    <img className="w-20 h-20 object-cover shrink-0" src={item?.image?.src ??  "https://via.placeholder.com/450x450"} alt={item?.image?.alt ?? "Проект"} />
+                    <img className="w-20 h-20 object-cover shrink-0"
+                         src={item?.image?.src ?? "https://via.placeholder.com/450x450"}
+                         alt={item?.image?.alt ?? "Проект"} />
                     <div className="flex-col justify-start items-start gap-2.5 inline-flex">
                       <div className="text-black text-xl font-medium  leading-normal">{item?.title}</div>
                       <div className="justify-start items-start gap-1.5 inline-flex">
