@@ -105,15 +105,42 @@ blocks:
         subtext: Должность
         image:
           src: /uploads/project-image-4.jpg
-      - {}
-      - {}
-      - {}
-      - {}
-      - {}
-      - {}
-      - {}
-      - {}
-      - {}
+      - text: Александр Власов
+        subtext: Должность
+        image:
+          src: /uploads/project-image-sheredega (11).jpg
+      - text: Ольга Романова
+        subtext: Должность
+        image:
+          src: /uploads/project-image-sheredega (10).jpg
+      - text: Александр Власов
+        subtext: Должность
+        image:
+          src: /uploads/project-image-sheredega (12).jpg
+      - text: Ольга Романова
+        subtext: Должность
+        image:
+          src: /uploads/project-image-sheredega (3).jpg
+      - text: Александр Власов
+        subtext: Должность
+        image:
+          src: /uploads/project-image-sheredega (2).jpg
+      - text: Ольга Романова
+        subtext: Должность
+        image:
+          src: /uploads/project-image-sheredega (6).jpg
+      - text: Александр Власов
+        subtext: Должность
+        image:
+          src: /uploads/project-image-sheredega (9).jpg
+      - text: Ольга Романова
+        subtext: Должность
+        image:
+          src: /uploads/project-image-sheredega (1).jpg
+      - text: Александр Власов
+        subtext: Должность
+        image:
+          src: /uploads/project-image-sheredega (4).jpg
     _template: cardsGrid
   - indent:
       desktopTop: 60
