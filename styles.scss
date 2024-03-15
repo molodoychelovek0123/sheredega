@@ -576,7 +576,16 @@ body {
 }
 
 html a{
+  transition: all 0.3s ease-in-out;
   &:hover{
     opacity: 0.35;
+  }
+}
+
+.hide-scrollbar{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar{
+    display: none;
   }
 }

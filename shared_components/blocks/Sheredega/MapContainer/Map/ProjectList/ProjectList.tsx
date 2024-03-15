@@ -63,8 +63,7 @@ const ProjectList = ({ projects, isOpen, setOpen, toggleOpen, mapGoTo }: {
       >
         <div className="w-full pt-2.5 pb-3">
           {(showProjects ?? []).length === 0 &&
-            <div className="text-black text-xl font-medium  leading-normal">Нам нечего вам показать, попытайтесь
-              повзаимодействовать с картой, чтобы получить какие-то результаты</div>}
+            <div className="text-black text-xl font-medium  leading-normal">В этом регионе у нас еще нет проектов</div>}
           <div className="w-full flex flex-col">
             {(showProjects ?? []).map((item, index) => (
 

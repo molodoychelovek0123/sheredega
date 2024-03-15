@@ -36,6 +36,7 @@ import { MapContainer } from "@/shared_components/blocks/Sheredega/MapContainer/
 import { LogoMarquee } from "@/shared_components/blocks/Sheredega/LogoMarquee/LogoMarquee";
 import { Contacts } from "@/shared_components/blocks/Sheredega/Contacts/Contacts";
 import { AboutPersonStatic } from "@/shared_components/blocks/Sheredega/AboutPersonStatic/AboutPersonStatic";
+import { ScrollLeftNumbers } from "@/shared_components/blocks/Sheredega/ScrollLeftNumbers/ScrollLeftNumbers";
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -103,9 +104,12 @@ export const BlockRenderer = <T = unknown>({ block, entity, customKey: key }: {
       return <Divider />
     case "CardsGrid":
       return <CardsGrid {...block}  uniquePath={uniquePath} key={uniquePath} />
+    case "ScrollLeftNumbersBlock":
+      // as по причине бага ТС, что нельзя больше 25 members в union
+      return <ScrollLeftNumbers {...block as PageBlocksScrollNumbersBlock}   key={uniquePath} />
     case "ScrollNumbersBlock":
       // as по причине бага ТС, что нельзя больше 25 members в union
-      return <ScrollNumbers {...block as PageBlocksScrollNumbersBlock}   key={uniquePath} />
+      return <ScrollLeftNumbers {...block as PageBlocksScrollNumbersBlock}   key={uniquePath} />
     case "AboutPerson":
       return <AboutPerson {...block as PageBlocksAboutPerson }  uniquePath={uniquePath} key={uniquePath} />
     case "AboutPersonSticky":

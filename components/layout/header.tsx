@@ -11,7 +11,11 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
   const [menuHeight, setMenuHeight] = React.useState<number>(0);
   const router = useRouter();
   const currentPath = router.asPath;
+  console.log(currentPath);
   const pathWoAnchors = currentPath.split("#")[0];
+
+  const hideMargin = pathWoAnchors === "/" || pathWoAnchors.includes("/projects/");
+
 
   const { scrollDirection } = useScrollDirection();
 
@@ -22,13 +26,11 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
   }, []);
 
   useEffect(() => {
-    if (typeof document !== "undefined")
-    {
+    if (typeof document !== "undefined") {
       if (menuHeight === 100) {
-        document.querySelector('body')?.classList.add('no-scroll');
-      }
-     else {
-        document.querySelector('body')?.classList.remove('no-scroll');
+        document.querySelector("body")?.classList.add("no-scroll");
+      } else {
+        document.querySelector("body")?.classList.remove("no-scroll");
       }
     }
   }, [menuHeight]);
@@ -44,7 +46,6 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
       const id = href.split("#")[1];
       const element = document.getElementById(id);
       if (element) {
-        console.log(element);
         element.scrollIntoView();
       }
     } else {
@@ -110,23 +111,24 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
               </div>
             </div>
           </div>
-          <div
-            className={"absolute bottom-0 right-0 max-h-[43vh] sm:max-h-full max-w-[50vw] sm:max-w-[42.153vw] w-full h-full pt-[89px] pointer-events-none"}>
+          {menuHeight > 0 && <div
+            className={"fixed bottom-0 right-0 max-h-[43vh] sm:max-h-full max-w-[50vw] sm:max-w-[42.153vw] w-full h-full pt-[89px] pointer-events-none"}>
             <div className={"relative w-full h-full menu-fingerprint"}>
               <img src={"/assets/menu-bg.svg"} alt="fingerprint"
                    className={"h-full w-full object-contain object-right-bottom"} />
             </div>
-          </div>
+          </div>}
         </Container>
       </AnimateHeight>
 
 
       <div
-        className={`overflow-hidden sticky z-40 bg-white ${scrollDirection === "down" ? "-top-24" : "top-0"} transition-all duration-300 mb-[60px] sm:mb-[50px]`}
+        className={`overflow-hidden sticky z-40 bg-white ${scrollDirection === "down" ? "-top-24" : "top-0"} transition-all duration-300 ${!hideMargin && "mb-[60px] sm:mb-[50px]"}`}
       >
         <Container uniquePath={"header"}>
           <div className=" py-[6px] md:py-[19px] justify-between items-center w-full inline-flex relative">
-            <a href={"/"} className="justify-start items-center gap-2.5 xs:gap-[14px] flex relative z-10  hover:opacity-40">
+            <a href={"/"}
+               className="justify-start items-center gap-2.5 xs:gap-[14px] flex relative z-10  hover:opacity-40">
               {data.logo && <img src={data.logo} alt="logo" className="h-[53px]" />}
               <div
                 className="text-black text-base sm:text-xl max-w-[150px] xs:max-w-full font-medium sm:font-normal  leading-[90%]">{data.name}</div>

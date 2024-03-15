@@ -19,6 +19,7 @@ export const MAP_INLINE_STYLES = `
           height: 50px;
           background: #FFFFFF;
           border: 1px solid rgba(0, 0, 0, 0.1);
+              border-radius: 0px;
       }
       
       .map-container .mapboxgl-ctrl button.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {

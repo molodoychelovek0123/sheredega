@@ -66,6 +66,13 @@ export const Map = ({
     700
   );
 
+  const updateProjectListOpen = useDebouncedCallback(
+    (isOpen: boolean) => {
+      setProjectListOpen(isOpen);
+    },
+    1500
+  );
+
   const geoJsonData = useMemo(() => ({
     "type": "FeatureCollection",
     "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
@@ -80,7 +87,7 @@ export const Map = ({
     // console.log([tooltipFilter, regionFilter, cameraBound]);
 
     setTimeout(() => {
-      if (tooltipFilter || regionFilter || cameraBound) setProjectListOpen(true);
+      if (tooltipFilter || regionFilter) setProjectListOpen(true);
     }, 400);
     if (tooltipFilter) {
       const tooltipResult = (memedRussianPoints ?? []).filter(item => item.tooltip?.toLowerCase().includes(tooltipFilter.toLowerCase()));
@@ -96,16 +103,12 @@ export const Map = ({
       });
       return regionResult;
     }
-    if (cameraBound) {
-      return filterPointsByBounds(memedRussianPoints ?? [], cameraBound);
-    }
+    // if (cameraBound) {
+    //   return filterPointsByBounds(memedRussianPoints ?? [], cameraBound);
+    // }
     return memedRussianPoints;
   }, [tooltipFilter, regionFilter]);
 
-  // const projectListRef = useClickAway<HTMLDivElement>(() => {
-  //   console.log("projectListRef");
-  //   // setProjectListOpen(false);
-  // });
 
   const mapContainer = useRef(null);
   const map = useRef<any>(null);
@@ -145,14 +148,15 @@ export const Map = ({
     const width = isSsr() ? 1920 : window.innerWidth;
     const lng = width < 900 ? 38 : 94;
     const lat = width < 900 ? 55 : 66;
-    const zoom = 4.0;
+    const zoom = 3.1;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: "mapbox://styles/boxdeveloper/clt2cx6x9007m01ra433404f1",
+      style: "mapbox://styles/boxdeveloper/cltrrmb7x00f001pjgqc35ls6",
       center: [lng, lat],
       zoom: zoom,
-      minZoom: 3.65,
-      projection: "globe"
+      // minZoom: 3.65,
+      minZoom: 2.0,
+      projection: "mercator"
     });
 
 
@@ -160,7 +164,9 @@ export const Map = ({
 
       map.current?.addSource("states", {
         "type": "vector",
-        "url": "mapbox://boxdeveloper.cbgbnbqx"
+        // "url": "mapbox://boxdeveloper.cbgbnbqx" Полный датасет
+
+        "url": "mapbox://boxdeveloper.78i49gr6"
       });
 
       map.current?.addSource("points", {
@@ -275,7 +281,7 @@ export const Map = ({
             "id": "fill-states",
             "type": "fill",
             "source": "states",
-            "source-layer": "russia_geojson_wgs84_new_2-2bvzgs",
+            "source-layer": "sheredega-15032024-d8izh5",
             "layout": {},
             "paint": {
               // "fill-outline-color": "#ffffff",
@@ -295,7 +301,7 @@ export const Map = ({
             "id": "state-borders",
             "type": "line",
             "source": "states",
-            "source-layer": "russia_geojson_wgs84_new_2-2bvzgs",
+            "source-layer": "sheredega-15032024-d8izh5",
             "layout": {},
             "paint": {
               "line-emissive-strength": 2,
@@ -339,19 +345,19 @@ export const Map = ({
       map.current?.on("click", "fill-states", function(e: any) {
 
 
-        const lat = Math.round((e?.lngLat?.lat ?? 0) * 100) / 100;
-        const lng = Math.round((e?.lngLat?.lng ?? 0) * 100) / 100;
-        const region = (memedRussianPoints ?? []).find(item =>
-          item?.lat && item?.lng
-          && Math.abs(Math.round((item?.lat ?? 0) * 100) / 100 - lat) < 0.9
-          && Math.abs(Math.round((item?.lng ?? 0) * 100) / 100 - lng) < 0.9
-        )?.region?.[0];
-        if (region) {
-          // Значит кликнули на unclustered-point
-          setRegionFilter(null);
-          updateMainLayer(null);
-          return;
-        }
+        // const lat = Math.round((e?.lngLat?.lat ?? 0) * 100) / 100;
+        // const lng = Math.round((e?.lngLat?.lng ?? 0) * 100) / 100;
+        // const region = (memedRussianPoints ?? []).find(item =>
+        //   item?.lat && item?.lng
+        //   && Math.abs(Math.round((item?.lat ?? 0) * 100) / 100 - lat) < 0.9
+        //   && Math.abs(Math.round((item?.lng ?? 0) * 100) / 100 - lng) < 0.9
+        // )?.region?.[0];
+        // if (region) {
+        //   // Значит кликнули на unclustered-point
+        //   setRegionFilter(null);
+        //   updateMainLayer(null);
+        //   return;
+        // }
         const coords = e.features[0].geometry.coordinates[0].length > 1 ? e.features[0].geometry.coordinates[0] : e.features[0].geometry.coordinates[0][0];
 
         const newRegionFilterValue = e.features[0].properties?.en_name ?? null;
@@ -363,9 +369,9 @@ export const Map = ({
 
         setTimeout(() => {
           try {
-            map.current?.easeTo({
-              center: getPolygonCenter(coords)
-            });
+            // map.current?.easeTo({
+            //   center: getPolygonCenter(coords)
+            // });
             setProjectListOpen(true);
           } catch (e) {
             // nothing
@@ -427,8 +433,13 @@ export const Map = ({
         // )?.region?.[0];
         // tooltipActiveRegion = region;
         const title = e.features[0].properties.title;
+
+
+        updateMainLayer(null);
         setTimeout(() => {
           try {
+
+            updateMainLayer(null);
             setTooltipFilter(title);
             setProjectListOpen(true);
             e.stopPropagation();
@@ -438,15 +449,19 @@ export const Map = ({
         }, 100);
       });
 
+
+      // CAMERABOUND
       map.current?.on("zoom", () => {
         setTooltipFilter(null);
         // setProjectListOpen(false);
-        updateCameraBound(map.current?.getBounds());
+        updateProjectListOpen(false);
+        // updateCameraBound(map.current?.getBounds());
       });
       map.current?.on("move", () => {
         setTooltipFilter(null);
+        updateProjectListOpen(false);
         // setProjectListOpen(false);
-        updateCameraBound(map.current?.getBounds());
+        // updateCameraBound(map.current?.getBounds());
       });
 
       map.current?.addControl(new mapboxgl.NavigationControl(), "top-right");
@@ -466,7 +481,27 @@ export const Map = ({
       map.current?.easeTo({
         center: center
       });
+      setTimeout(() => {
+        updateProjectListOpen(true);
+      }, 1000);
+      // setProjectListOpen(true);
     }
+  };
+
+  const openCenter = () => {
+    const width = isSsr() ? 1920 : window.innerWidth;
+    const lng = width < 900 ? 38 : 94;
+    const lat = width < 900 ? 55 : 66;
+    const zoom = 3.1;
+    map.current?.easeTo({
+      center: [lng, lat],
+      zoom,
+      curve: 1,
+      bearing: 0,
+      pitch: 0
+    });
+    setProjectListOpen(false);
+    updateProjectListOpen(false);
   };
 
 
@@ -475,11 +510,26 @@ export const Map = ({
       <style dangerouslySetInnerHTML={{ __html: MAP_INLINE_STYLES }} />
 
       <div className="relative bg-[#f6f7fa]">
-
+        {!isWorldWide &&
+          <>
+            <div className="absolute md:hidden items-center left-4 bottom-24 gap-4 z-10 cursor-pointer"
+                 onClick={openCenter}>
+              <img src="/assets/mobile-map-center.svg"
+                   alt="кнопка - международные - мобилка"
+                   className="" />
+            </div>
+            <div className="hidden md:flex absolute items-center right-15 bottom-24 gap-4 z-10 cursor-pointer"
+                 onClick={openCenter}>
+              <img src="/assets/map-center.svg"
+                   alt="кнопка - международные - мобилка"
+                   className="" />
+            </div>
+          </>
+        }
         {(memedWorldWidePoints ?? []).length > 0 &&
           <div className="absolute md:hidden items-center left-4 bottom-10 gap-4 z-10 cursor-pointer"
                onClick={onClickWorldWide}>
-            <img src="/assets/worldwide-button.svg"
+            <img src={isWorldWide ? "/assets/russia-mobile-button.svg" : "/assets/worldwide-button.svg"}
                  alt="кнопка - международные - мобилка"
                  className="" />
           </div>}
@@ -491,7 +541,7 @@ export const Map = ({
                  alt="кнопка - международные"
                  className="" />
             <span className="text-black text-[28px] font-medium leading-7 relative -top-[4px]">
-            {isWorldWide ? "россия" : "международные"}
+            {isWorldWide ? "Россия" : "международные"}
           </span>
           </div>
         }

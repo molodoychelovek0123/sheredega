@@ -24,7 +24,7 @@ const convertProjectToPoint = (item: DataProject): ProjectItem => ({
 // Где проебали типизацию, там можете даже не искать
 // Если что-то развалилось и вы попали сюда, значит вам очень плохо.
 // Спасибо за понимание.
-export const MapContainer = () => {
+export const MapContainer = ({type}: {type?: ""}) => {
   const [hasWorldWide, setHasWorldWide] = useState(false);
 
   const [worldWide, setWorldWide] = useState(false);
