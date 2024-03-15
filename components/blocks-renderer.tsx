@@ -104,9 +104,9 @@ export const BlockRenderer = <T = unknown>({ block, entity, customKey: key }: {
       return <Divider />
     case "CardsGrid":
       return <CardsGrid {...block}  uniquePath={uniquePath} key={uniquePath} />
-    case "ScrollLeftNumbersBlock":
-      // as по причине бага ТС, что нельзя больше 25 members в union
-      return <ScrollLeftNumbers {...block as PageBlocksScrollNumbersBlock}   key={uniquePath} />
+    // case "ScrollLeftNumbersBlock":
+    //   // as по причине бага ТС, что нельзя больше 25 members в union
+    //   return <ScrollLeftNumbers {...block as PageBlocksScrollNumbersBlock}   key={uniquePath} />
     case "ScrollNumbersBlock":
       // as по причине бага ТС, что нельзя больше 25 members в union
       return <ScrollLeftNumbers {...block as PageBlocksScrollNumbersBlock}   key={uniquePath} />
