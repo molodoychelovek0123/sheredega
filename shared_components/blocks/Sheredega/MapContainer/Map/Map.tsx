@@ -147,7 +147,7 @@ export const Map = ({
 
     const width = isSsr() ? 1920 : window.innerWidth;
     const lng = width < 900 ? 38 : 94;
-    const lat = width < 900 ? 55 : 66;
+    const lat = width < 900 ? 55 : 58;
     const zoom = 3.1;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
@@ -156,7 +156,7 @@ export const Map = ({
       zoom: zoom,
       // minZoom: 3.65,
       minZoom: 2.0,
-      projection: "globe"
+      projection: "mercator"
     });
 
 

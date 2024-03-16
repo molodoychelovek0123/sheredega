@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Container } from "../../shared_components/components/Container/container";
@@ -10,11 +10,17 @@ import AnimateHeight from "react-animate-height";
 export const Header = ({ data }: { data: GlobalHeader }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [menuHeight, setMenuHeight] = React.useState<number>(0);
+  const [hideMargin, setHideMargin] = useState(false);
   const router = useRouter();
   const currentPath = router.asPath;
   const pathWoAnchors = currentPath.split("#")[0];
 
-  const hideMargin = pathWoAnchors === "/" || pathWoAnchors.includes("/projects/");
+  useEffect(() => {
+    const currentPath = router.asPath;
+    const pathWoAnchors = currentPath.split("#")[0];
+
+    setHideMargin(pathWoAnchors === "" || pathWoAnchors === "/" || pathWoAnchors.includes("/projects/"))
+  }, [router]);
 
 
   const { scrollDirection } = useScrollDirection();
@@ -24,7 +30,6 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
   useEffect(() => {
     setIsClient(true);
   }, []);
-
 
 
   useEffect(() => {
@@ -58,7 +63,8 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
   let prevItem: Maybe<GlobalHeaderMenu> | undefined = undefined;
   return (
     <>
-      <AnimateHeight height={`${menuHeight}%`} className={"w-full h-full menu-height-container fixed top-0 left-0 bg-white z-50"}
+      <AnimateHeight height={`${menuHeight}%`}
+                     className={"w-full h-full menu-height-container fixed top-0 left-0 bg-white z-50"}
                      disableDisplayNone={true} ref={ref}>
         <Container uniquePath={"header-menu"}
                    className={" pb-6 pt-[30px] sm:pt-10 sm:pb-10 h-[100vh] relative max-w-full overflow-y-scroll"}>
@@ -125,7 +131,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
 
 
       <div
-        className={`overflow-hidden sticky z-40 bg-white ${scrollDirection === "down" ? "-top-24" : "top-0"} transition-all duration-300 ${!hideMargin ?  "mb-[60px] sm:mb-[50px]" : ""}`}
+        className={`overflow-hidden sticky z-40 bg-white ${scrollDirection === "down" ? "-top-24" : "top-0"} transition-all duration-300 ${!hideMargin ? "mb-[60px] sm:mb-[50px]" : ""}`}
       >
         <Container uniquePath={"header"}>
           <div className=" py-[6px] md:py-[19px] justify-between items-center w-full inline-flex relative">
