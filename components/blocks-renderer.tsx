@@ -4,7 +4,7 @@ import type {
   PageBlocks,
   PageBlocksAboutPerson, PageBlocksAboutPersonStatic,
   PageBlocksFourImageShowcase,
-  PageBlocksGridImage, PageBlocksLogos,
+  PageBlocksGridImage, PageBlocksLogos, PageBlocksPublicationList,
   PageBlocksRewards,
   PageBlocksScrollDrivenSlider,
   PageBlocksScrollNumbersBlock,
@@ -37,6 +37,7 @@ import { LogoMarquee } from "@/shared_components/blocks/Sheredega/LogoMarquee/Lo
 import { Contacts } from "@/shared_components/blocks/Sheredega/Contacts/Contacts";
 import { AboutPersonStatic } from "@/shared_components/blocks/Sheredega/AboutPersonStatic/AboutPersonStatic";
 import { ScrollLeftNumbers } from "@/shared_components/blocks/Sheredega/ScrollLeftNumbers/ScrollLeftNumbers";
+import { PublicationsList } from "@/shared_components/blocks/Sheredega/PublicationsList/PublicationsList";
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -127,6 +128,8 @@ export const BlockRenderer = <T = unknown>({ block, entity, customKey: key }: {
       return <LogoMarquee logosFirst={logosBlock.logosFirst ?? null} logosSecond={logosBlock.logosSecond ?? null} baseVelocity={logosBlock.baseVelocity ?? null} key={uniquePath} />
     case "AboutPersonStatic":
       return <AboutPersonStatic key={uniquePath} />
+    case "PublicationList":
+      return <PublicationsList block={block} {...block as PageBlocksPublicationList} uniquePath={uniquePath} key={uniquePath} />
     case "":
     default:
       return null;

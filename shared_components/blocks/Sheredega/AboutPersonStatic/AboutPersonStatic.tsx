@@ -1,3 +1,5 @@
+import { Container } from "@/shared_components/components/Container/container";
+
 export const AboutPersonStatic = () => {
   return (
     <>
@@ -42,9 +44,10 @@ export const AboutPersonStatic = () => {
       {/*  </div>*/}
       {/*</div>*/}
 
-      <div className="w-full px-[43px] lg:pl-[59px] lg:pr-[78px] pt-[43px]  bg-[#F6F7FA] flex-col justify-center items-start gap-2.5 hidden sm:inline-flex">
-        <div className="w-full justify-center  items-end inline-flex flex-wrap">
-          <div className=" flex-col justify-center items-start gap-[88px] inline-flex max-w-[580px] min-w-[350px] shrink grow basis-[350px] lg:basis-[580px] pb-15">
+      <div className="w-full  pt-[43px]  bg-[#F6F7FA] flex-col justify-start items-start gap-2.5 hidden sm:inline-flex">
+        <Container>
+        <div className="w-full justify-start  items-end inline-flex flex-wrap">
+          <div className=" flex-col justify-start items-start gap-[88px] inline-flex max-w-[580px] min-w-[350px] shrink grow basis-[350px] lg:basis-[580px] pb-15">
             <div className="w-full text-wrap-balance">
               <span className="text-black text-[28px] font-medium  leading-[30.80px]">«Мы проектируем людям </span>
               <span className="text-black text-[28px] font-normal  leading-[30.80px]">– комфортную жизнь городам – устойчивое развитие власти – доверие горожан»</span>
@@ -75,6 +78,7 @@ export const AboutPersonStatic = () => {
           </div>
           <img className="grow shrink  basis-[580px] max-w-[730px] object-contain lg:ml-[-60px] min-w-[300px]" src="/assets/yuri-and-evgenia.png" alt={"Юрий Шередега"} />
         </div>
+        </Container>
       </div>
       
       <div className="w-full  pt-10 bg-[#F6F7FA] justify-start items-start gap-2.5 inline-flex sm:hidden">
@@ -83,8 +87,8 @@ export const AboutPersonStatic = () => {
             <div className="flex-col justify-start items-start gap-5 flex">
               <div className="w-full"><span
                 className="text-black text-base font-normal  leading-tight">«</span><span
-                className="text-black text-base font-medium  leading-tight">Наша миссия</span><span
-                className="text-black text-base font-normal  leading-tight"> - продюсировать позитивные городские изменения в синергии с бизнесом, жителями и администрацией»</span>
+                className="text-black text-base font-medium  leading-tight">«Мы проектируем людям</span><span
+                className="text-black text-base font-normal  leading-tight">– комфортную жизнь городам – устойчивое развитие власти – доверие горожан»</span>
               </div>
               <div className="flex-col justify-start items-start gap-[5px] flex">
                 <div
@@ -98,9 +102,6 @@ export const AboutPersonStatic = () => {
               </div>
             </div>
             <div className="flex-col justify-start items-start gap-5 flex">
-              <div className="w-full text-black text-base font-normal  leading-tight">«Мы
-                помогаем заказчику определиться с целеполаганием и задачами развития»
-              </div>
               <div className="flex-col justify-start items-start gap-[5px] flex">
                 <div
                   className="w-full text-black text-base font-medium  leading-tight">Евгения

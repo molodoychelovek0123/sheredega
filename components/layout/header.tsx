@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Container } from "../../shared_components/components/Container/container";
@@ -8,10 +8,10 @@ import { useScrollDirection } from "@/global/hooks/useScrollDirection";
 import AnimateHeight from "react-animate-height";
 
 export const Header = ({ data }: { data: GlobalHeader }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const [menuHeight, setMenuHeight] = React.useState<number>(0);
   const router = useRouter();
   const currentPath = router.asPath;
-  console.log(currentPath);
   const pathWoAnchors = currentPath.split("#")[0];
 
   const hideMargin = pathWoAnchors === "/" || pathWoAnchors.includes("/projects/");
@@ -24,6 +24,8 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -56,8 +58,8 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
   let prevItem: Maybe<GlobalHeaderMenu> | undefined = undefined;
   return (
     <>
-      <AnimateHeight height={`${menuHeight}%`} className={"w-full h-full fixed top-0 left-0 bg-white z-50"}
-                     disableDisplayNone={true}>
+      <AnimateHeight height={`${menuHeight}%`} className={"w-full h-full menu-height-container fixed top-0 left-0 bg-white z-50"}
+                     disableDisplayNone={true} ref={ref}>
         <Container uniquePath={"header-menu"}
                    className={" pb-6 pt-[30px] sm:pt-10 sm:pb-10 h-[100vh] relative max-w-full overflow-y-scroll"}>
           <div className={"relative"}>
@@ -73,7 +75,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
                 {data.menu && data.menu.map((item, index) => {
 
                   const data = (
-                    <React.Fragment key={JSON.stringify(item ?? { data: index })}>
+                    <React.Fragment key={JSON.stringify(item ?? { data: index }) ?? index}>
                       <div
                         className={`col-start-1 md:col-end-5 border-t-black border-t border-solid pb-4 opacity-10 ${index > 0}  ${(prevItem?.items?.length ?? 0) > 0 ? "mt-[30px]" : "mt-[20px]"}  md:mt-10`}></div>
 
@@ -123,7 +125,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
 
 
       <div
-        className={`overflow-hidden sticky z-40 bg-white ${scrollDirection === "down" ? "-top-24" : "top-0"} transition-all duration-300 ${!hideMargin && "mb-[60px] sm:mb-[50px]"}`}
+        className={`overflow-hidden sticky z-40 bg-white ${scrollDirection === "down" ? "-top-24" : "top-0"} transition-all duration-300 ${!hideMargin ?  "mb-[60px] sm:mb-[50px]" : ""}`}
       >
         <Container uniquePath={"header"}>
           <div className=" py-[6px] md:py-[19px] justify-between items-center w-full inline-flex relative">
@@ -144,6 +146,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
                         : router.asPath.includes(item.href ?? "")) && isClient;
                     return (
                       <a data-tina-field={tinaField(item)} href={item?.href ?? "/"}
+                         key={JSON.stringify(item ?? { data: i }) ?? i}
                          className="text-black text-[22px] font-normal  leading-tight  hover:opacity-40">{item.label}</a>
                     );
                   })}

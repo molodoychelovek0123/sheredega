@@ -11,7 +11,7 @@ blocks:
     secondaryEmailTitle: 'Карьера:'
     secondaryEmail: hr@sheredega.ru
     tgLinkText: Блог в телеграм
-    tgLink: telegram
+    tgLink: 'https://t.me/SheredegaConsulting'
     indent:
       desktopTop: 60
       desktopBottom: 100

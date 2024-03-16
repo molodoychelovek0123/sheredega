@@ -48,17 +48,12 @@ const defailtData = [
 const DEFAULT_WIDTH = 150;
 const GAP = 115;
 export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
-
-  const SPRING_CONFIG = { damping: 500, stiffness: 400 };
   const x = useMotionValue(0);
   const springX = useSpring(x, { mass: 0.15 });
-  const endAnimation = false;
 
   const ref = useRef<HTMLDivElement>(null);
   const [componentSize, setComponentSize] = useState<number>(1920);
-  const [leftIndent, setLeftIndent] = useState<string>("35%");
   const [active, setActive] = useState<number>(0);
-  const sectionHeight = "500vh";
   const [lastItemWidth, setLastItemWidth] = useState<number>(DEFAULT_WIDTH);
   const [scrollLeft, setScrollLeft] = useState(0);
 
@@ -109,46 +104,6 @@ export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
     },
     [widths]);
 
-  // const scrollTrigger = useCallback(
-  //   () => {
-  //     if (ref.current && data && typeof window !== "undefined") {
-  //       const flexContainerEl = ref.current.querySelector("div.motion-div");
-  //       if (flexContainerEl) {
-  //         const boundingClientRect = flexContainerEl.getBoundingClientRect();
-  //         const leftPosition = boundingClientRect.x;
-  //
-  //         const positions = [...flexContainerEl.querySelectorAll("div")].map(item => item.getBoundingClientRect().x);
-  //         const leftIndentValue = Number(leftIndent.replaceAll("px", "").replaceAll("#", ""));
-  //
-  //         setLastItemWidth(`${([...flexContainerEl.querySelectorAll("div")]?.[data.length - 1]?.getBoundingClientRect()?.width ?? "0")}px`);
-  //
-  //         const index = positions.findIndex(item => item + 20 > leftIndentValue);
-  //
-  //
-  //         // if(index >= data?.length - 1){
-  //         //   setEndAnimationPosition(window.scrollY);
-  //         // }
-  //
-  //         if (index > data.length - 1) {
-  //           setActive(data.length - 1);
-  //           return;
-  //         }
-  //
-  //         if (index <= 0) {
-  //           if (leftPosition < -1000) {
-  //             setActive(data.length - 1);
-  //           } else {
-  //             setActive(0);
-  //           }
-  //           return;
-  //         }
-  //         setActive(index);
-  //
-  //       }
-  //     }
-  //   },
-  //   [leftIndent]
-  // );
 
 
   const getActiveIndex = (widthsArray: number[], gap: number, currentScroll: number) => {
@@ -175,40 +130,10 @@ export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
   }, [widths]);
 
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined" && typeof document !== "undefined") {
-  //     let padding = 64;
-  //     let cols = 2;
-  //     let summarycols = 6;
-  //     if (componentSize < 900) {
-  //       padding = 16;
-  //       cols = 0;
-  //       summarycols = 1;
-  //     }
-  //     if (componentSize < 1200 && componentSize >= 900) {
-  //       padding = 24;
-  //       cols = 1;
-  //       summarycols = 6;
-  //     }
-  //     if (componentSize >= 1200) {
-  //       padding = 64;
-  //       cols = 2;
-  //       summarycols = 6;
-  //     }
-  //
-  //     const colSize = (componentSize - (padding * 2)) / summarycols;
-  //     const calcLeftIndent = padding + cols * colSize;
-  //     setLeftIndent(`${calcLeftIndent}px`);
-  //
-  //   }
-  // }, [componentSize]);
 
 
   useEffect(() => {
     if ((componentSize ?? 0) > 900) {
-      // const maxScroll = (-1 * (ref.current?.clientWidth ?? 0)) + Number(leftIndent.replaceAll("px", "")) + Number(lastItemWidth.replaceAll("px", ""));
-      // console.log( Number(leftIndent.replaceAll("px", "")),Number(lastItemWidth.replaceAll("px", "")),  (-1 * (ref.current?.clientWidth ?? 0))  , -1 * scrollLeft);
-      // console.log(( Number(leftIndent.replaceAll("px", "")) + Number(lastItemWidth.replaceAll("px", "")) / 2)*2 )
 
       if (scrollLeft < 0) {
         setScrollLeft(0);
@@ -224,19 +149,6 @@ export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
           x.set(-scrollLeft);
         }
       }
-
-      // if (componentSize > 1200) {
-      //   const calc = (Number(leftIndent.replaceAll("px", "")) + Number(lastItemWidth.replaceAll("px", "")) / 2) * 2;
-      //   const scrollTo = scrollLeft < calc ? scrollLeft : calc;
-      //   const scrollTo2 = scrollTo > 0 ? scrollTo : 0;
-      //   x.set(-scrollTo2);
-      // } else {
-      //   const calc = componentSize;
-      //   const scrollTo = scrollLeft < calc ? scrollLeft : calc;
-      //
-      //   const scrollTo2 = scrollTo > 0 ? scrollTo : 0;
-      //   x.set(-scrollTo2);
-      // }
 
       scrollTrigger(scrollLeft);
     }

@@ -156,7 +156,7 @@ export const Map = ({
       zoom: zoom,
       // minZoom: 3.65,
       minZoom: 2.0,
-      projection: "mercator"
+      projection: "globe"
     });
 
 
@@ -166,7 +166,7 @@ export const Map = ({
         "type": "vector",
         // "url": "mapbox://boxdeveloper.cbgbnbqx" Полный датасет
 
-        "url": "mapbox://boxdeveloper.78i49gr6"
+        "url": "mapbox://boxdeveloper.0ci7vxx0"
       });
 
       map.current?.addSource("points", {
@@ -281,7 +281,7 @@ export const Map = ({
             "id": "fill-states",
             "type": "fill",
             "source": "states",
-            "source-layer": "sheredega-15032024-d8izh5",
+            "source-layer": "sheredega-15032024-6u6gb2",
             "layout": {},
             "paint": {
               // "fill-outline-color": "#ffffff",
@@ -301,7 +301,7 @@ export const Map = ({
             "id": "state-borders",
             "type": "line",
             "source": "states",
-            "source-layer": "sheredega-15032024-d8izh5",
+            "source-layer": "sheredega-15032024-6u6gb2",
             "layout": {},
             "paint": {
               "line-emissive-strength": 2,

@@ -26,6 +26,7 @@ import { contactsSchema } from "../../shared_components/blocks/Sheredega/Contact
 import { rewardsSchema } from "../../shared_components/blocks/Sheredega/Rewards/schema";
 import { mapSchema } from "../../shared_components/blocks/Sheredega/MapContainer/schema";
 import { scrollLeftNumbersBlockSchema } from "../../shared_components/blocks/Sheredega/ScrollLeftNumbers/schema";
+import { publicationListSchema } from "../../shared_components/blocks/Sheredega/PublicationsList/schema";
 
 export const getBlocksSchema = (additionalTemplates: ObjectField["templates"] = []): ObjectField => ({
   type: "object",
@@ -37,7 +38,7 @@ export const getBlocksSchema = (additionalTemplates: ObjectField["templates"] = 
   },
   templates: additionalTemplates.concat([
     sheredegaHeroBlockSchema,
-    gridTextBlockSchema,
+    gridTextBlockSchema,publicationListSchema,
     mapSchema,
     dividerSchema,
     scrollLeftNumbersBlockSchema,

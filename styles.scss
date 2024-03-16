@@ -1,5 +1,6 @@
 @import "./global/styles/animation";
 
+
 @mixin title-comp-120 {
   font-weight: 500;
   line-height: 1.1em;
@@ -573,19 +574,50 @@ body {
 
 .no-scroll {
   overflow: hidden;
+  padding-right: 7px;
+
+  .menu-height-container {
+    padding-right: 7px;
+  }
 }
 
-html a{
+html a {
   transition: all 0.3s ease-in-out;
-  &:hover{
+
+  &:hover {
     opacity: 0.35;
   }
 }
 
-.hide-scrollbar{
+.hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
-  &::-webkit-scrollbar{
+
+  &::-webkit-scrollbar {
     display: none;
   }
+}
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: #fff;
+}
+
+.hover-underline-animation::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }

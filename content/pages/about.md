@@ -5,18 +5,15 @@ blocks:
       # Наша работа — **найти идеальный компромисс**
     _template: content
   - data:
-      - text: '37'
-        subtext: регионов
+      - text: '54'
+        subtext: партнера за 4 года
+      - text: '34'
+        subtext: исследования
+      - text: 300+
+        subtext: привлеченных клиентов
       - text: '45'
         subtext: городов
-      - text: 160+
-        subtext: направлений
-      - text: '45'
-        subtext: городов
-      - text: '37'
-        subtext: регионов
     textBlock:
-      hideTitleOnMobile: true
       body: >
         Сегодня консалтинговые агентства играют важную роль в различных сферах
         бизнеса, предлагая широкий спектр услуг и экспертных знаний. \
@@ -27,7 +24,7 @@ blocks:
         операционные процессы, внедрять инновации, а также управлять
         изменениями.
       fontSize: '30'
-    _template: scrollNumbersBlock
+    _template: scrollLLeftNumbersBlock
   - indent:
       desktopTop: 60
       desktopBottom: 60
@@ -66,7 +63,7 @@ blocks:
       indentLeft: 38
     _template: aboutPersonStatic
   - body: |
-      #### **Команда**
+      #### &#x20;**Команда**
     _template: content
   - container: true
     indent:
