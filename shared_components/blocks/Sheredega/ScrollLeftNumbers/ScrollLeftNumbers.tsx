@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GridText } from "@/shared_components/blocks/Sheredega/GridText/GridText";
 import { TinaMarkdownContent } from "tinacms/dist/rich-text";
 import { animationFieldType } from "@/global/constants/animations";
 import { tinaField } from "tinacms/dist/react";
 import { useMotionValue, useSpring, motion } from "framer-motion";
 import useResizeObserver from "@react-hook/resize-observer";
+import { Container } from "@/shared_components/components/Container/container";
 
 type Props = {
   data?: ({
@@ -44,6 +45,8 @@ const defailtData = [
   }
 ];
 
+const DEFAULT_WIDTH = 150;
+const GAP = 115;
 export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
 
   const SPRING_CONFIG = { damping: 500, stiffness: 400 };
@@ -56,7 +59,7 @@ export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
   const [leftIndent, setLeftIndent] = useState<string>("35%");
   const [active, setActive] = useState<number>(0);
   const sectionHeight = "500vh";
-  const [lastItemWidth, setLastItemWidth] = useState<string>("0px");
+  const [lastItemWidth, setLastItemWidth] = useState<number>(DEFAULT_WIDTH);
   const [scrollLeft, setScrollLeft] = useState(0);
 
 
@@ -82,96 +85,160 @@ export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
   }, [ref]);
 
 
-  const scrollTrigger = useCallback(
-    () => {
+  const widths: number[] = useMemo(() => {
       if (ref.current && data && typeof window !== "undefined") {
         const flexContainerEl = ref.current.querySelector("div.motion-div");
         if (flexContainerEl) {
-          const boundingClientRect = flexContainerEl.getBoundingClientRect();
-          const leftPosition = boundingClientRect.x;
-
-          const positions = [...flexContainerEl.querySelectorAll("div")].map(item => item.getBoundingClientRect().x);
-          const leftIndentValue = Number(leftIndent.replaceAll("px", "").replaceAll("#", ""));
-
-          setLastItemWidth(`${([...flexContainerEl.querySelectorAll("div")]?.[data.length - 1]?.getBoundingClientRect()?.width ?? "0")}px`);
-
-          const index = positions.findIndex(item => item + 20 > leftIndentValue);
-
-
-          // if(index >= data?.length - 1){
-          //   setEndAnimationPosition(window.scrollY);
-          // }
-
-          if (index > data.length - 1) {
-            setActive(data.length - 1);
-            return;
-          }
-
-          if (index <= 0) {
-            if (leftPosition < -1000) {
-              setActive(data.length - 1);
-            } else {
-              setActive(0);
-            }
-            return;
-          }
-          setActive(index);
-
+          setLastItemWidth(([...flexContainerEl.querySelectorAll("div")]?.[data.length - 1]?.clientWidth ?? 0));
+          const widths = [...flexContainerEl.querySelectorAll("div")].map(item => item.clientWidth);
+          return widths;
         }
+        return [];
+      } else {
+        return Array.from({ length: data?.length ?? 0 }).fill(DEFAULT_WIDTH) as number[];
       }
     },
-    [leftIndent]
-  );
+    [data, ref]);
+  const scrollWidth: number = useMemo(() => {
+      let summaryWidth = 0;
+      widths.forEach((width) => {
+        summaryWidth += width + GAP;
+      });
+
+      return summaryWidth - GAP;
+    },
+    [widths]);
+
+  // const scrollTrigger = useCallback(
+  //   () => {
+  //     if (ref.current && data && typeof window !== "undefined") {
+  //       const flexContainerEl = ref.current.querySelector("div.motion-div");
+  //       if (flexContainerEl) {
+  //         const boundingClientRect = flexContainerEl.getBoundingClientRect();
+  //         const leftPosition = boundingClientRect.x;
+  //
+  //         const positions = [...flexContainerEl.querySelectorAll("div")].map(item => item.getBoundingClientRect().x);
+  //         const leftIndentValue = Number(leftIndent.replaceAll("px", "").replaceAll("#", ""));
+  //
+  //         setLastItemWidth(`${([...flexContainerEl.querySelectorAll("div")]?.[data.length - 1]?.getBoundingClientRect()?.width ?? "0")}px`);
+  //
+  //         const index = positions.findIndex(item => item + 20 > leftIndentValue);
+  //
+  //
+  //         // if(index >= data?.length - 1){
+  //         //   setEndAnimationPosition(window.scrollY);
+  //         // }
+  //
+  //         if (index > data.length - 1) {
+  //           setActive(data.length - 1);
+  //           return;
+  //         }
+  //
+  //         if (index <= 0) {
+  //           if (leftPosition < -1000) {
+  //             setActive(data.length - 1);
+  //           } else {
+  //             setActive(0);
+  //           }
+  //           return;
+  //         }
+  //         setActive(index);
+  //
+  //       }
+  //     }
+  //   },
+  //   [leftIndent]
+  // );
 
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && typeof document !== "undefined") {
-      let padding = 64;
-      let cols = 2;
-      let summarycols = 6;
-      if (componentSize < 900) {
-        padding = 16;
-        cols = 0;
-        summarycols = 1;
+  const getActiveIndex = (widthsArray: number[], gap: number, currentScroll: number) => {
+    if (currentScroll === 0) return 0;
+    if (currentScroll <= 25) return 0; // Костыль чисто, чтобы по кайфу было
+    let totalWidth = 0;
+    for (let i = 0; i < widthsArray.length; i++) {
+      if (currentScroll > totalWidth && currentScroll <= totalWidth + widthsArray[i] + gap) {
+        if (i + 1 < widthsArray.length) {
+          return i + 1; // Индексы начинаются с 1, так как уже учтен случай с 0
+        } else {
+          return widthsArray.length - 1;
+        }
       }
-      if (componentSize < 1200 && componentSize >= 900) {
-        padding = 24;
-        cols = 1;
-        summarycols = 6;
-      }
-      if (componentSize >= 1200) {
-        padding = 64;
-        cols = 2;
-        summarycols = 6;
-      }
-
-      const colSize = (componentSize - (padding * 2)) / summarycols;
-      const calcLeftIndent = padding + cols * colSize;
-      setLeftIndent(`${calcLeftIndent}px`);
-
+      totalWidth += widthsArray[i] + gap;
     }
-  }, [componentSize]);
+    return widthsArray.length - 1; // Если значение currentScroll превышает сумму всех элементов и промежутков
+
+  };
+
+  const scrollTrigger = useCallback((currentScroll: number) => {
+    const index = getActiveIndex(widths, GAP, currentScroll);
+    setActive(index);
+  }, [widths]);
+
+
+  // useEffect(() => {
+  //   if (typeof window !== "undefined" && typeof document !== "undefined") {
+  //     let padding = 64;
+  //     let cols = 2;
+  //     let summarycols = 6;
+  //     if (componentSize < 900) {
+  //       padding = 16;
+  //       cols = 0;
+  //       summarycols = 1;
+  //     }
+  //     if (componentSize < 1200 && componentSize >= 900) {
+  //       padding = 24;
+  //       cols = 1;
+  //       summarycols = 6;
+  //     }
+  //     if (componentSize >= 1200) {
+  //       padding = 64;
+  //       cols = 2;
+  //       summarycols = 6;
+  //     }
+  //
+  //     const colSize = (componentSize - (padding * 2)) / summarycols;
+  //     const calcLeftIndent = padding + cols * colSize;
+  //     setLeftIndent(`${calcLeftIndent}px`);
+  //
+  //   }
+  // }, [componentSize]);
 
 
   useEffect(() => {
-    if((componentSize ?? 0) > 900) {
+    if ((componentSize ?? 0) > 900) {
       // const maxScroll = (-1 * (ref.current?.clientWidth ?? 0)) + Number(leftIndent.replaceAll("px", "")) + Number(lastItemWidth.replaceAll("px", ""));
       // console.log( Number(leftIndent.replaceAll("px", "")),Number(lastItemWidth.replaceAll("px", "")),  (-1 * (ref.current?.clientWidth ?? 0))  , -1 * scrollLeft);
       // console.log(( Number(leftIndent.replaceAll("px", "")) + Number(lastItemWidth.replaceAll("px", "")) / 2)*2 )
-      if (componentSize > 1200) {
-        const calc = (Number(leftIndent.replaceAll("px", "")) + Number(lastItemWidth.replaceAll("px", "")) / 2) * 2;
-        const scrollTo = scrollLeft < calc ? scrollLeft : calc;
-        const scrollTo2 = scrollTo > 0 ? scrollTo : 0;
-        x.set(-scrollTo2);
-      } else {
-        const calc = componentSize;
-        const scrollTo = scrollLeft < calc ? scrollLeft : calc;
 
-        const scrollTo2 = scrollTo > 0 ? scrollTo : 0;
-        x.set(-scrollTo2);
+      if (scrollLeft < 0) {
+        setScrollLeft(0);
+        setActive(0);
+        x.set(0);
+      } else {
+        const maxAvailableScroll = scrollWidth - lastItemWidth;
+        if (scrollLeft > maxAvailableScroll) {
+          setScrollLeft(maxAvailableScroll);
+          x.set(-maxAvailableScroll);
+        } else {
+
+          x.set(-scrollLeft);
+        }
       }
 
-      scrollTrigger();
+      // if (componentSize > 1200) {
+      //   const calc = (Number(leftIndent.replaceAll("px", "")) + Number(lastItemWidth.replaceAll("px", "")) / 2) * 2;
+      //   const scrollTo = scrollLeft < calc ? scrollLeft : calc;
+      //   const scrollTo2 = scrollTo > 0 ? scrollTo : 0;
+      //   x.set(-scrollTo2);
+      // } else {
+      //   const calc = componentSize;
+      //   const scrollTo = scrollLeft < calc ? scrollLeft : calc;
+      //
+      //   const scrollTo2 = scrollTo > 0 ? scrollTo : 0;
+      //   x.set(-scrollTo2);
+      // }
+
+      scrollTrigger(scrollLeft);
     }
   }, [scrollLeft]);
 
@@ -180,29 +247,30 @@ export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
       {/*<style dangerouslySetInnerHTML={{ __html: style }} />*/}
       <div>
         {textBlock && <GridText textBlock={textBlock} />}
-        <div className="relative w-full overflow-hidden" ref={ref}>
-          <motion.div
-            className={`flex flex-nowrap motion-div max-w-full overflow-x-auto sm:overflow-x-visible hide-scrollbar gap-12 lg:gap-[115px] pt-20 pb-10 lg:py-20  `}
+        <Container className={"overflow-hidden"}>
+          <div className="relative w-full overflow-visible grid grid-cols-1  sm:grid-cols-6 gap-x-5 gap-y-10" ref={ref}>
+            <motion.div
+              className={`flex flex-nowrap motion-div max-w-full overflow-x-auto md:overflow-x-visible hide-scrollbar gap-12 lg:gap-[${GAP}px] pt-20 pb-10 lg:py-20 sm:col-start-3`}
 
-            style={{
-              x: springX,
-              paddingLeft: leftIndent
-            }}
-          >
-            {(data ?? []).map((item, i) =>
-              <div key={i}
-                   className={`${i === active ? "opacity-100" : "opacity-20"} transition-opacity duration-700 scroll-numbers-item`}
-                   data-tina-field={item ? tinaField(item) : undefined}>
-                <p
-                  className="text-[70px] md:text-[90px] lg:text-[120px] leading-[100%] mb-5 font-medium "> {item?.text} </p>
-                <p
-                  className="text-black text-lg  lg:text-2xl font-normal leading-tight lg:leading-snug whitespace-nowrap">{item?.subtext} </p>
+              style={{
+                x: springX
+              }}
+            >
+              {(data ?? []).map((item, i) =>
+                <div key={i}
+                     className={`${i === active ? "opacity-100" : "opacity-20"} transition-opacity duration-700 scroll-numbers-item`}
+                     data-tina-field={item ? tinaField(item) : undefined}>
+                  <p
+                    className="text-[70px] md:text-[90px] lg:text-[120px] leading-[100%] mb-5 font-medium "> {item?.text} </p>
+                  <p
+                    className="text-black text-lg  lg:text-2xl font-normal leading-tight lg:leading-snug whitespace-nowrap">{item?.subtext} </p>
 
-              </div>
-            )}
-          </motion.div>
+                </div>
+              )}
+            </motion.div>
 
-        </div>
+          </div>
+        </Container>
       </div>
     </section>
   );
