@@ -6,5 +6,6 @@ export type GridProps = {
   desktopColumns?: GridProps["tabletColumns"] | 7 | 8 | 9 | 10 | 11 | 12  | null;
   children?: React.ReactNode
   className?: string;
+  id?: string;
   ref?: RefObject<HTMLDivElement> | null;
 }

@@ -9,6 +9,7 @@ const Grid: ForwardRefRenderFunction<HTMLDivElement, GridProps> =
      tabletColumns = 6,
      desktopColumns = 6,
      children,
+     id,
      className
    }, ref) => {
     const mobileColumnsStyle = cn(
@@ -43,7 +44,8 @@ const Grid: ForwardRefRenderFunction<HTMLDivElement, GridProps> =
 
     return (
       <div className={`grid  ${mobileColumnsStyle} ${tabletColumnsStyle} ${desktopColumnsStyle} ${className}`}
-           ref={ref}>
+           ref={ref}
+           id={id}>
         {children}
       </div>
     );

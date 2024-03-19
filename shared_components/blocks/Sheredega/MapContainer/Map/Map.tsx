@@ -262,6 +262,8 @@ export const Map = ({
         }
       };
 
+      let mutexClick = false;
+
       let activeMainLayerId: number | null = null;
       const updateMainLayer = (active: number | null) => {
         try {
@@ -342,42 +344,64 @@ export const Map = ({
         return [avgLon, avgLat];
       };
 
-      map.current?.on("click", "fill-states", function(e: any) {
-
-
-        // const lat = Math.round((e?.lngLat?.lat ?? 0) * 100) / 100;
-        // const lng = Math.round((e?.lngLat?.lng ?? 0) * 100) / 100;
-        // const region = (memedRussianPoints ?? []).find(item =>
-        //   item?.lat && item?.lng
-        //   && Math.abs(Math.round((item?.lat ?? 0) * 100) / 100 - lat) < 0.9
-        //   && Math.abs(Math.round((item?.lng ?? 0) * 100) / 100 - lng) < 0.9
-        // )?.region?.[0];
-        // if (region) {
-        //   // Значит кликнули на unclustered-point
-        //   setRegionFilter(null);
-        //   updateMainLayer(null);
-        //   return;
-        // }
-        const coords = e.features[0].geometry.coordinates[0].length > 1 ? e.features[0].geometry.coordinates[0] : e.features[0].geometry.coordinates[0][0];
-
-        const newRegionFilterValue = e.features[0].properties?.en_name ?? null;
-        // setTooltipFilter(null);
-        setRegionFilter(prevState => prevState === newRegionFilterValue ? null : newRegionFilterValue);
-
-
-        updateMainLayer(e.features[0].properties.id);
-
+      map.current?.on("click", "fill-states", function(eventInitial: any) {
+        const e = { ...eventInitial };
         setTimeout(() => {
-          try {
-            // map.current?.easeTo({
-            //   center: getPolygonCenter(coords)
-            // });
-            setProjectListOpen(true);
-          } catch (e) {
-            // nothing
+
+          if (mutexClick) {
+            console.log("no click on fill-states");
+            return;
           }
 
-        }, 100);
+          // const lat = Math.round((e?.lngLat?.lat ?? 0) * 100) / 100;
+          // const lng = Math.round((e?.lngLat?.lng ?? 0) * 100) / 100;
+          // const region = (memedRussianPoints ?? []).find(item =>
+          //   item?.lat && item?.lng
+          //   && Math.abs(Math.round((item?.lat ?? 0) * 100) / 100 - lat) < 0.9
+          //   && Math.abs(Math.round((item?.lng ?? 0) * 100) / 100 - lng) < 0.9
+          // )?.region?.[0];
+          // if (region) {
+          //   // Значит кликнули на unclustered-point
+          //   setRegionFilter(null);
+          //   updateMainLayer(null);
+          //   return;
+          // }
+          mutexClick = true;
+          // const coords = e.features[0].geometry.coordinates[0].length > 1 ? e.features[0].geometry.coordinates[0] : e.features[0].geometry.coordinates[0][0];
+
+          const newRegionFilterValue = e.features[0].properties?.en_name ?? null;
+          // setTooltipFilter(null);
+
+          let mainLayerId = e.features[0].properties.id;
+
+          setRegionFilter(prevState => {
+            if (prevState === newRegionFilterValue) {
+              mainLayerId = null;
+              return null;
+            } else {
+              return newRegionFilterValue;
+            }
+          });
+          updateMainLayer(mainLayerId);
+
+          setTimeout(() => {
+            try {
+              // map.current?.easeTo({
+              //   center: getPolygonCenter(coords)
+              // });
+              setTooltipFilter(null);
+              setProjectListOpen(true);
+            } catch (e) {
+              // nothing
+            }
+
+          }, 100);
+
+          setTimeout(() => {
+            mutexClick = false;
+          }, 300);
+
+        }, 50);
       });
 
 
@@ -423,6 +447,11 @@ export const Map = ({
         showTooltip(e);
       });
       map.current?.on("click", "unclustered-point", (e: any) => {
+        // if (mutexClick) {
+        //   console.log("no click on unclustered-point");
+        //   return;
+        // }
+        e.preventDefault();
         // console.log("unclustered-point");
         // const coords = e.features[0].geometry.coordinates.length > 1 ? e.features[0].geometry.coordinates : e.features[0].geometry.coordinates[0];
         // // console.log(coords);
@@ -432,21 +461,37 @@ export const Map = ({
         //   (item?.lat ?? 0) * 100) / 100 - lat < 0.1 && Math.round((item?.lng ?? 0) * 100) / 100 - lng < 0.1
         // )?.region?.[0];
         // tooltipActiveRegion = region;
+        mutexClick = true;
         const title = e.features[0].properties.title;
 
 
         updateMainLayer(null);
-        setTimeout(() => {
-          try {
 
-            updateMainLayer(null);
-            setTooltipFilter(title);
-            setProjectListOpen(true);
-            e.stopPropagation();
-          } catch (e) {
-            // nothing
-          }
+        const kostyulSetActivePoint = () => {
+
+          updateMainLayer(null);
+          setTooltipFilter(title);
+          setProjectListOpen(true);
+        };
+
+        setTimeout(() => {
+          kostyulSetActivePoint();
+        }, 20);
+        setTimeout(() => {
+          kostyulSetActivePoint();
+        }, 25);
+        setTimeout(() => {
+          kostyulSetActivePoint();
+        }, 30);
+        setTimeout(() => {
+          kostyulSetActivePoint();
+        }, 50);
+        setTimeout(() => {
+          kostyulSetActivePoint();
         }, 100);
+        setTimeout(() => {
+          mutexClick = false;
+        }, 300);
       });
 
 
@@ -454,12 +499,12 @@ export const Map = ({
       map.current?.on("zoom", () => {
         setTooltipFilter(null);
         // setProjectListOpen(false);
-        updateProjectListOpen(false);
+        // updateProjectListOpen(false);
         // updateCameraBound(map.current?.getBounds());
       });
       map.current?.on("move", () => {
         setTooltipFilter(null);
-        updateProjectListOpen(false);
+        // updateProjectListOpen(false);
         // setProjectListOpen(false);
         // updateCameraBound(map.current?.getBounds());
       });
@@ -481,9 +526,7 @@ export const Map = ({
       map.current?.easeTo({
         center: center
       });
-      setTimeout(() => {
-        updateProjectListOpen(true);
-      }, 1000);
+      updateProjectListOpen(true);
       // setProjectListOpen(true);
     }
   };

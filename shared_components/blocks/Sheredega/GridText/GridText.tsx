@@ -8,7 +8,7 @@ import { useAnimations } from "@/global/useAnimations";
 import { RichTextComponent } from "@/global/schemas/richTextFieldSchema";
 
 
-export const GridText = ({ block, grid, textBlock, indent, uniquePath, customCss, customComponent }: GridTextProps) => {
+export const GridText = ({ block, grid, textBlock, indent, uniquePath, customCss, customComponent, id }: GridTextProps) => {
 
   const {
     textStart = "3",
@@ -73,7 +73,7 @@ export const GridText = ({ block, grid, textBlock, indent, uniquePath, customCss
    */
   return (
     <Container indent={indent} uniquePath={uniquePath} customCss={customCss}>
-      <Grid {...grid} ref={textBlockRef} className="gap-x-5 gap-y-10">
+      <Grid {...grid} ref={textBlockRef} className="gap-x-5 gap-y-10" id={id}>
         {title &&
           (<h2
             className={`${titleClasses} ${textBlockAnimationClass}  leading-[1.1em]  font-medium col-start-1 md:block`}

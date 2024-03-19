@@ -8,7 +8,7 @@ import { tinaField } from "tinacms/dist/react";
 
 export const Content = ({ data }: { data: PageBlocksContent }) => {
   return (
-    <Section>
+    <Section id={data?.id ?? undefined}>
       <Container
         className={`prose prose-lg rte-text`}
         data-tina-field={tinaField(data, "body")}
@@ -31,6 +31,11 @@ export const contentBlockSchema: TinaTemplate = {
     }
   },
   fields: [
+    {
+      type: "string",
+      label: "ID",
+      name: "id"
+    },
     {
       type: "rich-text",
       label: "Body",

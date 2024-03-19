@@ -44,7 +44,7 @@ const ProjectList = ({ projects, isOpen, setOpen, toggleOpen, mapGoTo }: {
   const showProjects = useMemo(() => projects, [projects]);
   return (
     <div
-      className={`w-full max-h-full min-h-[90px] max-h-[1000px] flex-col justify-start items-start  inline-flex bg-white border border-black border-opacity-10 p-6 lg:p-[26px] pb-0 lg:pb-0 pointer-events-auto pr-[10px]`}>
+      className={`w-full  min-h-[90px] max-h-[1000px] flex-col justify-start items-start  inline-flex bg-white border border-black border-opacity-10 p-6 lg:p-[26px] pb-0 lg:pb-0 pointer-events-auto pr-[10px]`}>
       <div className="w-full justify-between items-center inline-flex cursor-pointer pb-6 lg:pb-[26px]"
            onClick={toggleOpen}>
         <div className="text-black text-xl md:text-2xl lg:text-[28px] h-[32px] font-medium leading-9">География

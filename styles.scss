@@ -572,14 +572,23 @@ body {
   }
 }
 
+.menu-absolute {
+  margin-right: -6.5px;
+}
+
 .no-scroll {
   overflow: hidden;
-  padding-right: 7px;
+  padding-right: 6.5px;
 
   .menu-height-container {
-    padding-right: 7px;
+    padding-right: 6.5px;
+  }
+
+  .menu-absolute {
+    margin-right: 0;
   }
 }
+
 
 html a {
   transition: all 0.3s ease-in-out;

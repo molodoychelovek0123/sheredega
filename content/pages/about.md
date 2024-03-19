@@ -62,8 +62,8 @@ blocks:
       shiftLeft: 40
       indentLeft: 38
     _template: aboutPersonStatic
-  - body: |
-      #### &#x20;**Команда**
+  - id: team
+    body: "\\\n\_\n\n#### **Команда**\n"
     _template: content
   - container: true
     indent:

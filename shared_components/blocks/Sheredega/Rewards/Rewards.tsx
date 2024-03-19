@@ -28,6 +28,6 @@ export const Rewards = ({
   };
   return (
     <GridText customComponent={RewardsItemMemo} textBlock={kostyilTextBlock} grid={grid} indent={indent}
-              uniquePath={`${uniquePath ?? ""}-rewards`} customCss={customCss} />
+              uniquePath={`${uniquePath ?? ""}-rewards`} customCss={customCss} id="rewards" />
   );
 };

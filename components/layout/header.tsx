@@ -7,6 +7,8 @@ import { GlobalHeader, GlobalHeaderMenu, Maybe } from "../../tina/__generated__/
 import { useScrollDirection } from "@/global/hooks/useScrollDirection";
 import AnimateHeight from "react-animate-height";
 
+
+const DURATION = 150;
 export const Header = ({ data }: { data: GlobalHeader }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [menuHeight, setMenuHeight] = React.useState<number>(0);
@@ -19,7 +21,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
     const currentPath = router.asPath;
     const pathWoAnchors = currentPath.split("#")[0];
 
-    setHideMargin(pathWoAnchors === "" || pathWoAnchors === "/" || pathWoAnchors.includes("/projects/"))
+    setHideMargin(pathWoAnchors === "" || pathWoAnchors === "/" || pathWoAnchors.includes("/projects/"));
   }, [router]);
 
 
@@ -34,11 +36,14 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
 
   useEffect(() => {
     if (typeof document !== "undefined") {
-      if (menuHeight === 100) {
-        document.querySelector("body")?.classList.add("no-scroll");
-      } else {
-        document.querySelector("body")?.classList.remove("no-scroll");
-      }
+
+      setTimeout(() => {
+        if (menuHeight === 100) {
+          document.querySelector("body")?.classList.add("no-scroll");
+        } else {
+          document.querySelector("body")?.classList.remove("no-scroll");
+        }
+      }, DURATION);
     }
   }, [menuHeight]);
 
@@ -65,7 +70,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
     <>
       <AnimateHeight height={`${menuHeight}%`}
                      className={"w-full h-full menu-height-container fixed top-0 left-0 bg-white z-50"}
-                     disableDisplayNone={true} ref={ref}>
+                     disableDisplayNone={true} ref={ref} duration={DURATION}>
         <Container uniquePath={"header-menu"}
                    className={" pb-6 pt-[30px] sm:pt-10 sm:pb-10 h-[100vh] relative max-w-full overflow-y-scroll"}>
           <div className={"relative"}>
@@ -83,7 +88,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
                   const data = (
                     <React.Fragment key={JSON.stringify(item ?? { data: index }) ?? index}>
                       <div
-                        className={`col-start-1 md:col-end-5 border-t-black border-t border-solid pb-4 opacity-10 ${index > 0}  ${(prevItem?.items?.length ?? 0) > 0 ? "mt-[30px]" : "mt-[20px]"}  md:mt-10`}></div>
+                        className={`col-start-1 md:col-end-5 border-t-black border-t border-solid pb-4 opacity-10  ${(prevItem?.items?.length ?? 0) > 0 ? "mt-[30px]" : "mt-[20px]"}  md:mt-10`}></div>
 
                       <div
                         className={`col-start-1 md:col-end-2 ${(item?.items?.length ?? 0) > 0 ? "pb-[30px]" : ""} md:pb-10`}>
@@ -120,7 +125,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
             </div>
           </div>
           {menuHeight > 0 && <div
-            className={"fixed bottom-0 right-0 max-h-[43vh] sm:max-h-full max-w-[50vw] sm:max-w-[42.153vw] w-full h-full pt-[89px] pointer-events-none"}>
+            className={"fixed bottom-0 right-0 max-h-[43vh] sm:max-h-full max-w-[50vw] sm:max-w-[42.153vw] w-full h-full pt-[89px] pointer-events-none menu-absolute"}>
             <div className={"relative w-full h-full menu-fingerprint"}>
               <img src={"/assets/menu-bg.svg"} alt="fingerprint"
                    className={"h-full w-full object-contain object-right-bottom"} />

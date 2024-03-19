@@ -36,8 +36,8 @@ export const Footer = () => {
           <div className="col-start-7 col-end-9 flex-col justify-start items-start gap-5 inline-flex">
             <a href={"/about#partners"}
                className="text-white text-xl font-normal leading-normal hover:opacity-40">Партнеры</a>
-            <a href={"/about#rewards"}
-               className="text-white text-xl font-normal leading-normal hover:opacity-40">Награды</a>
+            <a href={"/publications"}
+               className="text-white text-xl font-normal leading-normal hover:opacity-40">Публикации</a>
             <a href={"/contacts#geography"} className="text-white text-xl font-normal leading-normal hover:opacity-40">География
               проектов</a>
 
