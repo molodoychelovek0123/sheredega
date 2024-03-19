@@ -8,7 +8,7 @@ import { ReactNode } from "react";
 export type GridTextProps = {
   block?: any| null;
   grid?: GridProps| null;
-  id?: string;
+  id?: string | null;
   textBlock?: {
     hideTitleOnMobile?: boolean| null;
     title?: string| null;
