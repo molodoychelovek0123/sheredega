@@ -4,6 +4,8 @@ query pageQuery {
       edges {
         node {
           title
+          titleMap
+          titleList
           date
           hashtags
           heroImg

@@ -11,18 +11,20 @@ export const Hero = ({ block, images, title }: HeroProps) => {
   const [active, setActive] = useState(0);
   const imageTotal = (images?.length ?? 0);
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActive(prevState => {
-        if (prevState + 1 >= imageTotal) {
-          return 0;
-        }
-        return prevState + 1;
-      });
-    }, 5000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+    if (imageTotal > 0) {
+      const timer = setInterval(() => {
+        setActive(prevState => {
+          if (prevState + 1 >= imageTotal) {
+            return 0;
+          }
+          return prevState + 1;
+        });
+      }, 5000);
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [imageTotal]);
 
 
   return (
@@ -33,7 +35,7 @@ export const Hero = ({ block, images, title }: HeroProps) => {
             <img key={index}
                  className={`image-container absolute top-0 left-0 w-full h-full transition-opacity duration-500 object-cover ${index !== active ? "opacity-0" : "opacity-100"}`}
                  src={item?.src ?? "https://via.placeholder.com/1920x1080"}
-                 alt={item?.alt ??"Альтернативный текст" } />
+                 alt={item?.alt ?? "Альтернативный текст"} />
 
           )
         )}
@@ -42,8 +44,9 @@ export const Hero = ({ block, images, title }: HeroProps) => {
         size="large"
         className="relative h-full w-full"
       >
-        <Title  size={title?.size ?? "100"} seoSize={title?.seoSize ?? "1"} color={title?.color ?? "black"} data-tina-field={tinaField(block, "title")}
-                className={"mt-auto absolute bottom-0"}
+        <Title size={title?.size ?? "100"} seoSize={title?.seoSize ?? "1"} color={title?.color ?? "black"}
+               data-tina-field={tinaField(block, "title")}
+               className={"mt-auto absolute bottom-0"}
         > {heading} </Title>
 
       </Container>

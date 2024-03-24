@@ -39,27 +39,40 @@ export const MAP_INLINE_STYLES = `
           position: relative;
       }
       .mapboxgl-popup-content {
-          box-sizing: border-box;
+             box-sizing: border-box;
           padding: 10px 30px 12px;
           background: #FFFFFF;
           border: 1px solid rgba(0, 0, 0, 0.15);
           border-radius: 3px;
-          
           font-family: 'Grato Grotesk DEMO';
           font-style: normal;
           font-weight: 500;
-          font-size: 15px;
+          font-size: 13px;
           line-height: 120%;
           text-align: center;
           color: #000000;
+          box-sizing: border-box;
+          background: #FFFFFF;
+          border: 1px solid rgba(0, 0, 0, 0.15);
+          border-radius: 3px;
+          padding: 5px 12px 5px 12px;
+          
       }
       
       
       
       button.mapboxgl-popup-close-button {
-          scale: 1.6;
-          right: 5px;
-          top: 1px;
+          scale: 0.626;
+          right: 2px;
+          top: 2px;
+          height: 8px;
+          width: 8px;
+          user-select: none;
+          outline: 0;
+          border: 0;
+          font-weight: 800;
+          opacity: 0.4;
+          line-height: 0;
       }
       
       button.mapboxgl-popup-close-button:hover {

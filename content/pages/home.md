@@ -4,8 +4,6 @@ blocks:
   - images:
       - src: /uploads/slider-image-0.jpg
         alt: 'Sheredega - Hero image '
-      - src: ''
-        alt: 'Sheredega Hero Image - 2 '
     title:
       heading: Мы — городские психологи от архитектуры
       color: white

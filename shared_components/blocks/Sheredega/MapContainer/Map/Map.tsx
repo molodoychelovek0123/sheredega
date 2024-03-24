@@ -179,7 +179,7 @@ export const Map = ({
 
 
       map.current?.loadImage(
-        "http://localhost:3000/uploads/point.png",
+        "/assets/point-selected.png",
         (error: any, image: any) => {
           console.log(error, image);
           if (error) throw error;
@@ -187,7 +187,7 @@ export const Map = ({
         }
       );
 
-      const updatePointsLayer = () => {
+      const updatePointsLayer = (activeCity?: number | null) => {
         try {
           removeLayer("clusters");
           removeLayer("cluster-count");
@@ -254,7 +254,13 @@ export const Map = ({
             source: "points",
             filter: ["!", ["has", "point_count"]],
             layout: {
-              "icon-image": "point", // reference the image
+              // "icon-image": "point", // reference the image
+              "icon-image": [
+                "case",
+                ["==", ["get", "id"], activeCity],
+                "cat",
+                "point"
+              ],
               "icon-size": 1
               // "symbol-z-order": "viewport-y"
             }
@@ -265,7 +271,7 @@ export const Map = ({
       let mutexClick = false;
 
       let activeMainLayerId: number | null = null;
-      const updateMainLayer = (active: number | null) => {
+      const updateMainLayer = (active: number | null, activeCity: number | null = null) => {
         try {
           removeLayer("fill-states");
           removeLayer("state-borders");
@@ -323,7 +329,7 @@ export const Map = ({
           });
         }
 
-        updatePointsLayer();
+        updatePointsLayer(activeCity);
       };
 
       updateMainLayer(null);
@@ -463,13 +469,14 @@ export const Map = ({
         // tooltipActiveRegion = region;
         mutexClick = true;
         const title = e.features[0].properties.title;
+        const cityId = e.features[0].properties.id;
 
 
-        updateMainLayer(null);
+        updateMainLayer(null, cityId);
 
         const kostyulSetActivePoint = () => {
 
-          updateMainLayer(null);
+          updateMainLayer(null, cityId);
           setTooltipFilter(title);
           setProjectListOpen(true);
         };

@@ -166,6 +166,16 @@ const Project: Collection = {
       required: true
     },
     {
+      type: "string",
+      label: "Заголовок в географии проектов",
+      name: "titleMap",
+    },
+    {
+      type: "string",
+      label: "Заголовок в списке проектов",
+      name: "titleList",
+    },
+    {
       type: "datetime",
       label: "Дата публикации",
       name: "date",

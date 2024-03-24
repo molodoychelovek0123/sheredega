@@ -12,6 +12,8 @@ export type ProjectItem = {
   lat?: number;
   tooltip?: string;
   title?: string;
+  titleMap?: string;
+  titleList?: string;
   city?: string;
   year?: string;
   link?: string;
@@ -77,7 +79,7 @@ const ProjectList = ({ projects, isOpen, setOpen, toggleOpen, mapGoTo }: {
                          src={item?.image?.src ?? "https://via.placeholder.com/450x450"}
                          alt={item?.image?.alt ?? "Проект"} />
                     <div className="flex-col justify-start items-start gap-2.5 inline-flex">
-                      <div className="text-black text-xl font-medium  leading-normal">{item?.title}</div>
+                      <div className="text-black text-xl font-medium  leading-normal">{item?.titleMap ?? item?.titleList ??item?.title }</div>
                       <div className="justify-start items-start gap-1.5 inline-flex">
                         <div className="opacity-30 text-black text-base font-semibold  leading-tight">{item?.year}</div>
                         <div className="opacity-30 text-black text-base font-medium  leading-tight">{item?.city}</div>
