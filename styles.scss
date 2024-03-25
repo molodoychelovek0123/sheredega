@@ -212,6 +212,12 @@ body, .font-sans {
   blockquote::after {
     content: '\201D';
   }
+
+  ol, ul, li {
+    @media (max-width: 600px) {
+      list-style-position: inside;
+    }
+  }
 }
 
 
@@ -629,4 +635,8 @@ html a {
 .hover-underline-animation:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+.overflow-wrap-text {
+  overflow-wrap: break-word;
 }

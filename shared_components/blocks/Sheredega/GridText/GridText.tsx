@@ -76,7 +76,7 @@ export const GridText = ({ block, grid, textBlock, indent, uniquePath, customCss
       <Grid {...grid} ref={textBlockRef} className="gap-x-5 gap-y-10" id={id}>
         {title &&
           (<h2
-            className={`${titleClasses} ${textBlockAnimationClass}  leading-[1.1em]  font-medium col-start-1 md:block`}
+            className={`${titleClasses} ${textBlockAnimationClass}  leading-[1.1em]  font-medium col-start-1 md:block overflow-wrap-text`}
 
           >
             <span className="text-inner" data-tina-field={block ? tinaField(block, "textBlock.title") : undefined}>
