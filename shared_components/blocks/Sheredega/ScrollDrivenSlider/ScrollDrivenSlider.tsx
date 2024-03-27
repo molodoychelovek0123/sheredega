@@ -4,6 +4,9 @@ import { CSSProperties, RefObject, useEffect, useRef } from "react";
 import { BaseSectionProps } from "@/shared_components/blocks/Sheredega/constants";
 import md5 from "md5";
 import { MyImageProps } from "@/shared_components/utils/imageDefaultSchema";
+import Lightbox from "react-spring-lightbox";
+import { LightBoxImage, useLightbox } from "@/global/hooks/useLightbox";
+import { ArrowButton } from "@/components/ArrowButton";
 
 type Props = {
   images?: (MyImageProps)[] | null;
@@ -89,54 +92,78 @@ export const ScrollDrivenSlider = ({
 
   const id = `slider__${md5(`${uniquePath} + ${images?.[0]?.src}`)}`;
 
+  const filteredImages = (images?.filter(Boolean) ?? []) as LightBoxImage;
+  const { onNext, onPrev, currentIndex, isOpen, setIsOpen, setCurrentIndex } = useLightbox(filteredImages);
 
   const bulletIndex = view === "1" ? undefined : -1 * (Number(view) - 1);
   return (
-    <Container indent={indent} uniquePath={uniquePath} customCss={customCss} hide={!container}>
-      <div
-        style={{ "--gap": `${gap}px`, marginRight: view !== "1" ? "calc(var(--gap) * -1)" : 0 } as CSSProperties}>
-        <ul
-          ref={ref}
-          className={`scrolldriven-slides ${id}`}>
-          {images?.map((image, index) => {
+    <>
+      <Lightbox currentIndex={currentIndex} images={filteredImages} isOpen={isOpen} onNext={onNext} onPrev={onPrev}
+                onClose={() => setIsOpen(false)}
+                renderPrevButton={({ canPrev }) => (
+                  <ArrowButton
+                    position="left"
+                    onClick={onPrev}
+                    disabled={!canPrev}
+                  />
+                )}
+                renderNextButton={({ canNext }) => (
+                  <ArrowButton position="right" onClick={onNext} disabled={!canNext} />
+                )}
+                // renderImageOverlay={() => <div
+                //   className={"fixed top-0 left-0 w-full h-full bg-black opacity-30 -z-1"} />}
+      />
+      <Container indent={indent} uniquePath={uniquePath} customCss={customCss} hide={!container}>
+        <div
+          style={{ "--gap": `${gap}px`, marginRight: view !== "1" ? "calc(var(--gap) * -1)" : 0 } as CSSProperties}>
+          <ul
+            ref={ref}
+            className={`scrolldriven-slides ${id}`}>
+            {filteredImages?.map((image, index) => {
 
-            if(!image) {
-              return null;
-            }
-            return (
+              if (!image) {
+                return null;
+              }
+              return (
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                <li key={image?._tina_metadata?.name ?? index} name={`${id}__${index}`}
+                    className={`scrolldriven-slide scrolldriven-slide-${view} `}
+                    data-tina-field={tinaField(image)}>
+                  <div className={`scrolldriven-container-${aspectRatio} relative w-full`}>
+                    <img src={image?.src ?? "https://via.placeholder.com/500x500"}
+                         alt={image.alt ?? "Альтернативный текст"} draggable={false} className={`scrolldriven-image`}
+                         onClick={() => {
+                           setCurrentIndex(index);
+                           setIsOpen(true);
+                         }}
+                      // onClick={typeof window !== "undefined" && typeof image.link === "string" ? () => window.open(image?.link ?? "/", "_blank") : undefined}
+                    />
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div className="w-full h-2 justify-center items-start gap-2 inline-flex">
+
+          {(images ?? []).slice(0, bulletIndex).map((image, index) => (
+            <a
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              <li key={image?._tina_metadata?.name ?? index} name={`${id}__${index}`}
-                  className={`scrolldriven-slide scrolldriven-slide-${view} `}
-                  data-tina-field={tinaField(image)}>
-                <div className={`scrolldriven-container-${aspectRatio} relative w-full`}>
-                  <img src={image?.src ?? "https://via.placeholder.com/500x500"} alt={image.alt ?? "Альтернативный текст"} draggable={false} className={`scrolldriven-image`}
-                       onClick={typeof window !== "undefined" && typeof image.link === 'string' ? () => window.open(image?.link ?? "/", "_blank") : undefined} />
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="w-full h-2 justify-center items-start gap-2 inline-flex">
-
-        {(images ?? []).slice(0, bulletIndex).map((image, index) => (
-          <a
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            key={image?._tina_metadata?.name ?? index}
-            className="w-2 h-2 bg-gray-800 rounded-full opacity-20 hover:opacity-80" href={`#${id}__${index}`}
-            onClick={(e) => {
-              e.preventDefault();
-              if (ref.current) {
-                ref.current.scrollTo({
-                  left: index * (ref.current?.querySelector(".scrolldriven-slide")?.clientWidth ?? 0),
-                  behavior: "smooth"
-                });
-              }
-            }} />
-        ))}
-      </div>
-    </Container>
+              key={image?._tina_metadata?.name ?? index}
+              className="w-2 h-2 bg-gray-800 rounded-full opacity-20 hover:opacity-80" href={`#${id}__${index}`}
+              onClick={(e) => {
+                e.preventDefault();
+                if (ref.current) {
+                  ref.current.scrollTo({
+                    left: index * (ref.current?.querySelector(".scrolldriven-slide")?.clientWidth ?? 0),
+                    behavior: "smooth"
+                  });
+                }
+              }} />
+          ))}
+        </div>
+      </Container></>
   );
 };

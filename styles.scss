@@ -649,3 +649,11 @@ html a {
 .overflow-wrap-text {
   overflow-wrap: break-word;
 }
+
+body.lightbox-open {
+  overflow: hidden;
+
+  #__next {
+    opacity: 0.4;
+  }
+}
