@@ -676,3 +676,8 @@ body.lightbox-open {
     padding-left: 110px;
   }
 }
+
+.tint {
+  background: linear-gradient(0deg, #000000a1, transparent);
+  z-index: 10;
+}

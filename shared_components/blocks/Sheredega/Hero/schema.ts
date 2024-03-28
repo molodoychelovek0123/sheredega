@@ -20,17 +20,22 @@ export const HeroBlockSchema: Template = {
       list: true,
       ui: {
         component: "group-list",
-        itemProps: (item : any) => ({
+        itemProps: (item: any) => ({
           key: item.id,
-          label: item.alt,
+          label: item.alt
         }),
         defaultItem: () => ({
-          alt: 'Изображение',
-          id: Math.random().toString(36).substr(2, 9),
-        }),
+          alt: "Изображение",
+          id: Math.random().toString(36).substr(2, 9)
+        })
       },
       fields: imageSchema.fields as any
     },
-    titleSchema
+    titleSchema,
+    {
+      type: "boolean",
+      name: "tint",
+      label: "Включить затемнение"
+    }
   ]
 };
