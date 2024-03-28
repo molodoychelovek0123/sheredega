@@ -107,7 +107,7 @@ export const Map = ({
     //   return filterPointsByBounds(memedRussianPoints ?? [], cameraBound);
     // }
     return memedRussianPoints;
-  }, [tooltipFilter, regionFilter]);
+  }, [tooltipFilter, regionFilter, memedRussianPoints]);
 
 
   const mapContainer = useRef(null);

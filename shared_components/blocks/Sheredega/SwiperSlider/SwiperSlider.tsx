@@ -22,6 +22,7 @@ type Props = {
   view?: string | null;
   aspectRatio?: "16:9" | "4:3" | "1:1" | string | null;
   gap?: number | null;
+  imageContain?: boolean | null;
 } & BaseSectionProps
 
 
@@ -32,7 +33,9 @@ export const SwiperSlider = ({
                                gap = 20,
                                indent,
                                uniquePath,
-                               customCss, showRightEl
+                               customCss,
+                               showRightEl,
+                               imageContain
                              }: Props) => {
 
   if (aspectRatio !== "16:9" && aspectRatio !== "4:3" && aspectRatio !== "1:1") {
@@ -91,7 +94,7 @@ export const SwiperSlider = ({
               <div className={`scrolldriven-container-${aspectRatio} relative w-full`}>
                 <img src={image?.src ?? "https://via.placeholder.com/500x500"}
                      alt={image.alt ?? "Альтернативный текст"} draggable={false}
-                     className={`absolute top-0 left-0 w-full h-full cursor-pointer object-contain object-top`}
+                     className={`absolute top-0 left-0 w-full h-full cursor-pointer ${imageContain ? "object-contain" : "object-cover"} object-top`}
                      onClick={() => {
                        setCurrentIndex(index);
                        setIsOpen(true);

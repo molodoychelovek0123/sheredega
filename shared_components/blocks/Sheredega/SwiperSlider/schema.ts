@@ -36,7 +36,14 @@ export const swiperSliderSchema: Template = {
         { value: "4:3", label: "4:3" },
         { value: "1:1", label: "1:1" }
       ]
-    }, {
+    },
+    {
+      type: "boolean",
+      name: "imageContain",
+      label: "Не растягивать изображения до формата",
+      description: "При растягивании изображения теряется часть контента изображения, но при этом она сохраняет пропорции."
+    },
+    {
       type: "number",
       name: "gap",
       label: "Отступ"
