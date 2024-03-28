@@ -681,3 +681,19 @@ body.lightbox-open {
   background: linear-gradient(0deg, #000000a1, transparent);
   z-index: 10;
 }
+
+.p-0-force{
+  padding: 0 !important;
+}
+
+.swiper.swiper-horizontal.sheredega-swiper-slider {
+  padding-bottom: 10px;
+
+  .swiper-pagination-horizontal.swiper-pagination {
+    bottom: 0px;
+
+    .swiper-pagination-bullet.swiper-pagination-bullet-active {
+      background: black;
+    }
+  }
+}

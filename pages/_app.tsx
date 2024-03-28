@@ -1,3 +1,7 @@
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+
 import "@/public/fonts/stylesheet.css";
 import "../styles.scss";
 import { CookiesProvider } from "react-cookie";

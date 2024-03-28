@@ -6,9 +6,9 @@ import { customCssSchema } from "../../../../global/schemas/customCss";
 import { imageSchema } from "../../../../shared_components/utils/imageDefaultSchema";
 
 
-export const scrollDrivenSliderSchema: Template = {
-  name: "scrollDrivenSlider",
-  label: "CSS слайдер",
+export const swiperSliderSchema: Template = {
+  name: "swiperSlider",
+  label: "JS слайдер",
   ui: {
     previewSrc: "/blocks/scroll-driven-scroll.jpg",
     defaultItem: {

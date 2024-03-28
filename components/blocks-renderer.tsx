@@ -8,7 +8,7 @@ import type {
   PageBlocksRewards,
   PageBlocksScrollDrivenSlider,
   PageBlocksScrollNumbersBlock,
-  PageBlocksSheredegaHero,
+  PageBlocksSheredegaHero, PageBlocksSwiperSlider,
   ProjectsBlocks,
   ProjectsBlocksProjectHeading
 } from "../tina/__generated__/types";
@@ -38,6 +38,7 @@ import { Contacts } from "@/shared_components/blocks/Sheredega/Contacts/Contacts
 import { AboutPersonStatic } from "@/shared_components/blocks/Sheredega/AboutPersonStatic/AboutPersonStatic";
 import { ScrollLeftNumbers } from "@/shared_components/blocks/Sheredega/ScrollLeftNumbers/ScrollLeftNumbers";
 import { PublicationsList } from "@/shared_components/blocks/Sheredega/PublicationsList/PublicationsList";
+import { SwiperSlider } from "@/shared_components/blocks/Sheredega/SwiperSlider/SwiperSlider";
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -92,6 +93,8 @@ export const BlockRenderer = <T = unknown>({ block, entity, customKey: key }: {
       return <Accordion {...block} uniquePath={uniquePath} key={uniquePath} />;
     case "ScrollDrivenSlider":
       return <ScrollDrivenSlider {...block as PageBlocksScrollDrivenSlider} uniquePath={uniquePath} key={uniquePath} />;
+    case "SwiperSlider":
+      return <SwiperSlider {...block as PageBlocksSwiperSlider} uniquePath={uniquePath} key={uniquePath} />;
     case "ProjectHeading":
       return <ProjectHeading {...entity} titleSize={(block as ProjectsBlocksProjectHeading).size}
                              uniquePath={uniquePath}

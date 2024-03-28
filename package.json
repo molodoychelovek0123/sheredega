@@ -57,6 +57,7 @@
     "tinacms": "^1.5.29",
     "typescript": "^4.5.2",
     "use-debounce": "^10.0.0",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "swiper": "^11.1.0"
   }
 }
