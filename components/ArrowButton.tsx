@@ -12,7 +12,7 @@ export const ArrowButton = ({ position, onClick, disabled }: {
   };
   return (
     <div
-      className={`flex items-center justify-center rounded-full ${disabled ? "opacity-30" : "cursor-pointer"} bg-[#111111]  z-50 relative w-8 h-8 ${position === "right" ? "mr-2" : "ml-2"}`}
+      className={`flex items-center justify-center rounded-full ${disabled ? "opacity-30" : "cursor-pointer"} bg-[#111111]  z-50 relative w-8 h-8 ${position === "right" ? "mr-5" : "ml-5"}`}
       onClick={handleClick}>
       {position === "right" &&
         <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">

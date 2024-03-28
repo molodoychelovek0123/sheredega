@@ -12,7 +12,7 @@ export const swiperSliderSchema: Template = {
   ui: {
     previewSrc: "/blocks/scroll-driven-scroll.jpg",
     defaultItem: {
-      container: true,
+      showRightEl: true,
       indent: indentDefaults,
       grid: gridSchemaDefaultValues,
       aspectRatio: "1:1",
@@ -22,8 +22,8 @@ export const swiperSliderSchema: Template = {
   fields: [
     {
       type: "boolean",
-      name: "container",
-      label: "Использовать контейнер?"
+      name: "showRightEl",
+      label: "Показывать правый элемент"
     },
     indentSchema,
     gridSchema,

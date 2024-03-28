@@ -8,6 +8,7 @@ import React from "react";
 import { LightBoxImage, useLightbox } from "@/global/hooks/useLightbox";
 import Lightbox from "react-spring-lightbox";
 import { ArrowButton } from "@/components/ArrowButton";
+import { CloseButton } from "@/components/CloseButton";
 
 export const GridImage = ({ grid, images, indent, uniquePath, customCss, animation }: GridImageProps) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -34,11 +35,16 @@ export const GridImage = ({ grid, images, indent, uniquePath, customCss, animati
                     disabled={!canPrev}
                   />
                 )}
+                renderHeader={() => (
+                  <div className="flex justify-end pointer-events-none">
+                    <CloseButton onClick={() => {
+                      setIsOpen(false);
+                    }} />
+                  </div>
+                )}
                 renderNextButton={({ canNext }) => (
                   <ArrowButton position="right" onClick={onNext} disabled={!canNext} />
                 )}
-                // renderImageOverlay={() => <div
-                //   className={"fixed top-0 left-0 w-full h-full bg-black opacity-30 -z-1"} />}
       />
       <Container indent={indent} uniquePath={uniquePath} customCss={customCss}>
         <Grid {...grid} ref={ref} className="gap-5">

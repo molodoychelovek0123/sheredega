@@ -6,6 +6,7 @@ import { tinaField } from "tinacms/dist/react";
 import { LightBoxImage, useLightbox } from "@/global/hooks/useLightbox";
 import Lightbox from "react-spring-lightbox";
 import { ArrowButton } from "@/components/ArrowButton";
+import { CloseButton } from "@/components/CloseButton";
 
 export const FourImageShowcase = ({
                                     images = [],
@@ -39,11 +40,16 @@ export const FourImageShowcase = ({
                     disabled={!canPrev}
                   />
                 )}
+                renderHeader={() => (
+                  <div className="flex justify-end pointer-events-none">
+                    <CloseButton onClick={() => {
+                      setIsOpen(false);
+                    }} />
+                  </div>
+                )}
                 renderNextButton={({ canNext }) => (
                   <ArrowButton position="right" onClick={onNext} disabled={!canNext} />
                 )}
-                // renderImageOverlay={() => <div
-                //   className={"fixed top-0 left-0 w-full h-full bg-black opacity-30 -z-1"} />}
       />
       <Container indent={indent} uniquePath={uniquePath} customCss={customCss} hide={!container}>
         <div className="w-full justify-start items-start four-image-showcase inline-flex flex-wrap " ref={ref}>

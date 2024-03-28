@@ -14,13 +14,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // import required modules
 import { Keyboard, Mousewheel, Pagination } from "swiper/modules";
+import { CloseButton } from "@/components/CloseButton";
 
 type Props = {
+  showRightEl?: boolean | null;
   images?: (MyImageProps)[] | null;
   view?: string | null;
   aspectRatio?: "16:9" | "4:3" | "1:1" | string | null;
   gap?: number | null;
-  container?: boolean | null;
 } & BaseSectionProps
 
 
@@ -31,8 +32,7 @@ export const SwiperSlider = ({
                                gap = 20,
                                indent,
                                uniquePath,
-                               customCss,
-                               container = true
+                               customCss, showRightEl
                              }: Props) => {
 
   if (aspectRatio !== "16:9" && aspectRatio !== "4:3" && aspectRatio !== "1:1") {
@@ -56,15 +56,22 @@ export const SwiperSlider = ({
                     disabled={!canPrev}
                   />
                 )}
+                renderHeader={() => (
+                  <div className="flex justify-end pointer-events-none">
+                    <CloseButton onClick={() => {
+                      setIsOpen(false);
+                    }} />
+                  </div>
+                )}
                 renderNextButton={({ canNext }) => (
                   <ArrowButton position="right" onClick={onNext} disabled={!canNext} />
                 )}
       />
-      <Container indent={indent} uniquePath={uniquePath} customCss={customCss} hide={!container}
+      <Container indent={indent} uniquePath={uniquePath} customCss={customCss}
                  className={"p-0-force"}>
         <Swiper
           id={id}
-          slidesPerView={3}
+          slidesPerView={Number(view ?? "3")}
 
           spaceBetween={gap}
           mousewheel={true}
@@ -76,7 +83,7 @@ export const SwiperSlider = ({
           }}
           modules={[Pagination, Mousewheel, Keyboard]}
           className="sheredega-swiper-slider  px-4 md:px-6 lg:px-10"
-          style={{ paddingRight: (gap ?? 0) + 50 }}
+          style={showRightEl ? { paddingRight: (gap ?? 0) + 50 } : undefined}
         >
 
           {filteredImages?.map((image, index) => {

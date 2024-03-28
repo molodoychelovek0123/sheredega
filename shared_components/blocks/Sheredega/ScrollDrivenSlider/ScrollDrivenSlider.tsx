@@ -7,6 +7,7 @@ import { MyImageProps } from "@/shared_components/utils/imageDefaultSchema";
 import Lightbox from "react-spring-lightbox";
 import { LightBoxImage, useLightbox } from "@/global/hooks/useLightbox";
 import { ArrowButton } from "@/components/ArrowButton";
+import { CloseButton } from "@/components/CloseButton";
 
 type Props = {
   images?: (MyImageProps)[] | null;
@@ -107,11 +108,16 @@ export const ScrollDrivenSlider = ({
                     disabled={!canPrev}
                   />
                 )}
+                renderHeader={() => (
+                  <div className="flex justify-end pointer-events-none">
+                    <CloseButton onClick={() => {
+                      setIsOpen(false);
+                    }} />
+                  </div>
+                )}
                 renderNextButton={({ canNext }) => (
                   <ArrowButton position="right" onClick={onNext} disabled={!canNext} />
                 )}
-                // renderImageOverlay={() => <div
-                //   className={"fixed top-0 left-0 w-full h-full bg-black opacity-30 -z-1"} />}
       />
       <Container indent={indent} uniquePath={uniquePath} customCss={customCss} hide={!container}>
         <div
