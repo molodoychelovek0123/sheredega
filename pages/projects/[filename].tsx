@@ -10,7 +10,7 @@ import React, { CSSProperties } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 
 export const LinkToAllProjects = () => (
-  <a className="flex justify-center items-center gap-3 mb-24 mt-14" href="/projects">
+  <a className="flex justify-center items-center gap-3 mt-14" href="/projects">
              <span className="text-black text-xl  lg:text-[28px] font-medium leading-7 relative -top-[4px]">
             ко всем проектам
           </span>
@@ -103,7 +103,7 @@ export const getStaticProps = async ({ params }: { params: { filename: string; [
 export const getStaticPaths = async () => {
   const projectsListData = await client.queries.projectsConnection();
   return {
-    paths: (projectsListData.data.projectsConnection?.edges??[]).map((project) => ({
+    paths: (projectsListData.data.projectsConnection?.edges ?? []).map((project) => ({
       params: { filename: project?.node?._sys.filename }
     })),
     fallback: "blocking"

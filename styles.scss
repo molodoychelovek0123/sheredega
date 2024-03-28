@@ -197,6 +197,19 @@ body, .font-sans {
     list-style-type: decimal;
   }
 
+  ul, ol {
+    //list-style-position: inside;
+    display: flex;
+    padding-left: 1em;
+    flex-direction: column;
+    gap: 0.5em;
+
+    li > div {
+      display: inline;
+    }
+  }
+
+
   a {
     text-decoration: underline;
   }
@@ -655,5 +668,11 @@ body.lightbox-open {
 
   #__next {
     opacity: 0.4;
+  }
+}
+
+.grid-inner-indent {
+  @media (min-width: 1220px) {
+    padding-left: 110px;
   }
 }

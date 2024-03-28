@@ -85,13 +85,13 @@ export const GridText = ({ block, grid, textBlock, indent, uniquePath, customCss
           </h2>)
         }
         {textBlock && body ?
-          <div className={`${classes} ${textBlockAnimationClass}  rte-text leading-[1.3em]`}
+          <div className={`${classes} ${textBlockAnimationClass}  rte-text leading-[1.3em] grid-inner-indent `}
                data-tina-field={tinaField(block, "textBlock")}>
             <RichTextComponent body={body} />
           </div>
           : null
         }
-        {customComponent && <div className={`${classes} ${textBlockAnimationClass} `}>
+        {customComponent && <div className={`${classes} ${textBlockAnimationClass} grid-inner-indent `}>
           {customComponent}
         </div>}
         {/*{animatedText &&*/}

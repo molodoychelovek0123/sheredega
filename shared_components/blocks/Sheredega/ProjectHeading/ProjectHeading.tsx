@@ -45,16 +45,16 @@ export const ProjectHeading = (props: Props) => {
     partners,
     type,
     hashtags,
-    titleSize = "80",
+    titleSize = "50",
     uniquePath
   } = props;
 
   return (
     <Container uniquePath={uniquePath ?? "Шапка проекта"}>
-      <div className="justify-between items-center gap-16 inline-flex py-15 w-full">
+      <div className="justify-between items-start gap-16 inline-flex py-15 w-full">
         <div className="flex-col justify-start items-start gap-10 lg:gap-12 inline-flex w-full">
           <div className="flex-col justify-start items-start gap-6 flex w-full">
-            <Title size={titleSize ?? "80"} lineHeight={"100%"}
+            <Title size={titleSize ?? "50"} lineHeight={"100%"}
                    data-tina-field={tinaField(props, "title")}> {title}</Title>
             {description && <div
               className="text-black  text-lg  md:text-xl lg:text-2xl font-medium leading-snug lg:leading-loose "
@@ -81,9 +81,9 @@ export const ProjectHeading = (props: Props) => {
                     {partners && partners.length > 0 ? <ProjectInfoTab title="Партнеры" text={partners.join(", ")}
                                                                        data-tina-field={tinaField(props, "partners")} /> : null}
                     {type && <ProjectInfoTab title="Тип проекта" text={(type ?? []).join(", ")}
-                                    data-tina-field={tinaField(props, "type")}
-                                    className="hidden lg:inline-flex"
-                    /> }
+                                             data-tina-field={tinaField(props, "type")}
+                                             className="hidden lg:inline-flex"
+                    />}
                   </div>
                 )
                 : null}
@@ -110,7 +110,7 @@ export const ProjectHeading = (props: Props) => {
         {heroImg &&
           <div className="w-[300px] relative lg:shrink-0 hidden md:block" data-tina-field={tinaField(props, "heroImg")}>
             <div className="w-full pt-[100%] relative">
-              <img className="absolute left-0 top-0 w-full h-full -mt-6  object-cover" src={heroImg}
+              <img className="absolute left-0 top-0 w-full h-full mt-[5px]  object-cover" src={heroImg}
                    alt={title ?? "Заголовок проекта"} />
             </div>
           </div>}
@@ -126,7 +126,7 @@ export const projectHeadingBlockSchema: Template = {
   ui: {
     previewSrc: "/blocks/project-heading.png",
     defaultItem: {
-      titleSize: "80"
+      titleSize: "50"
     }
   },
   fields: [
