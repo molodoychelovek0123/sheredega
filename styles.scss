@@ -375,14 +375,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .scrolldriven-container-16\:9 {
+  border: 1px solid #eee;
   padding-top: calc(calc(9 / 16) * 100%);
 }
 
 .scrolldriven-container-4\:3 {
+  border: 1px solid #eee;
   padding-top: calc(calc(3 / 4) * 100%);
 }
 
 .scrolldriven-container-1\:1 {
+  border: 1px solid #eee;
   padding-top: 100%;
 }
 
