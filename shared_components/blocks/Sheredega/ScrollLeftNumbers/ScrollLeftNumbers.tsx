@@ -105,7 +105,6 @@ export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
     [widths]);
 
 
-
   const getActiveIndex = (widthsArray: number[], gap: number, currentScroll: number) => {
     if (currentScroll === 0) return 0;
     if (currentScroll <= 25) return 0; // Костыль чисто, чтобы по кайфу было
@@ -128,8 +127,6 @@ export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
     const index = getActiveIndex(widths, GAP, currentScroll);
     setActive(index);
   }, [widths]);
-
-
 
 
   useEffect(() => {
@@ -162,7 +159,7 @@ export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
         <Container className={"overflow-hidden"}>
           <div className="relative w-full overflow-visible grid grid-cols-1  sm:grid-cols-6 gap-x-5 gap-y-10" ref={ref}>
             <motion.div
-              className={`flex flex-nowrap motion-div max-w-full overflow-x-auto md:overflow-x-visible hide-scrollbar gap-12 lg:gap-[${GAP}px] pt-20 pb-10 lg:py-20 sm:col-start-3`}
+              className={`flex flex-nowrap grid-inner-indent   motion-div max-w-full overflow-x-auto md:overflow-x-visible hide-scrollbar gap-12 lg:gap-[${GAP}px] pt-20 pb-10 lg:py-20 sm:col-start-3`}
 
               style={{
                 x: springX
@@ -175,7 +172,7 @@ export const ScrollLeftNumbers = ({ data = defailtData, textBlock }: Props) => {
                   <p
                     className="text-[70px] md:text-[90px] lg:text-[120px] leading-[100%] mb-5 font-medium "> {item?.text} </p>
                   <p
-                    className="text-black text-lg  lg:text-2xl font-normal leading-tight lg:leading-snug whitespace-nowrap">{item?.subtext} </p>
+                    className="text-black text-lg  lg:text-2xl font-normal leading-tight lg:leading-snug">{item?.subtext} </p>
 
                 </div>
               )}

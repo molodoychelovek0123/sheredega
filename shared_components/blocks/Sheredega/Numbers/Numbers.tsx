@@ -65,7 +65,7 @@ export const Numbers = ({ numbers, indent, uniquePath, customCss, animation, gri
       <Grid ref={ref} {...grid} className="gap-x-5 gap-y-10">
         <div className={`${contentGridStartClass} flex flex-wrap`}>
           <Grid mobileColumns={2} tabletColumns={Number(tabletColumns) ? 3 : 2} desktopColumns={3}
-                className={"gap-6 lg:gap-x-12 gap-y-10"}>
+                className={"gap-6 lg:gap-x-12 gap-y-10 grid-inner-indent"}>
             {(numbers ?? []).map((item, index) => (
               <div
                 key={`${item?.numberValue ?? ""}-${item?.text ?? ""}-${item?.numberUnit ?? ""}-${index}`}

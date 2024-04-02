@@ -146,9 +146,12 @@ export const Map = ({
 
 
     const width = isSsr() ? 1920 : window.innerWidth;
-    const lng = width < 900 ? 38 : 94;
-    const lat = width < 900 ? 55 : 58;
-    const zoom = 3.1;
+    // const lng = width < 900 ? 38 : 94;
+    // const lat = width < 900 ? 55 : 58;
+
+    const lng = 38;
+    const lat = 55;
+    const zoom = 3.65;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/boxdeveloper/cltrrmb7x00f001pjgqc35ls6",
