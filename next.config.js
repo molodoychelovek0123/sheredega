@@ -1,3 +1,4 @@
+const { resolve } = require("node:path");
 module.exports = {
   webpack(config) {
     config.module.rules.push({
@@ -5,6 +6,10 @@ module.exports = {
       issuer: /\.[jt]sx?$/,
       use: ["@svgr/webpack"]
     });
+
+    config.resolve.alias['@radix-ui/react-use-effect-event'] =
+      resolve(__dirname, 'stubs/use-effect-event.js');
+
 
     return config;
   },
